@@ -437,6 +437,54 @@
 	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{LaTeX脚注}}}。
 	
 	
+	\section{模板中的各种编号}
+	
+	标题、图片、表格、伪码、公式、定义、定理、命题、推论、引理、证明、脚注这些文档元素的编号都是自行计算并生成的，无需劳烦用户。\textbf{但形如(1-1a)的子公式编号不能完全自动生成}，为此，模板提供了较为便捷的\shadcmd{subeqtag[<子公式编号标签>]}命令让用户花尽可能少的精力做到这一点，且保证完全不会出错。
+	
+	该需求往往出现在数学模型的约束中，最常用的方式可能是使用\shadcmd{tag\{\}}命令显示指定某条约束的编号。但是，该方式操作繁琐，而且在后续需要调整约束顺序或增删约束时很容易漏改某些tag导致子公式编号混乱，对论文作者来说这是很容易被忽略的问题。
+	
+	本模板提供的\shadcmd{subeqtag[<子公式编号标签>]}命令完全避免了上述问题。您只需要在对应的约束后使用\shadcmd{subeqtag}，该约束就会被赋予与当前主公式编号保持一致的下级编号。并且，对连续的多个约束使用该命令会**自动生成**递增的子公式编号，交换约束顺序编号也会自行更正，断不可能出错。
+	
+	如果您需要在正文中引用某个子公式编号，那么可以像往常一样在\shadcmd{subeqtag}之后使用\shadcmd{label\{<编号标签>\}}，或者直接指定\shadcmd{subeqtag[<子公式编号标签>]}的可选参数，一条命令就搞定，非常人性化。
+	
+	下面的源码将产生式\eqref{eq: obj 1}\textasciitilde \eqref{eq: constriant gamma}对应的例子，其中式\eqref{eq: constraint x}和\eqref{eq: constriant gamma}使用了\shadcmd{subeqtag[<子公式编号标签>]}的可选参数。
+	
+	
+	\begin{verbatim}
+		\begin{align}
+			\max x^2 + y^2 + z^2 \label{eq: obj 1} \\
+			\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
+			y \leq 2, \subeqtag \\
+			z \leq 4, \subeqtag
+		\end{align}
+		
+		\begin{align}
+			\min \left(\alpha + \beta + \gamma\right)^2 \label{eq: obj 2} \\
+			\text{s.t.} \quad \alpha \leq 9, \subeqtag \\
+			\beta \geq -10, \subeqtag \\
+			\gamma \geq 8, \subeqtag[eq: constriant gamma]
+		\end{align}
+	\end{verbatim}
+	
+	\begin{align}
+		\max x^2 + y^2 + z^2 \label{eq: obj 1} \\
+		\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
+		y \leq 2, \subeqtag \\
+		z \leq 4, \subeqtag
+	\end{align}
+	
+	\begin{align}
+		\min \left(\alpha + \beta + \gamma\right)^2 \label{eq: obj 2} \\
+		\text{s.t.} \quad \alpha \leq 9, \subeqtag \\
+		\beta \geq -10, \subeqtag \\
+		\gamma \geq 8, \subeqtag[eq: constriant gamma]
+	\end{align}
+	
+	
+	有两点需要提醒，\shadcmd{subeqtag[<子公式编号标签>]}的可选参数全文不可重复定义，因为它本质上还是调用的\shadcmd{label\{<编号标签>\}}，不用多说。另外，尽管使用\shadcmd{subeqtag[<子公式编号标签>]}的可选参数指定的标签本质上是基于\shadcmd{label\{<编号标签>\}}进行的封装，在TexStudio这样的编辑器上使用\shadcmd{ref\{<编号标签>\}}或\shadcmd{eqref\{<编号标签>\}}却不会自动弹出这些标签的选项，需要用户手动输入；而如果是直接用\shadcmd{label\{<编号标签>\}}指定的标签，引用时会出现在提醒选项中，用户可以直接选择，这算是\shadcmd{subeqtag[<子公式编号标签>]}不太方便的点，可惜我并不知道该如何解决。
+	
+	
+	
 	\section{引用}
 	
 	对公式、图片、表格、伪码、定义、定理、命题、推论、引理、证明等编号的引用直接用\shadcmd{ref\{<编号label>\}}即可，其中需要带括号公式编号则使用\shadcmd{eqref\{<公式label>\}}。
