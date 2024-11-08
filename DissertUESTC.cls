@@ -905,6 +905,12 @@ Path = ./font/,
 \newtheorem{proposition}{命题}
 \newtheorem{corollary}{推论}
 \newtheorem{lemma}{引理}
+% 让这些环境随章节重置编号
+\counterwithin{definition}{chapter}
+\counterwithin{theorem}{chapter}
+\counterwithin{proposition}{chapter}
+\counterwithin{corollary}{chapter}
+\counterwithin{lemma}{chapter}
 %\renewenvironment{proof}{{\sffamily 证明：}}{\hfill $\blacksquare$\par}  % https://blog.csdn.net/robert_chen1988/article/details/61204853
 \renewenvironment{proof}[1][\proofname]{\par
 	\pushQED{\qed}%
