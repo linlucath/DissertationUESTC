@@ -671,6 +671,8 @@ Path = ./font/,
 \captionsetup[subfloat]{%
 	labelformat=simple,  % 配合对\thesubfigure的重新定义，避免子图题显示为((a))
 	listofformat=subsimple,  % 避免单独引用的子图编号显示为((a))，参考subfig宏包
+	captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
+	farskip=4bp,  % 调整纵向子图与上方子图题的间距
 }
 \robustify{\subref}  % 让\subref更易用：https://tex.stackexchange.com/questions/228973/argument-of-captionydblarg-has-an-extra
 \captionsetup[table]{
