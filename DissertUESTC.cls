@@ -229,6 +229,7 @@ urlcolor=black,
 \RequirePackage[flushleft]{threeparttable}  % 排版带附注的表格需要，选项参考宏包文档
 \RequirePackage{xparse}  % 定义带多个可选参数的命令或环境时需要
 \RequirePackage{centerlastline}  % 设计封面中的标题最后一行居中需要
+\RequirePackage{multirow}  % 表格合并多行单元格需要
 
 
 %%----------------- main code -----------------
