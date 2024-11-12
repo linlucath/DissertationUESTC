@@ -173,6 +173,31 @@
 	
 	表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合规范中对线宽的要求。注意不要用\shad{$\backslash$hline}。
 	
+	另外，在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值按规范要求设置为了\shad{0.75}磅，如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\shad{booktabs}宏包的官方文档。
+	
+	\begin{table}[htbp]
+		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
+		\begin{threeparttable}
+			\begin{tabular}{ccccc}
+				\toprule
+				\multirow{2}{*}{Column0} &  \multicolumn{2}{c}{Column1\tnote{1}} & \multicolumn{2}{c}{Column2\tnote{2}} \\
+				\cmidrule(lr){2-3}\cmidrule[2.5bp](l){4-5}
+				~     & subcolumn1 & subcolumn2 & subcolumn1 & subcolumn2 \\
+				\midrule
+				Row1  & element11 & element12 &element13 & element14 \\
+				Row2  & element21 & element22 &element23 & element24 \\
+				\cmidrule{2-3}\cmidrule[2.5bp]{4-5}
+				Row3  & element31 & element32 &element33 & element34 \\
+				\bottomrule
+			\end{tabular}
+			\begin{tablenotes}
+				\item[1] \shadcmd{cmidrule}默认线高按规范要求设置为0.75bp，并用第二项可选参数同时修剪掉框线的左右端点
+				\item[2] 通过指定\shadcmd{cmidrule}的第一项可选参数调整线高，并用第二项可选参数仅修剪掉框线的左端点
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{table}
+	
+	
 	更需要说明的是生成带附注的表格。本模板采用\shad{threeparttable}宏包实现将表格中的附注内容顶格排版在表格底部：
 	\begin{enumerate}
 		\item 使用\shadcmd{tnote\{<label>\}}在表格中插入上标编号；

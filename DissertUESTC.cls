@@ -685,9 +685,15 @@ Path = ./font/,
 	aboveskip=6bp-0.15\baselineskip,
 	belowskip=6bp,
 }
-% 调整三线表线高，https://tex.stackexchange.com/questions/156122
-\setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的线高
-\setlength\lightrulewidth{0.75bp} % 调整\midrule线高
+% 调整三线表线高：https://tex.stackexchange.com/questions/156122
+\setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的默认线高
+\setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高
+
+% 调整表格中间线条线高：https://tex.stackexchange.com/questions/679523
+\setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档
+\setlength\aboverulesep{0bp}  % 调整\cmidrule生成框线的上垂直间隔
+\setlength\belowrulesep{0bp}  % 调整\cmidrule生成框线的下垂直间隔
+
 % 表中文字垂直居中且水平居中的方法，https://blog.csdn.net/happy_demo/article/details/105430091
 
 % 重定义table环境，使表格整体默认在页面中居中，并设置其内容的字体大小和行距，内部环境使用其普通形式，https://tex.stackexchange.com/questions/14683
