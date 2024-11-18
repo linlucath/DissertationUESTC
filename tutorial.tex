@@ -75,6 +75,115 @@
 	
 	\listofsymbs  % 生成主要符号表标题，需要额外维护符号表内容
 	
+	生成主要符号表的章标题需使用本模板提供的\shadcmd{listofsymbs}命令。排版主要符号表的内容则需要使用本模板提供的\shad{symbtable}环境。该环境基于\shad{longtable}环境进行封装，依次接受两个可选参数：
+	
+	\shadcmd{begin\{symbtable\}[<表格整体位置>](<主要符号表的列控制参数>)}
+	
+	\noindent 其中，第一项可选参数用于设置\shad{longtable}环境的可选参数，且默认值与\shad{longtable}环境保持一致；第二项可选参数用于设置\shad{longtable}环境的必选参数，其默认值设置为\shad{p\{3.5em\} p\{$\backslash$linewidth-9em\} p\{3em\}<\{$\backslash$centering\}}。
+	
+	若非必要，用户不应指定\shad{symbtable}环境的可选参数。但若出于对排版美观性的考虑，可适当调整主要符号表各列的宽度。注意，按照学位论文撰写规范中的示例，\textbf{主要符号表有且仅有三列}。因此，切勿对第二项可选参数设置其他列数。
+	
+	\begin{symbtable}
+		a & 加速度（acceleration） & 1 \\
+		A & 振幅（amplitude）、面积（Area)、磁场矢量势（magnetic vector potential） & 2 \\
+		B & 磁场、磁感应强度、核结合能 & 3 \\
+		c & 真空中光速 & 4 \\
+		C & 比热容(heat capacity）、电容 & 5 \\
+		d & 长度（distance）、直径（diameter）、微分（differential，如dx）& 6 \\
+		D & 电位移矢量（electric displacement） & 7 \\
+		e & 元电荷、自然底数（欧拉常数）& 8 \\
+		E & 能量、电场场强，电动势 & 9 \\
+		f & 频率、焦距（光学） & 10 \\
+		F & 力、通量（Flux） & 11 \\
+		g &（地表）重力加速度 & 12 \\
+		G & 万有引力常数 & 13 \\
+		h & 普朗克常数、高度 & 14 \\
+		H & 哈勃常数、焓、磁化强度矢量、哈密顿算符（Hamiltonian） & 15 \\
+		i & 虚数单位 & 16 \\
+		I & 电流、惯量（inertia）、冲量(impulse) & 17 \\
+		j & 辐射强度、加加速度（jerk） & 18 \\
+		J & 角动量、概率流(量子力学）、电流密度、巨配分函数里的巨势 Z(J) & 19 \\
+		k & 玻尔兹曼(Boltzmann)常数、库伦常数、用来指代某常量或固定比值 & 20 \\
+		K & 四维波矢量（相对论）、动能 & 21 \\
+		l & 长度(length) & 22 \\
+		L & 角动量、电感系数 & 23 \\
+		m & 质量 & 24 \\
+		M & 磁化率 & 25 \\
+		n & 序数、主量子数、摩尔数（化学）、折射率（光学） & 26 \\
+		N & 序数、中子数、放大倍率（光学）& 27 \\
+		o & 小o符号 & 28 \\
+		O & 大O符号 & 29 \\
+		p & 动量、压强(pressure)、电偶极矩(electric dipole moment) & 30 \\
+		P & 概率（量子力学，统计学）、功率（power)、极化度 & 31 \\
+		q & 电荷 & 32 \\
+		Q & 电荷热量、流量 & 33 \\
+		r & 半径、位置向量、球坐标系半径轴 & 34 \\
+		R & 电阻、普适气体常数（热力学）、里德伯(Rydberg)常数（光谱学）、反射率（Reflectivity，光学） & 35 \\
+		s & 自旋 & 36 \\
+		S & 熵、面积 & 37 \\
+		t & 时间 & 38 \\
+		T & 温度、周期、透射率（Transmittance，光学） & 39 \\
+		u & 原子质量单位、物距（光学） & 40 \\
+		U & 电压、电势 & 50 \\
+		v & 速度、像距（光学） & 51 \\
+		V & 体积、势能 & 52 \\
+		w & 速度 & 53 \\
+		W & 功 & 54 \\
+		x & 直角坐标系横轴 & 55 \\
+		X & 磁化率、电抗 & 56 \\
+		y & 直角坐标系纵轴 & 57 \\
+		Y & 光亮度、球谐函数 & 58 \\
+		z & 直角/圆柱坐标系竖轴、复数变量 & 59 \\
+		Z & 阻抗、原子序数（质子数）、配分函数（partition function） & 60 \\
+		$\alpha$ & 角度、精细结构常数、角加速度、四维加速度（相对论）、攻角 & 61 \\
+		Α & Alpha （与英文拼写难区分的希腊字母一般不使用） & 62 \\
+		$\beta$ & 角度；磁通系数；速度与光速的比值 & 63 \\
+		Β & Beta Β函数 & 64 \\
+		γ & 电导系数、洛伦兹因子、热容比 & 65 \\
+		Γ & Gamma Γ函数、克里斯托弗尔符号 & 66 \\
+		δ & 狄拉克δ函数、克罗内克函数（Kronecker delta）、屈光度、微分 & 67 \\
+		Δ & Delta 拉普拉斯算子、有限差 & 68 \\
+		ε & 电容率（permittivity）、介电常数、列维-奇维塔符号(Levi-Civita symbol)、发射率 & 69 \\
+		Ε & Epsilon & 70 \\
+		Ϝ & digamma & 71 \\
+		ζ & 阻尼比、黎曼ζ函数 & 72 \\
+		Ζ & Zeta & 73 \\
+		η & 黏度（viscosity）、磁滞系数、效率 & 74 \\
+		Η & Eta & 75 \\
+		θ & 角变量、温度、球坐标/圆柱坐标横角 & 76 \\
+		Θ & Theta 单位阶跃函数（Heaviside step function） & 77 \\
+		Ι & Iota & 78 \\
+		$\kappa$ & 介质常数比ε/ε0、导热率、热扩散率 & 79 \\
+		$\kappa$ & Kappa & 80 \\
+		λ & 波长、mean free path、半衰期 & 81 \\
+		$\Lambda$ & Lambda 洛伦兹变换、冯·卡门常数 & 82 \\
+		μ & 磁导率、质子质量单位、摩擦系数、离子迁移率 & 83 \\
+		Μ & Mu & 84 \\
+		ν & 频率、运动粘度、自由度 & 85 \\
+		Ν & Nu & 86 \\
+		ξ & 黎曼ξ函数、随机变量 & 87 \\
+		Ξ & Xi & 88 \\
+		Ο & Omicron & 89 \\
+		π & 圆周率、共轭动量 & 90 \\
+		∏ & Pi 乘积 & 91 \\
+		ρ & 密度、电阻率 & 92 \\
+		Ρ & Rho & 93 \\
+		σ & 导电率、斯提芬-波尔兹曼常数（Stefan–Boltzmann constant）、核反应截面、表面密度、标准差 & 94 \\
+		∑ & Sigma 总和 & 95 \\
+		τ & 扭矩(Torque)、剪应力（Shear stress）、时间常数、2π & 96 \\
+		Τ & Tau & 97 \\
+		Υ & Upsilon & 98 \\
+		φ & 球坐标纵角、波相位（wave phase）、直径 & 99 \\
+		Φ & Phi 磁通量、辐射通量、逸出功 & 100 \\
+		χ & 电极化率(Electric susceptibility) & 101 \\
+		Χ & Chi 电抗 & 102 \\
+		ψ & 角速；介质电通量（静电力线） & 103 \\
+		Ψ & Psi 波函数 & 104 \\
+		ω & 角速度 & 105 \\
+		Ω & omega 蔡廷常数（Chaitin's constant） 立体角（Solid angle） & 106 \\
+	\end{symbtable}
+	
+	
 	
 	% 打印缩略词表，\printnomenclature[<英文缩写宽度>](<中文全称宽度>)
 	\printnomenclature
@@ -94,6 +203,7 @@
 	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\shad{编译缩略词表}}。Overleaf用户则可以一键搞定，无需额外操作。
 	
 	\chapter{主体}
+	
 	
 	\section{各级标题}
 	
@@ -171,7 +281,9 @@
 	\clearpage
 	\section{表格}
 	
-	表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合规范中对线宽的要求。注意不要用\shad{$\backslash$hline}。
+	\subsection{普通表格}
+	
+	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合规范中对线宽的要求。注意不要用\shad{$\backslash$hline}。
 	
 	另外，在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值按规范要求设置为了\shad{0.75}磅，如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\shad{booktabs}宏包的官方文档。
 	
@@ -197,6 +309,8 @@
 		\end{threeparttable}
 	\end{table}
 	
+	\newpage
+	\subsection{带附注表格}
 	
 	更需要说明的是生成带附注的表格。本模板采用\shad{threeparttable}宏包实现将表格中的附注内容顶格排版在表格底部：
 	\begin{enumerate}
@@ -246,6 +360,73 @@
 		\end{threeparttable}
 	\end{table}
 	
+	
+	\clearpage
+	\subsection{跨页表格}
+	
+	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\shad{longtable}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<跨页表题>\}}来正确排版跨页之后的表题，务必使用此命令，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致。
+	
+	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见下方示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}。
+	
+	\begin{longtable}{p{2em} p{4.5em} p{11em} p{6em} p{11em}}
+		\caption{中国计算机学会部分推荐期刊及会议} \label{tab: 中国计算机学会部分推荐期刊及会议} \\
+		
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} & \textbf{网址} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\multicolumn{5}{c}{\CPcaption{中国计算机学会部分推荐期刊及会议}}\\
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} & \textbf{网址} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		& & & & \hfill 续下页 \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\endlastfoot
+		
+		1 & JSAC & IEEE Journal on Selected Areas in Communications & IEEE & http://dblp.uni-trier.de/db/journals/jsac/ \\
+		2 & TMC & IEEE Transactions on Mobile Computing & IEEE & http://dblp.uni-trier.de/db/journals/tmc/ \\
+		3 & TON & IEEE/ACM Transactions on Networking & IEEE/ACM & http://dblp.uni-trier.de/db/journals/ton/ \\
+		1 & TOIT & ACM Transactions on Internet Technology & ACM & http://dblp.uni-trier.de/db/journals/toit/ \\
+		2 & TOMM & ACM Transactions on Multimedia Computing, Communications and Applications & ACM & http://dblp.uni-trier.de/db/journals/tomccap/ \\
+		3 & TOSN & ACM Transactions on Sensor Networks & ACM & http://dblp.uni-trier.de/db/journals/tosn/ \\
+		4 & CN & Computer Networks & Elsevier & http://dblp.uni-trier.de/db/journals/cn/ \\
+		5 & TCOM & IEEE Transactions on Communications & IEEE & http://dblp.uni-trier.de/db/journals/tcom/ \\
+		6 & TWC & IEEE Transactions on Wireless Communications & IEEE & http://dblp.uni-trier.de/db/journals/twc/ \\
+		1 & & Ad Hoc Networks & Elsevier & http://dblp.uni-trier.de/db/journals/adhoc/ \\
+		2 & CC & Computer Communications & Elsevier & http://dblp.uni-trier.de/db/journals/comcom/ \\
+		3 & TNSM & IEEE Transactions on Network and Service Management & IEEE & http://dblp.uni-trier.de/db/journals/tnsm/ \\
+		4 & & IET Communications & IET & http://dblp.uni-trier.de/db/journals/iet-com/ \\
+		5 & JNCA & Journal of Network and Computer Applications & Elsevier & http://dblp.uni-trier.de/db/journals/jnca/ \\
+		6 & MONET & Mobile Networks and Applications & Springer & http://dblp.uni-trier.de/db/journals/monet/ \\
+		7 & & Networks & Wiley & http://dblp.uni-trier.de/db/journals/networks/ \\
+		8 & PPNA & Peer-to-Peer Networking and Applications & Springer & http://dblp.uni-trier.de/db/journals/ppna/ \\
+		9 & WCMC & Wireless Communications and Mobile Computing & Wiley & http://dblp.uni-trier.de/db/journals/wicomm/ \\
+		10 & & Wireless Networks & Springer & http://dblp.uni-trier.de/db/journals/winet/ \\
+		11 & IOT & IEEE Internet of Things Journal & IEEE & https://dblp.org/db/journals/ iotj/index.html \\
+		1 & SIGCOMM & ACM International Conference on Applications, Technologies, Architectures, and Protocols for Computer Communication & ACM & http://dblp.uni-trier.de/db/conf/sigcomm/ index.html \\
+		2 & MobiCom & ACM International Conference on Mobile Computing and Networking & ACM & http://dblp.uni-trier.de/db/conf/mobicom/ \\
+		3 & INFOCOM & IEEE International Conference on Computer Communications & IEEE & http://dblp.uni-trier.de/db/conf/infocom/ \\
+		4 & NSDI & Symposium on Network System Design and Implementation & USENIX & http://dblp.uni-trier.de/db/conf/nsdi/ \\
+		1 & SenSys & ACM Conference on Embedded Networked Sensor Systems & ACM & http://dblp.uni-trier.de/db/conf/sensys/ \\
+		2 & CoNEXT & ACM International Conference on Emerging Networking Experiments and Technologies & ACM & http://dblp.uni-trier.de/db/conf/conext/ \\
+		3 & SECON & IEEE International Conference on Sensing, Communication, and Networking & IEEE & http://dblp.uni-trier.de/db/conf/secon/ \\
+		4 & IPSN & International Conference on Information Processing in Sensor Networks & IEEE/ACM & http://dblp.uni-trier.de/db/conf/ipsn/ \\
+		5 & MobiSys & ACM International Conference on Mobile Systems, Applications, and Services & ACM & http://dblp.uni-trier.de/db/conf/mobisys/ \\
+		6 & ICNP & IEEE International Conference on Network Protocols & IEEE & http://dblp.uni-trier.de/db/conf/icnp/ \\
+		7 & MobiHoc & International Symposium on Theory, Algorithmic Foundations, and Protocol Design for Mobile Networks and Mobile Computing & ACM/IEEE & http://dblp.uni-trier.de/db/conf/mobihoc/ \\
+		8 & NOSSDAV & International Workshop on Network and Operating System Support for Digital Audio and Video & ACM & http://dblp.uni-trier.de/db/conf/nossdav/ \\
+		9 & IWQoS & IEEE/ACM International Workshop on Quality of Service & IEEE & http://dblp.uni-trier.de/db/conf/iwqos/ \\
+		10 & IMC & ACM Internet Measurement Conference & ACM/USENIX & http://dblp.uni-trier.de/db/conf/imc/ \\
+		
+	\end{longtable}
 	
 	\clearpage
 	\section{伪代码}

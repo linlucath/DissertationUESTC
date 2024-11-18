@@ -224,6 +224,7 @@ urlcolor=black,
 \RequirePackage[perpage]{footmisc}
 \RequirePackage{enumitem}  % 调整list的边距需要
 \RequirePackage{booktabs}  % 调整三线表线宽需要
+\RequirePackage{longtable}  % 跨页表格需要
 \RequirePackage{array}
 % https://blog.csdn.net/weixin_43971980/article/details/96514640
 \RequirePackage[flushleft]{threeparttable}  % 排版带附注的表格需要，选项参考宏包文档
@@ -702,9 +703,70 @@ Path = ./font/,
 \renewenvironment{table}[1][tbp]{
 	\oldtable[#1]
 	\centering
-	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont
+	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
+	%	\renewcommand{\arraystretch}{1.1}
 }{
 	\oldendtable
+}
+
+% 在\longtable的定义中插入一行命令，以调整跨页长表格内容的字体及行距。参考自longtable宏包
+\newcommand{\longtableprop}{%
+	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
+	%	\renewcommand{\arraystretch}{1.1}%
+}
+
+\def\longtable{%
+	\par
+	\if@noskipsec\mbox{}\par\fi
+	\@nobreakfalse
+	\ifx\multicols\@undefined
+	\else
+	\ifnum\col@number>\@ne
+	\@twocolumntrue
+	\fi
+	\fi
+	\if@twocolumn
+	\LT@err{longtable not in 1-column mode}\@ehc
+	\fi
+	\begingroup
+	\longtableprop % 这里调整字体大小和行距
+	%	\setlength{\tabcolsep}{6pt}  % 调整列间隔
+	\@ifnextchar[\LT@array{\LT@array[x]}}
+
+\setlength{\LTpre}{12bp}  % 表前间隔
+\setlength{\LTpost}{6bp}  % 表后间隔
+\setlength{\LTcapwidth}{\textwidth-9.5em}  % 表题宽度，这个参数跟table不太一样，现在设定的值在观感上相对正文字体大小是左右各缩进了4em。有可能是因为longtable的五号字体在设置该参数时已经生效。
+
+% 再定义一个新跨页表格环境用于主要符号表
+\NewDocumentEnvironment{symbtable}{O{c} D(){p{3.5em} p{\linewidth-9em} p{3em}<{\centering}}}{%
+	%	\setlength{\tabcolsep}{6pt}  % 调整列间隔
+	\setlength{\LTpre}{0bp}%
+	\setlength{\LTpost}{0bp}%
+	\renewcommand{\longtableprop}{%
+		\zihao{-4}\setlength\baselineskip{12bp}\selectfont%
+		\renewcommand{\arraystretch}{1.3}%
+	}%
+	\begin{longtable}[#1]{#2}%
+		\textbf{符号} & \textbf{说明} & \textbf{页码} \\
+		\endfirsthead
+		\textbf{符号} & \textbf{说明} & \textbf{页码} \\
+		\endhead
+		\endfoot
+		\endlastfoot
+	}{
+	\end{longtable}%
+}
+
+\newlength{\CPcapwidth}  % 记录长表格跨页表题的宽度
+\newcommand{\CPcaptext}{} % 记录跨页表题完整文本
+\newcommand{\CPcaption}[1]{%
+	\small%
+	\renewcommand{\CPcaptext}{\tablename\ \thetable\ #1（续）}
+	\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
+	\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
+	{\parbox[b]{\CPcapwidth}{\vspace{7bp}\CPcaptext}}%
+	{\parbox[b]{\LTcapwidth}{\vspace{7bp}\CPcaptext}}%
+	\vspace{4bp}
 }
 
 
@@ -855,18 +917,20 @@ Path = ./font/,
 \setlength{\nomitemsep}{0bp}
 % 缩略词表添加新条目，https://blog.csdn.net/ya6543/article/details/113075774
 \newlength{\nomdescrchnwidth}
-\newcommand{\nomdescr}[1]{
-	\parbox[t]{\linewidth-\nomdescrchnwidth}{\raggedright\strut #1 \strut}
-}
-\newcommand{\nomdescrchn}[1]{
-	\parbox[t]{\nomdescrchnwidth}{\strut #1 \strut}\ignorespaces
-}
-\newcommand{\nomchn}[4][]{
-	\nomenclature[#1]{#2}{
-		\nomdescr{#3}
-		\nomdescrchn{#4}
-	}
-}
+\newcommand{\nomdescr}[1]{%
+	\parbox[t]{\linewidth-\nomdescrchnwidth}{\raggedright\strut #1 \strut}%
+	\ignorespaces%
+}%
+\newcommand{\nomdescrchn}[1]{%
+	\parbox[t]{\nomdescrchnwidth}{\strut #1 \strut}%
+	\ignorespaces%
+}%
+\newcommand{\nomchn}[4][]{%
+	\nomenclature[#1]{#2}{%
+		\nomdescr{#3}%
+		\nomdescrchn{#4}%
+	}%
+}%
 
 % 重定义缩略词表打印命令，加入书签，并设置单面印刷
 \let\oldprintnomenclature\printnomenclature
