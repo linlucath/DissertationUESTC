@@ -87,6 +87,8 @@
 	\renewcommand{\reviewers}{#2}
 }
 
+\newcommand{\subfigformat}{}
+
 
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
 \newcounter{pseudopage}
@@ -171,6 +173,15 @@
 	\DegLv{博士}
 }
 
+\DeclareOption{subfigsimple}{
+	\renewcommand{\subfigformat}{simple}
+}
+
+\DeclareOption{subfigparens}{
+	\renewcommand{\subfigformat}{parens}
+}
+
+
 \DeclareOption*{
 	\ifthenelse{\equal{\CurrentOption}{boxruled}}
 	{\PassOptionsToClass{\CurrentOption}{algorithm2e}}
@@ -182,7 +193,7 @@
 
 %%%%%%----------------- execution of options -----------------
 
-\ExecuteOptions{print,doctor}
+\ExecuteOptions{print,doctor,subfigparens}
 \ProcessOptions\relax
 
 %%%%%%----------------- package loading -----------------
@@ -231,6 +242,7 @@ urlcolor=black,
 \RequirePackage{xparse}  % 定义带多个可选参数的命令或环境时需要
 \RequirePackage{centerlastline}  % 设计封面中的标题最后一行居中需要
 \RequirePackage{multirow}  % 表格合并多行单元格需要
+\RequirePackage{extarrows} % 带文字的长等号与箭头需要
 
 
 %%----------------- main code -----------------
@@ -642,7 +654,9 @@ Path = ./font/,
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 \renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
-\renewcommand{\thesubfigure}{(\alph{subfigure})}
+\ifthenelse{\equal{\subfigformat}{simple}}%
+{}%
+{\renewcommand{\thesubfigure}{(\alph{subfigure})}}
 \renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
 \renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
 %% 新增一个子公式编号使用的计数器
@@ -660,21 +674,34 @@ Path = ./font/,
 
 %%%%%% 调整浮动体与前后文本的间距，https://github.com/CTeX-org/forum/issues/86，需要与caption包配合
 %%%%%% 官方文档，https://mirrors.bfsu.edu.cn/CTAN/macros/latex/contrib/caption/caption.pdf
-\setlength{\intextsep}{6bp}  % 浮动体前后间距
-\captionsetup[figure]{
-	name={图},
-	labelsep=space,
-	font=small,
-	margin={4em, 4em},
-	position=below,
-	aboveskip=6bp,
-	belowskip=6bp-0.15\baselineskip
+%% https://www.latexstudio.net/archives/9786.html
+\setlength{\floatsep}{6bp} % 相邻两个浮动体之间的垂直距离
+\setlength{\intextsep}{6bp}  % h模式浮动体前后间距
+\setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或页面中第一个b模式的浮动体与文本的间距。
+\captionsetup[figure]{%
+	name={图},%
+	labelsep=space,%
+	font=small,%
+	margin={4em, 4em},%
+	position=below,%
+	aboveskip=6bp,%
+	belowskip=6bp-0.15\baselineskip%
 }
-\captionsetup[subfloat]{%
-	labelformat=simple,  % 配合对\thesubfigure的重新定义，避免子图题显示为((a))
-	listofformat=subsimple,  % 避免单独引用的子图编号显示为((a))，参考subfig宏包
-	captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
-	farskip=4bp,  % 调整纵向子图与上方子图题的间距
+\ifthenelse{\equal{\subfigformat}{simple}}
+{
+	\captionsetup[subfloat]{%
+		labelformat=parens,
+		listofformat=subparens,
+		captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
+		farskip=4bp,  % 调整纵向子图与上方子图题的间距
+	}
+}{
+	\captionsetup[subfloat]{%
+		labelformat=simple,  % 配合对\thesubfigure的重新定义，避免子图题显示为((a))
+		listofformat=subsimple,  % 避免单独引用的子图编号显示为((a))，参考subfig宏包
+		captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
+		farskip=4bp,  % 调整纵向子图与上方子图题的间距
+	}
 }
 \robustify{\subref}  % 让\subref更易用：https://tex.stackexchange.com/questions/228973/argument-of-captionydblarg-has-an-extra
 \captionsetup[table]{
@@ -938,7 +965,7 @@ Path = ./font/,
 	\newpage%
 	\markboth{缩略词表}{缩略词表}%
 	\pdfbookmark[0]{缩略词表}{bookmarknomenclature}%
-	\renewcommand{\nompreamble}{{\noindent \bfseries \makebox[#1][l]{英文缩写} \makebox[\linewidth-#1-#2][l]{英文全称} \makebox[#2][l]{中文全称}}}  % 缩略词表额外注释
+	\renewcommand{\nompreamble}{{\noindent \bfseries \makebox[#1][l]{英文缩写} \makebox[\linewidth-#1-#2-\tabcolsep][l]{英文全称} \makebox[#2][l]{中文全称}}}  % 缩略词表额外注释
 	\setlength{\nomdescrchnwidth}{#2}
 	\oldprintnomenclature[#1]
 	\insertevenemptypage
