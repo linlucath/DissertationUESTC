@@ -5,6 +5,8 @@
 %%%%%%----------------- initial code -----------------
 
 \RequirePackage{ifthen}
+\RequirePackage{amsmath}  % 包含\eqref{}命令
+\RequirePackage{booktabs}  % 调整三线表线宽需要
 
 \newcommand{\insertemptypage}{}
 \newcommand{\insertevenemptypage}{}
@@ -87,7 +89,20 @@
 	\renewcommand{\reviewers}{#2}
 }
 
+
+\newcommand{\uestctocname}{目\hspace{1em}录}
+% 控制目录中各级标题的缩进距离
+\newcommand{\tocsecindent}{1.7em}
+\newcommand{\tocsubsecindent}{3.6em}
+\newcommand{\tocsubsubsecindent}{6em}
+
+\newcommand{\uestcfigcapmargin}{4em}  % 控制图题左右侧缩进，本科2em，研究生4em
 \newcommand{\subfigformat}{}
+
+
+\setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
+\setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
+
 
 
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
@@ -122,6 +137,28 @@
 \DeclareOption{nonprint}{
 	\renewcommand{\insertemptypage}{}
 	\renewcommand{\insertevenemptypage}{}
+}
+
+
+
+\DeclareOption{bachelor}{
+	\renewcommand{\evenpagemark}{电子科技大学学士学位论文}
+	\renewcommand{\achievementtext}{攻读学士学位期间取得的成果}
+	\renewcommand{\covertitletext}{学士学位论文}
+	\renewcommand{\covertitleentext}{BACHELOR THESIS}
+	\renewcommand{\majlabel}{专\hspace{2em}业}
+	\setlength{\nametitleorgskip}{6bp}
+	\renewcommand{\majorlabel}{专\hspace{2em}业}
+	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
+	\DegLv{学士}
+	\renewcommand{\uestctocname}{目\hspace{0.5em}录}
+	\renewcommand{\tocsecindent}{1em}
+	\renewcommand{\tocsubsecindent}{2em}
+	\renewcommand{\tocsubsubsecindent}{3em}
+	\renewcommand{\eqref}[1]{（\ref{#1}）}
+	\renewcommand{\uestcfigcapmargin}{2em}
+	\setlength\lightrulewidth{0.5bp}
+	\setlength\cmidrulewidth{0.5bp}
 }
 
 
@@ -211,11 +248,11 @@
 \RequirePackage{afterpage}
 % 生成带编号的书签，并设置书签深度（bookmarksdepth不显示赋值则取tocdepth值），参考hyperref宏包文档
 \RequirePackage[
-bookmarksnumbered=true,
-bookmarksdepth=3,
-citecolor=black,
-linkcolor=black,
-urlcolor=black,
+	bookmarksnumbered=true,
+	bookmarksdepth=3,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=black,
 ]{hyperref}
 \RequirePackage{graphicx}
 \RequirePackage[font=small]{subfig}
@@ -223,7 +260,7 @@ urlcolor=black,
 %\RequirePackage{soul}
 \RequirePackage[numbers,sort&compress]{natbib}  % 排版参考文献和文献引用样式需要
 \RequirePackage{nomencl}
-\RequirePackage{amssymb, amsmath, amsthm}  % 顺序不能错
+\RequirePackage{amssymb, amsthm}
 \RequirePackage{caption}
 \RequirePackage[algochapter, linesnumbered, ruled]{algorithm2e}
 \RequirePackage{appendix}
@@ -234,7 +271,6 @@ urlcolor=black,
 % https://wenku.csdn.net/answer/37441a87026a40a28ff235d24c15c879
 \RequirePackage[perpage]{footmisc}
 \RequirePackage{enumitem}  % 调整list的边距需要
-\RequirePackage{booktabs}  % 调整三线表线宽需要
 \RequirePackage{longtable}  % 跨页表格需要
 \RequirePackage{array}
 % https://blog.csdn.net/weixin_43971980/article/details/96514640
@@ -271,23 +307,36 @@ urlcolor=black,
 \setsansfont{Times New Roman}  % 英文正文无衬线字体
 \setmonofont{Times New Roman}  % 英文正文等宽字体
 \setCJKmainfont{SimSun}[
-AutoFakeBold=2,
-AutoFakeSlant=0.3,
-Path = ./font/,
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
 ]   % 正文中文字体——宋体
 \setCJKsansfont{SimHei}[
-AutoFakeBold=2,
-AutoFakeSlant=0.3,
-Path = ./font/,
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
 ]   % 正文中文无衬线字体——黑体
-\setCJKmonofont{STZHONGS}[
-AutoFakeBold=2,
-AutoFakeSlant=0.3,
-Path = ./font/,
-]   % 正文中文等宽字体——华文中宋
+%\setCJKmonofont{STZHONGS}[
+%	AutoFakeBold=2,
+%	AutoFakeSlant=0.3,
+%	Path = ./font/,
+%]   % 正文中文等宽字体——华文中宋
 % 定义ctex包默认字体之外的其他字体：
 % https://blog.csdn.net/ProgramChangesWorld/article/details/51429138
-%\setCJKfamilyfont{hwzs}{STZhongsong}
+% https://latex.lierhua.top/zh/docs/%E5%AD%97%E4%BD%93%E6%97%8F/
+\newCJKfontfamily\hwzs{HuaWenZhongSong}  % 为研究生封面添加需要的华文中宋字族
+\setCJKfamilyfont{hwzs}{STZHONGS}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
+
+\newCJKfontfamily\hwxk{HuaWenXingKai}  % 为本科封面添加需要的华文行楷字族
+\setCJKfamilyfont{hwxk}{STXINGKA}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
 
 \hypersetup{colorlinks=true,linkcolor=black}
 \setcitestyle{numbers,square}
@@ -302,49 +351,53 @@ Path = ./font/,
 
 
 %% 构建论文封面
-%\newcommand\uestccover[7]{
-	%	\newpage\thispagestyle{empty}
-	%	\pdfbookmark[0]{论文封面}{bookmarkcover}%
-	%	\vspace*{13bp}
-	%	{\fontsize{22bp}{16.9bp}\selectfont\centering%
-		%		电\hspace{0.5em}子\hspace{0.5em}科\hspace{0.5em}%
-		%		技\hspace{0.5em}大\hspace{0.5em}学 \par}
-	%	\vspace*{6bp}
-	%	{\fontsize{12bp}{9.23bp}\selectfont\centering%
-		%		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-	%	\vspace*{3cm-34bp}
-	%	{\fontsize{42bp}{32.31bp}\selectfont\centering%
-		%		\covertitletext\par}
-	%	\vspace*{10bp}\par
-	%	{\fontsize{16bp}{12.31bp}\selectfont\centering%
-		%		\covertitleentext\par}
-	%	\vspace*{1.6cm}\par
-	%	{\centering\includegraphics[height=5.5cm]{uestcbadge}\par}
-	%	\vspace*{1.5cm-5bp}\par
-	%	{\ttfamily\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
-		%		\parbox[t]{3cm}{\centering 论文题目}%
-		%		\CJKunderline*[thickness=0.5bp, depth=8bp]{%
-			%			\parbox[t][3.6cm]{10.5cm}{\centering \Phantom{#1}%
-				%				\par\vspace{-\baselineskip}%
-				%				\rule[-8.5bp]{\linewidth-1bp}{0.5bp}}}}
-	%	\par\vspace*{1bp}
-	%	{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
-		%		\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
-		%		\CJKunderline*[thickness=0.5bp, depth=5bp]{\makebox[9cm][c]{#2}}%
-		%		\par\vspace*{1bp}\noindent
-		%		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
-		%		\CJKunderline*[thickness=0.5bp, depth=5bp]{\makebox[9cm][c]{#3}}%
-		%		\par\vspace*{1bp}\noindent
-		%		\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
-		%		\CJKunderline*[thickness=0.5bp, depth=5bp]{\makebox[9cm][c]{#4}}%
-		%		\par\vspace*{1bp}\noindent
-		%		\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
-		%		\CJKunderline*[thickness=0.5bp, depth=5bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
-		%		\par\vspace*{1bp}\noindent
-		%		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
-		%		\CJKunderline*[thickness=0.5bp, depth=5bp]{\makebox[9cm][c]{#7}}
-		%		\par\vspace*{-\baselineskip}\insertemptypage}
-	%}
+
+\newcommand\bachelorcover[7]{
+	\newpage\thispagestyle{empty}
+	\pdfbookmark[0]{论文封面}{bookmarkcover}%
+	\vspace*{-12bp}
+	{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
+		电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
+		技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
+	\vspace*{7bp}
+	{\fontsize{12bp}{9.23bp}\selectfont\centering%
+		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+	\vspace*{32bp}
+	{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
+		\covertitletext\par}
+	\vspace*{10bp}\par
+	{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
+		\covertitleentext\par}
+	\vspace*{1.7cm}\par
+	{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
+	\vspace*{3.3cm}\par
+	{\bfseries\raggedright%
+		\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
+		\parbox[t][3.6cm]{10.5cm}{%
+			\fontsize{16bp}{26bp}\selectfont
+			\begin{centerlastline}%
+				\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+			\end{centerlastline}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+	\par\vspace*{20bp}
+	{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
+		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
+		\par\vspace*{-\baselineskip}\insertemptypage}
+}
 
 \newcommand\uestccover[7]{
 	\newpage\thispagestyle{empty}
@@ -365,7 +418,7 @@ Path = ./font/,
 	\vspace*{1.85cm}\par
 	{\centering\includegraphics[height=5.0cm]{uestclogo}\par}
 	\vspace*{1.75cm-5bp}\par
-	{\ttfamily\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
+	{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
 		\parbox[t]{3cm}{\centering 论文题目}%
 		\parbox[t][3.6cm]{10.5cm}{%
 			\begin{centerlastline}%
@@ -394,166 +447,166 @@ Path = ./font/,
 
 %% 中文扉页
 \newcommand\uestczhtitlepage{{
-		\newpage\thispagestyle{empty}
-		\rmfamily\zihao{-4}\raggedright%
-		\vspace*{-\baselineskip}\par\vspace*{4bp}%
-		\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage}%
-		\parbox[b][0.8cm][b]{1.5cm}{\filright 分类号}%
-		\parbox[b][0.8cm][b]{6cm}{\centering%
-			\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clsnum \hfill}}%
-		\parbox[b][0.8cm][b]{1.5cm}{\centering 密级}%
-		\parbox[b][0.8cm][b]{6cm}{\centering%
-			\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clslv%
-				\hfill}}\par\vspace*{-3bp}
-		\parbox[b][0.8cm][b]{1.5cm}{\filright UDC\textsuperscript{注1}}%
-		\parbox[b][0.8cm][b]{6cm}{\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \udc%
-				\hfill}}\par\vspace*{-8bp}
-		\parbox[b][2.5cm][b]{15cm}{\ttfamily\zihao{-0}\centering%
-			学\hspace{1em}位\hspace{1em}论\hspace{1em}文\par\vspace*{1bp}}
-		\parbox[b][2.5cm][b]{15cm}{\ttfamily\zihao{-2}\hspace*{2cm}%
-			\parbox[b]{11cm}{\centering\bfseries \dissertationtitle} \par\vspace{-\baselineskip}%
-			\rule[-8bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
-		\parbox[b][0.8cm]{15cm}{\centering （题名和副题名）}\par\vspace*{0bp}
-		\hspace*{5cm}\parbox[b][1.5cm][b]{5cm}{\zihao{3}\centering\bfseries%
-			\author\par\vspace{-\baselineskip}%
-			\rule[-5bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
-		\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering%
-			（作者姓名）}\par\vspace*{1.3cm+1bp}
-		\parbox[b][0.9cm][b]{2.75cm}{\filleft 指导教师}%
-		\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries \supervisor%
-			\par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}%
-		\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries \supervisortitle%
-			\par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-		\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
-			\supervisororg \par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}%
-		\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
-			\supervisorloc \par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par%
-		\parbox[b][3.3cm][t]{15cm}{
-			\ifthenelse{\equal{\associatesupervisor}{}}{
-				\vspace*{\nametitleorgskip}\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}}{
-				\vspace*{-4bp}\filright
-				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering%
-					\bfseries \associatesupervisor \par\vspace{-\baselineskip}%
-					\rule[-4bp]{\linewidth}{0.5bp}}%
-				\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
-					\associatesupervisortitle \par\vspace{-\baselineskip}%
-					\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
-					\associatesupervisororg \par\vspace{-\baselineskip}%
-					\rule[-4bp]{\linewidth}{0.5bp}}%
-				\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries% 
-					\associatesupervisorloc \par\vspace{-\baselineskip}%
-					\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{\nametitleorgskip}
-				\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}
-			}
-		}\par\vspace*{-5bp}
-		\parbox[b][0.9cm][b]{2.75cm}{申请学位级别}%
-		\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \deglv%
-			\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
-		\parbox[b][0.9cm][b]{2.75cm}{\centering \majorlabel}%
-		\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \major%
-			\par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-		\ifthenelse{\equal{\profield}{}}
-		{}
-		{
-			\parbox[b][0.9cm][b]{2.75cm}{专业学位领域}%
-			\parbox[b][0.9cm][b]{12.25cm}{\zihao{4}\centering%
-				\hspace*{0.5em} \profield \par\vspace{-\baselineskip}%
+	\newpage\thispagestyle{empty}
+	\rmfamily\zihao{-4}\raggedright%
+	\vspace*{-\baselineskip}\par\vspace*{4bp}%
+	\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage}%
+	\parbox[b][0.8cm][b]{1.5cm}{\filright 分类号}%
+	\parbox[b][0.8cm][b]{6cm}{\centering%
+		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clsnum \hfill}}%
+	\parbox[b][0.8cm][b]{1.5cm}{\centering 密级}%
+	\parbox[b][0.8cm][b]{6cm}{\centering%
+		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clslv%
+			\hfill}}\par\vspace*{-3bp}
+	\parbox[b][0.8cm][b]{1.5cm}{\filright UDC\textsuperscript{注1}}%
+	\parbox[b][0.8cm][b]{6cm}{\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \udc%
+			\hfill}}\par\vspace*{-8bp}
+	\parbox[b][2.5cm][b]{15cm}{\hwzs\zihao{-0}\centering%
+		学\hspace{1em}位\hspace{1em}论\hspace{1em}文\par\vspace*{1bp}}
+	\parbox[b][2.5cm][b]{15cm}{\hwzs\zihao{-2}\hspace*{2cm}%
+		\parbox[b]{11cm}{\centering\bfseries \dissertationtitle} \par\vspace{-\baselineskip}%
+		\rule[-8bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
+	\parbox[b][0.8cm]{15cm}{\centering （题名和副题名）}\par\vspace*{0bp}
+	\hspace*{5cm}\parbox[b][1.5cm][b]{5cm}{\zihao{3}\centering\bfseries%
+		\author\par\vspace{-\baselineskip}%
+		\rule[-5bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
+	\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering%
+		（作者姓名）}\par\vspace*{1.3cm+1bp}
+	\parbox[b][0.9cm][b]{2.75cm}{\filleft 指导教师}%
+	\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries \supervisor%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries \supervisortitle%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+	\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
+		\supervisororg \par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
+		\supervisorloc \par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par%
+	\parbox[b][3.3cm][t]{15cm}{
+		\ifthenelse{\equal{\associatesupervisor}{}}{
+			\vspace*{\nametitleorgskip}\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}}{
+			\vspace*{-4bp}\filright
+			\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering%
+				\bfseries \associatesupervisor \par\vspace{-\baselineskip}%
+				\rule[-4bp]{\linewidth}{0.5bp}}%
+			\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
+				\associatesupervisortitle \par\vspace{-\baselineskip}%
 				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+			\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
+				\associatesupervisororg \par\vspace{-\baselineskip}%
+				\rule[-4bp]{\linewidth}{0.5bp}}%
+			\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries% 
+				\associatesupervisorloc \par\vspace{-\baselineskip}%
+				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{\nametitleorgskip}
+			\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}
 		}
-		\parbox[b][0.9cm][b]{2.75cm}{提交论文日期}%
-		\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \submitdate%
-			\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
-		\parbox[b][0.9cm][b]{2.75cm}{\centering 论文答辩日期}%
-		\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \debatedate%
-			\par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
-		\parbox[b][0.9cm][b]{4cm}{学位授予单位和日期}%
-		\parbox[b][0.9cm][b]{6cm}{\zihao{4}\centering\bfseries \grantorg%
-			\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
-		\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \grantdate%
-			\par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
-		\parbox[b][0.9cm][b]{3.25cm}{答辩委员会主席}%
-		\parbox[b][0.9cm][b]{11.75cm}{\zihao{4}\filright\bfseries%
-			\hspace*{0.5em} \chairreviewer \par\vspace{-\baselineskip}%
+	}\par\vspace*{-5bp}
+	\parbox[b][0.9cm][b]{2.75cm}{申请学位级别}%
+	\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \deglv%
+		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{2.75cm}{\centering \majorlabel}%
+	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \major%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+	\ifthenelse{\equal{\profield}{}}
+	{}
+	{
+		\parbox[b][0.9cm][b]{2.75cm}{专业学位领域}%
+		\parbox[b][0.9cm][b]{12.25cm}{\zihao{4}\centering%
+			\hspace*{0.5em} \profield \par\vspace{-\baselineskip}%
 			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-		\parbox[b][0.9cm][b]{1.5cm}{评阅人}%
-		\parbox[b][0.9cm][b]{13.5cm}{\zihao{4}\filright\bfseries%
-			\hspace*{0.5em} \mbox{\reviewers} \par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-2bp}
-		\parbox[b][1.5cm][b]{15cm}{注1：注明《国际十进分类法UDC》的类号。}
-		\par\vspace*{-\baselineskip}\insertemptypage}}
+	}
+	\parbox[b][0.9cm][b]{2.75cm}{提交论文日期}%
+	\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \submitdate%
+		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{2.75cm}{\centering 论文答辩日期}%
+	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \debatedate%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
+	\parbox[b][0.9cm][b]{4cm}{学位授予单位和日期}%
+	\parbox[b][0.9cm][b]{6cm}{\zihao{4}\centering\bfseries \grantorg%
+		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \grantdate%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
+	\parbox[b][0.9cm][b]{3.25cm}{答辩委员会主席}%
+	\parbox[b][0.9cm][b]{11.75cm}{\zihao{4}\filright\bfseries%
+		\hspace*{0.5em} \chairreviewer \par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+	\parbox[b][0.9cm][b]{1.5cm}{评阅人}%
+	\parbox[b][0.9cm][b]{13.5cm}{\zihao{4}\filright\bfseries%
+		\hspace*{0.5em} \mbox{\reviewers} \par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-2bp}
+	\parbox[b][1.5cm][b]{15cm}{注1：注明《国际十进分类法UDC》的类号。}
+	\par\vspace*{-\baselineskip}\insertemptypage}}
 
 %% 英文扉页
 \newcommand{\uestcentitlepage}[7]{{%
-		\newpage\thispagestyle{empty}%
-		\zihao{3}\centering%
-		\pdfbookmark[0]{英文扉页}{bookmarkentitlepage}%
-		\parbox[t][5cm][c]{13cm}{\zihao{-2}\setlength{\baselineskip}{18bp}%
-			\bfseries\centering\vspace*{-15bp} \Phantom{#1}}%
-		\par\vspace*{0pt}%
-		\parbox[t][8cm][c]{13cm}{\zihao{-3}\setlength{\baselineskip}{22.5bp}%
-			\centering\vspace*{-17bp} \entitlepagemidtext}%
-		\par\vspace*{0pt}%
-		\ifthenelse{\equal{#6}{}}%
-		{\parbox[t][1.2cm]{15cm}{}}%
-		{\parbox[t][0.8cm]{15cm}{}}%
-		\par\vspace*{7pt}%
-		\parbox[t][2.4cm][t]{15cm}{%
-			\parbox[t]{3cm}{\filleft Discipline}%
-			\parbox[t][2.4cm]{12cm}{%
-				\bfseries%
-				\setlength{\baselineskip}{1.2cm}%
-				\begin{centerlastline}%
-					\ifthenelse{\equal{#2}{}}
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #2}}%
-				\end{centerlastline}%
-				\par\vspace*{-\baselineskip}%
-				\rule[-5.5bp]{\linewidth}{0.5bp}%
-			}%
-		}
-		\par\vspace*{0pt}%
-		\parbox[t][1.2cm]{3cm}{\filleft Student ID}%
-		\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-			\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#3}}}%
-		\par\vspace*{0pt}%
-		\parbox[t][1.2cm]{3cm}{\filleft Author}%
-		\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-			\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#4}}}%
-		\par\vspace*{-1pt}%
-		\parbox[t][1.2cm]{3cm}{\filleft Supervisor}%
-		\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-			\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#5}}}%
-		\par\vspace*{-1pt}%
-		\ifthenelse{\equal{#6}{}}%
-		{}%
-		{%
-			\makebox[3cm][r]{}%
-			\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-				\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#6}}}%
-			\par\vspace*{-1pt}%
+	\newpage\thispagestyle{empty}%
+	\zihao{3}\centering%
+	\pdfbookmark[0]{英文扉页}{bookmarkentitlepage}%
+	\parbox[t][5cm][c]{13cm}{\zihao{-2}\setlength{\baselineskip}{18bp}%
+		\bfseries\centering\vspace*{-15bp} \Phantom{#1}}%
+	\par\vspace*{0pt}%
+	\parbox[t][8cm][c]{13cm}{\zihao{-3}\setlength{\baselineskip}{22.5bp}%
+		\centering\vspace*{-17bp} \entitlepagemidtext}%
+	\par\vspace*{0pt}%
+	\ifthenelse{\equal{#6}{}}%
+	{\parbox[t][1.2cm]{15cm}{}}%
+	{\parbox[t][0.8cm]{15cm}{}}%
+	\par\vspace*{7pt}%
+	\parbox[t][2.4cm][t]{15cm}{%
+		\parbox[t]{3cm}{\filleft Discipline}%
+		\parbox[t][2.4cm]{12cm}{%
+			\bfseries%
+			\setlength{\baselineskip}{1.2cm}%
+			\begin{centerlastline}%
+				\ifthenelse{\equal{#2}{}}
+				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
+				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #2}}%
+			\end{centerlastline}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-5.5bp]{\linewidth}{0.5bp}%
 		}%
-		\parbox[t][2.4cm][t]{15cm}{%
-			\parbox[t]{3cm}{\filleft School}%
-			\parbox[t][2.4cm]{12cm}{%
-				\bfseries%
-				\setlength{\baselineskip}{1.2cm}%
-				\begin{centerlastline}%
-					\ifthenelse{\equal{#2}{}}
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #7}}%
-				\end{centerlastline}%
-				\par\vspace{-\baselineskip}%
-				\rule[-5.5bp]{\linewidth}{0.5bp}}%
-		}%
-		\par\vspace*{-\baselineskip}\insertemptypage}}
+	}
+	\par\vspace*{0pt}%
+	\parbox[t][1.2cm]{3cm}{\filleft Student ID}%
+	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#3}}}%
+	\par\vspace*{0pt}%
+	\parbox[t][1.2cm]{3cm}{\filleft Author}%
+	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#4}}}%
+	\par\vspace*{-1pt}%
+	\parbox[t][1.2cm]{3cm}{\filleft Supervisor}%
+	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#5}}}%
+	\par\vspace*{-1pt}%
+	\ifthenelse{\equal{#6}{}}%
+	{}%
+	{%
+		\makebox[3cm][r]{}%
+		\CJKunderline*[thickness=0.5bp, depth=5bp]{%
+			\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#6}}}%
+		\par\vspace*{-1pt}%
+	}%
+	\parbox[t][2.4cm][t]{15cm}{%
+		\parbox[t]{3cm}{\filleft School}%
+		\parbox[t][2.4cm]{12cm}{%
+			\bfseries%
+			\setlength{\baselineskip}{1.2cm}%
+			\begin{centerlastline}%
+				\ifthenelse{\equal{#2}{}}
+				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
+				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #7}}%
+			\end{centerlastline}%
+			\par\vspace{-\baselineskip}%
+			\rule[-5.5bp]{\linewidth}{0.5bp}}%
+	}%
+	\par\vspace*{-\baselineskip}\insertemptypage}}
 
 %% 声明页
 \newcommand{\declaration}[4][3cm]{
@@ -561,7 +614,7 @@ Path = ./font/,
 	
 	\vspace*{18bp}%
 	\pdfbookmark[0]{独创性声明}{bookmarkdeclaration}%
-	{\ttfamily\bfseries\centering
+	{\hwzs\bfseries\centering
 		\zihao{-2}\setlength{\baselineskip}{18bp}\selectfont
 		独创性声明 \par}
 	\vspace*{18bp}
@@ -590,7 +643,7 @@ Path = ./font/,
 	\vspace*{32bp}
 	
 	\vspace*{24bp}
-	{\ttfamily\bfseries\centering
+	{\hwzs\bfseries\centering
 		\zihao{-2}\setlength{\baselineskip}{18bp}\selectfont
 		论文使用授权 \par}
 	\vspace*{18bp}
@@ -655,8 +708,8 @@ Path = ./font/,
 \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
 \renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 \ifthenelse{\equal{\subfigformat}{simple}}%
-{}%
-{\renewcommand{\thesubfigure}{(\alph{subfigure})}}
+	{}%
+	{\renewcommand{\thesubfigure}{(\alph{subfigure})}}
 \renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
 \renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
 %% 新增一个子公式编号使用的计数器
@@ -682,27 +735,27 @@ Path = ./font/,
 	name={图},%
 	labelsep=space,%
 	font=small,%
-	margin={4em, 4em},%
+	margin={\uestcfigcapmargin, \uestcfigcapmargin},%
 	position=below,%
 	aboveskip=6bp,%
 	belowskip=6bp-0.15\baselineskip%
 }
 \ifthenelse{\equal{\subfigformat}{simple}}
-{
-	\captionsetup[subfloat]{%
-		labelformat=parens,
-		listofformat=subparens,
-		captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
-		farskip=4bp,  % 调整纵向子图与上方子图题的间距
+	{
+		\captionsetup[subfloat]{%
+			labelformat=parens,
+			listofformat=subparens,
+			captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
+			farskip=4bp,  % 调整纵向子图与上方子图题的间距
+		}
+	}{
+		\captionsetup[subfloat]{%
+			labelformat=simple,  % 配合对\thesubfigure的重新定义，避免子图题显示为((a))
+			listofformat=subsimple,  % 避免单独引用的子图编号显示为((a))，参考subfig宏包
+			captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
+			farskip=4bp,  % 调整纵向子图与上方子图题的间距
+		}
 	}
-}{
-	\captionsetup[subfloat]{%
-		labelformat=simple,  % 配合对\thesubfigure的重新定义，避免子图题显示为((a))
-		listofformat=subsimple,  % 避免单独引用的子图编号显示为((a))，参考subfig宏包
-		captionskip=-3bp,  % 去掉子图编号和子图间的垂直空间，这里-3bp是因为将\small设置为了20bp行距，而五号字大小是10.5bp，规范对子图题编号行距的要求是单倍行距，需要略作补偿。参见subfig宏包
-		farskip=4bp,  % 调整纵向子图与上方子图题的间距
-	}
-}
 \robustify{\subref}  % 让\subref更易用：https://tex.stackexchange.com/questions/228973/argument-of-captionydblarg-has-an-extra
 \captionsetup[table]{
 	name={表},
@@ -715,10 +768,10 @@ Path = ./font/,
 }
 % 调整三线表线高：https://tex.stackexchange.com/questions/156122
 \setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的默认线高
-\setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高
+% \setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
 
 % 调整表格中间线条线高：https://tex.stackexchange.com/questions/679523
-\setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档
+% \setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
 \setlength\aboverulesep{0bp}  % 调整\cmidrule生成框线的上垂直间隔
 \setlength\belowrulesep{0bp}  % 调整\cmidrule生成框线的下垂直间隔
 
@@ -782,6 +835,7 @@ Path = ./font/,
 		\endlastfoot
 	}{
 	\end{longtable}%
+	\insertevenemptypage
 }
 
 \newlength{\CPcapwidth}  % 记录长表格跨页表题的宽度
@@ -811,28 +865,28 @@ Path = ./font/,
 %%%%%% 修改各级标题样式，参见titlesec宏包官方文档
 %%%%%% \titleformat{⟨command⟩}[⟨shape⟩]{⟨format⟩}{⟨label ⟩}{⟨sep⟩}{⟨before-code⟩}[⟨after-code⟩]
 \titleformat{\chapter}[block]
-{\thispagestyle{fancy}\sffamily\filcenter
-	\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont}
-{\thechapter}{\wordsep}{%
-	\ifthenelse{\equal{\value{chapter}}{1}}%
-	{\stepcounter{pagereset}}%
-	{}%
-	\ifthenelse{\equal{\value{pagereset}}{1}}  % 从第一章开始页码变更为罗马数字
-	{\pagenumbering{arabic}\stepcounter{pagereset}}%
-	{}%
-}
+	{\thispagestyle{fancy}\sffamily\filcenter
+		\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont}
+	{\thechapter}{\wordsep}{%
+		\ifthenelse{\equal{\value{chapter}}{1}}%
+		{\stepcounter{pagereset}}%
+		{}%
+		\ifthenelse{\equal{\value{pagereset}}{1}}  % 从第一章开始页码变更为罗马数字
+		{\pagenumbering{arabic}\stepcounter{pagereset}}%
+		{}%
+	}
 \titleformat{\section}[block]
-{\sffamily\filright
-	\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
-{\thesection}{\wordsep}{}
+	{\sffamily\filright
+		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
+	{\thesection}{\wordsep}{}
 \titleformat{\subsection}[block]
-{\sffamily\filright
-	\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
-{\thesubsection}{\wordsep}{}
+	{\sffamily\filright
+		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
+	{\thesubsection}{\wordsep}{}
 \titleformat{\subsubsection}[block]
-{\sffamily\filright
-	\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont}
-{\thesubsubsection}{\wordsep}{}
+	{\sffamily\filright
+		\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont}
+	{\thesubsubsection}{\wordsep}{}
 
 % 标准\chapter似乎会在标题上方默认添加大小为\baselineskip的垂直空间
 \titlespacing{\chapter}{0bp}{24bp-\baselineskip}{18bp}
@@ -864,26 +918,26 @@ Path = ./font/,
 	\parbox[t]{4em}{\textbf{关键词：}}\parbox[t]{\textwidth-4em}{#1}
 	\insertevenemptypage}
 \newcommand\enkeywords[1]{\par\vspace{\baselineskip}\noindent
-	\parbox[t]{4.7em}{\textbf{Keywords: }}\parbox[t]{\textwidth-4.7em}{#1}
+	\parbox[t]{5em}{\textbf{Keywords:}}\parbox[t]{\textwidth-5em}{#1}
 	\insertevenemptypage}
 
 \setcounter{secnumdepth}{5}
 
 \setcounter{tocdepth}{2}  % 设定目录的显示深度，到2级（chapter是0级）
-\renewcommand{\contentsname}{目\hspace{1em}录}  % 修改目录标题
+\renewcommand{\contentsname}{\uestctocname}  % 修改目录标题
 %% 调整主目录条目的缩进、字体、导航线型、页码编号等样式，参考titlesec宏包文档。
 \titlecontents{chapter}[0bp]
-{\sffamily\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
-\titlecontents{section}[1.7em]
-{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
-\titlecontents{subsection}[3.6em]
-{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
-\titlecontents{subsubsection}[6em]
-{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
+	{\sffamily\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
+	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
+\titlecontents{section}[\tocsecindent]
+	{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
+	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
+\titlecontents{subsection}[\tocsubsecindent]
+	{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
+	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
+\titlecontents{subsubsection}[\tocsubsubsecindent]
+	{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
+	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
 % titlesec的\titlecontents也有弊端，第十章和第十一章标签后的标题内容无法产生相同的悬挂缩进，故而对不齐。考虑到章节一般不会那么多，尚且可用，但是对于图目录和表目录，编号很容易突破到两位数。为了让所有图题和表题对齐，tocloft宏包提供的方式更为适合，后续对图目录和表目录的调整即是如此。
 
 
@@ -899,31 +953,31 @@ Path = ./font/,
 \renewcommand{\listtablename}{表目录}   % 修改表目录标题
 \let\oldlistoffigures\listoffigures
 \renewcommand{\listoffigures}{{
-		%	\let\oldnumberline\numberline
-		%	\renewcommand{\numberline}{\figurename~\oldnumberline}  % 为图目录条目加上标签“图”，https://www.latexstudio.net/archives/6202.html。这种方式会导致图目录条目悬挂缩进对不齐，弃用
-		\renewcommand\addvspace[1]{}  % 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
-		\renewcommand{\cftfigpresnum}{\figurename~}  % 给图目录条目加上标签“图”
-		\setlength{\cftfigindent}{0em}  % 取消图目录条目左边距
-		\addtolength{\cftfignumwidth}{1.4em}  % 调整图目录条目悬挂缩进量
-		\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
-		\newpage%
-		\pdfbookmark[0]{图目录}{bookmarklof}%
-		\oldlistoffigures
-		\insertevenemptypage
+	%	\let\oldnumberline\numberline
+	%	\renewcommand{\numberline}{\figurename~\oldnumberline}  % 为图目录条目加上标签“图”，https://www.latexstudio.net/archives/6202.html。这种方式会导致图目录条目悬挂缩进对不齐，弃用
+	\renewcommand\addvspace[1]{}  % 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	\renewcommand{\cftfigpresnum}{\figurename~}  % 给图目录条目加上标签“图”
+	\setlength{\cftfigindent}{0em}  % 取消图目录条目左边距
+	\addtolength{\cftfignumwidth}{1.4em}  % 调整图目录条目悬挂缩进量
+	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
+	\newpage%
+	\pdfbookmark[0]{图目录}{bookmarklof}%
+	\oldlistoffigures
+	\insertevenemptypage
 }}
 \let\oldlistoftables\listoftables
 \renewcommand{\listoftables}{{
-		%	\let\oldnumberline\numberline
-		%	\renewcommand{\numberline}{\tablename~\oldnumberline}  % 为表目录条目加上标签“表”。这种方式会导致表目录条目悬挂缩进对不齐，弃用
-		\renewcommand\addvspace[1]{}  % 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
-		\renewcommand{\cfttabpresnum}{\tablename~}  % 给表目录条目加上标签“图”
-		\setlength{\cfttabindent}{0em}  % 取消表目录条目左边距，参考tocloft宏包文档
-		\addtolength{\cfttabnumwidth}{1.4em}  % 调整表目录条目悬挂缩进量
-		\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
-		\newpage%
-		\pdfbookmark[0]{表目录}{bookmarklot}%
-		\oldlistoftables
-		\insertevenemptypage
+	%	\let\oldnumberline\numberline
+	%	\renewcommand{\numberline}{\tablename~\oldnumberline}  % 为表目录条目加上标签“表”。这种方式会导致表目录条目悬挂缩进对不齐，弃用
+	\renewcommand\addvspace[1]{}  % 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	\renewcommand{\cfttabpresnum}{\tablename~}  % 给表目录条目加上标签“图”
+	\setlength{\cfttabindent}{0em}  % 取消表目录条目左边距，参考tocloft宏包文档
+	\addtolength{\cfttabnumwidth}{1.4em}  % 调整表目录条目悬挂缩进量
+	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
+	\newpage%
+	\pdfbookmark[0]{表目录}{bookmarklot}%
+	\oldlistoftables
+	\insertevenemptypage
 }}
 
 
@@ -934,7 +988,7 @@ Path = ./font/,
 	\pdfbookmark[0]{主要符号表}{bookmarklistofsymbs}%
 	\chapter*{主要符号表}%
 	\markboth{主要符号表}{主要符号表}%
-	\insertevenemptypage
+	%	\insertevenemptypage
 }
 
 
@@ -991,14 +1045,14 @@ Path = ./font/,
 
 % 定义、定理、命题、引理、推论，https://ask.latexstudio.net/index.php/ask/article/647.html
 \newtheoremstyle{uestc} % <风格名>
-{0pt} % <上方间距> 若留空，则使用默认值
-{0pt} % <下方间距> 若留空，则使用默认值
-{} % <主体字体> 如 \itshape
-{\parindent} % <缩进长度> 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
-{\sffamily} % <定理头字体> 如 \bfseries
-{} % <定理头后的标点符号> 如点号、冒号
-{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
-{} % <定理头格式指定> 一般留空
+	{0pt} % <上方间距> 若留空，则使用默认值
+	{0pt} % <下方间距> 若留空，则使用默认值
+	{} % <主体字体> 如 \itshape
+	{\parindent} % <缩进长度> 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
+	{\sffamily} % <定理头字体> 如 \bfseries
+	{} % <定理头后的标点符号> 如点号、冒号
+	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
+	{} % <定理头格式指定> 一般留空
 \theoremstyle{uestc} % plain: regular+italic, definition: regular++, remark: italic+regular
 \newtheorem{definition}{定义}
 \newtheorem{theorem}{定理}
@@ -1184,15 +1238,15 @@ Path = ./font/,
 \renewcommand\thefootnote{\textcircled{\@arabic\c@footnote}}
 % 保持正文中脚注序号为上标，脚注部分的编号为非上标
 \xpatchcmd\@makefntext
-{{\hss\@makefnmark}}
-{{\hss\@makefnmark@nosuperscript}\space}
-{}{\fail}
+	{{\hss\@makefnmark}}
+	{{\hss\@makefnmark@nosuperscript}\space}
+	{}{\fail}
 \def\@makefnmark@nosuperscript{\hbox{\normalfont\@thefnmark}}
 % 调整分割线长度
 \xpatchcmd\footnoterule
-{.4\columnwidth}
-{12em}
-{}{\fail}
+	{.4\columnwidth}
+	{12em}
+	{}{\fail}
 
 % 设置脚注文本的缩进，https://www.latexstudio.net/archives/321.html
 \deffootnote{1.5em}{0em}{\makebox[1.5em][l]{\thefootnotemark}}

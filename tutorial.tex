@@ -1,5 +1,5 @@
 % !TEX Program = xelatex
-\documentclass[nonprint, doctor, vlined]{DissertUESTC}
+\documentclass[print, doctor, vlined]{DissertUESTC}
 
 
 \begin{document}
@@ -11,7 +11,15 @@
 	\nocite{*}
 	
 	% 封面
-%	\uestccover{<论文题目>}{<学科专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>}{<学院>}
+%	\bachelorcover{<论文题目>}{<学院>}{<专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>} % 仅学士用
+	\bachelorcover{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}
+				{古墓派}
+				{玉女素心剑法}
+				{1182000}
+				{杨\hspace{1em}过}
+				{小龙女}
+				{掌\hspace{1em}门}
+%	\uestccover{<论文题目>}{<学科专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>}{<学院>} % 仅研究生用
 	\uestccover{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}
 				{玉女素心剑法}
 				{1182000}
@@ -20,7 +28,7 @@
 				{掌\hspace{1em}门}
 				{古墓派}
 	
-	% 中文扉页
+	% 中文扉页，仅研究生用
 	\ClsNum{TN828.6}  % \ClsNum{<分类号>}
 	\ClsLv{公开}  % \ClsLv{<密级>}
 	\UDC{621.39}  % \UDC{<UDC号>}
@@ -37,7 +45,7 @@
 	\Reviewer{黄蓉}{一灯大师、老顽童、黄老邪、郭靖、小龙女}  % \Reviewer{<答辩委员为主席>}{<评阅人>}
 	\uestczhtitlepage
 	
-	% 英文扉页
+	% 英文扉页，仅研究生用
 	% \uestcentitlepage{<文题>}{<专业>}{<学号>}{<作者>}{<导师>}{<副导师>}{<学院>}，若无副导师，则将“<副导师>”参数留空即可
 	\uestcentitlepage{How to Take Revenge When My Father's Murderer is Suspected to Be a Famous Hero}
 					{Jade Lady Soul Sword Technique}
@@ -46,7 +54,7 @@
 					{Grandmaster Dragondaughter Little}{Grandmaster Northern Beggar}
 					{Ancient Tomb Sect}
 	
-	% 独创性声明：[签名宽度]{日期}{作者签名图片}{导师签名图片}，送审时使用空强制参数即可
+	% 独创性声明：[签名宽度]{日期}{作者签名图片}{导师签名图片}，送审时使用空强制参数即可，仅研究生用
 	\declaration[3cm]{2024年08月31日}{authsign}{spvrsign}
 	
 	% 开启中文摘要
@@ -55,7 +63,7 @@
 	杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。但之后因杨过与郭芙等人之间的矛盾，郭靖便送其去全真派习武。其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。 他身边有许多红颜知己钟情于他，而他却一心只爱小龙女，后结为夫妇；他和郭家恩怨难分，数度因误会关系紧张，却始终挺身而出相助他们，解除嫌隙，化气为和；命运多舛，与小龙女分隔十六年里，随伴亦师亦友的神雕行侠仗义，惩恶扬善。江湖人称“神雕大侠”。 后等小龙女不至毅然跳崖殉情，在谷底与小龙女重逢后携手保卫襄阳城，杨过一展其旷世武学的威力，打败金轮法王，飞石击杀蒙古大汗，保大宋十三年和平。成为名扬天下的“神雕侠侣”。 最后一次华山论剑后，与妻子小龙女绝迹江湖。
 	
 	% 中文关键字
-	\zhkeywords{练武，离经叛道，复仇，抗敌}
+	\zhkeywords{练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌}
 	
 	
 	% 开启英文摘要
@@ -65,7 +73,7 @@
 	
 	
 	% 英文关键字
-	\enkeywords{Martial arts, apostasy, revenge, fighting against the enemy}
+	\enkeywords{Martial arts, apostasy, revenge, fighting against the enemy, martial arts, apostasy, revenge, fighting against the enemy}
 	
 	\tableofcontents  % 主目录，必要
 	
@@ -82,6 +90,8 @@
 	\noindent 其中，第一项可选参数用于设置\shad{longtable}环境的可选参数，且默认值与\shad{longtable}环境保持一致；第二项可选参数用于设置\shad{longtable}环境的必选参数，其默认值设置为\shad{p\{3.5em\} p\{$\backslash$linewidth-9em\} p\{3em\}<\{$\backslash$centering\}}。
 	
 	若非必要，用户不应指定\shad{symbtable}环境的可选参数。但若出于对排版美观性的考虑，可适当调整主要符号表各列的宽度。注意，按照学位论文撰写规范中的示例，\textbf{主要符号表有且仅有三列}。因此，切勿对第二项可选参数设置其他列数。
+	
+	\textbf{重要提醒}：\shadcmd{listofsymbs}命令和\shad{symbtable}环境必须同时出现或消失。消失好理解，不需要主要符号表的时候，通通注释掉即可；需要的时候，必须使用\shad{symbtable}环境生成表格内容，因为在印刷模式下，这部分结束时是否需要添加左手空白页的判断逻辑放在了\shad{symbtable}环境结束时（自动）执行。
 	
 	\begin{symbtable}
 		a & 加速度（acceleration） & 1 \\
@@ -202,6 +212,8 @@
 	
 	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\shad{编译缩略词表}}。Overleaf用户则可以一键搞定，无需额外操作。
 	
+	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。不必慌张，在你正式使用本模板撰写论文时，肯定不需要当前页的内容。
+	
 	\chapter{主体}
 	
 	
@@ -271,6 +283,8 @@
 		}
 		\caption{撩妹是我杨过的被动技能。\subref{fig: 绿萼2}好腼腆的姑娘；\subref{fig: 杨过绿萼}你终于肯笑了；\subref{fig: GG}哦吼} \label{fig: 被动技能}
 	\end{figure}
+
+	研究生和本科生学位论文规范对多行图题左右侧缩进距离的要求不同，前者为单侧\shad{4em}，后者为单侧\shad{2em}。此参数由论文类型选项控制，无需用户过问。各位可以试试看，图\ref{fig: 被动技能}的主图题在\shad{bachelor}选项下能单行排版，而在其他类型选项下会换行。
 	
 	\begin{figure}[!htb]
 		\centering
@@ -283,9 +297,9 @@
 	
 	\subsection{普通表格}
 	
-	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合规范中对线宽的要求。注意不要用\shad{$\backslash$hline}。
+	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合研究生规范中对线高的要求（\shad{1.5}磅、\shad{0.75}磅、\shad{1.5}磅）。注意不要用\shad{$\backslash$hline}。而对于本科生，学士学位论文规范要求表格中的线高统一为\shad{0.5}磅，在\shad{bachelor}选项下，\shad{$\backslash$midrule}的线高设置为\shad{0.5}磅。因此，本科生在表格中只需要也只可以使用\shad{$\backslash$midrule}和\shadcmd{cmidrule}，否则线高将不符合要求。
 	
-	另外，在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值按规范要求设置为了\shad{0.75}磅，如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\shad{booktabs}宏包的官方文档。
+	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\shad{booktabs}宏包的官方文档。
 	
 	\begin{table}[htbp]
 		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
@@ -303,7 +317,7 @@
 				\bottomrule
 			\end{tabular}
 			\begin{tablenotes}
-				\item[1] \shadcmd{cmidrule}默认线高按规范要求设置为0.75bp，并用第二项可选参数同时修剪掉框线的左右端点
+				\item[1] 在\shad{bachelor}选项下，\shadcmd{cmidrule}默认线高设置为0.5bp，而在其他论文类型下，默认值为0.75bp，两者规范的要求不同。可用第二项可选参数同时修剪掉框线的左右端点
 				\item[2] 通过指定\shadcmd{cmidrule}的第一项可选参数调整线高，并用第二项可选参数仅修剪掉框线的左端点
 			\end{tablenotes}
 		\end{threeparttable}
@@ -640,7 +654,7 @@
 	
 	在正文中加入脚注直接在需要放置脚注标签的位置使用\\\shadcmd{footnote\{<脚注内容>\}}即可。
 	
-	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{LaTeX脚注}}}。
+	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
 	
 	
 	\section{模板中的各种编号}
@@ -700,6 +714,8 @@
 	对参考文献的行内引用直接使用\shadcmd{cite\{<参考文献label>\}}，以上标形式引用则使用\shadcmd{citess\{<参考文献label>\}}。
 	
 	参考文献的引用是基于\shad{natbib}宏包实现的，单次引用多篇参考文献时会自动排序并压缩序号（如果可以的话）。
+
+	另外，研究生论文规范要求正文中引用的公式编号样式采用英文括号，即\shad{(1-1)}；而本科论文规范中则要求是中文括号，即\shad{（1-1）}。在公式右侧的编号中，两者均采用英文括号。此间区别完全由相应的选项（\shad{doctor}/\shad{prodoctor}/\shad{master}/\shad{promaster}/ \shad{bachelor}）控制，用户无需过问，但一定要确保自己写对了选项。
 	
 	
 	\section{参考文献编译}
@@ -893,7 +909,7 @@
 	\chapter{黯然销魂掌秘籍}
 	\section{真气运转}
 	
-	\achievement
+	\achievement % 仅研究生用
 	
 	\noindent\textbf{发表论文：}
 	
