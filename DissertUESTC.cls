@@ -4,9 +4,12 @@
 
 %%%%%%----------------- initial code -----------------
 
+\LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
 \RequirePackage{ifthen}
 \RequirePackage{amsmath}  % 包含\eqref{}命令
 \RequirePackage{booktabs}  % 调整三线表线宽需要
+\RequirePackage[UTF8]{ctex}
+\RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 
 \newcommand{\insertemptypage}{}
 \newcommand{\insertevenemptypage}{}
@@ -100,6 +103,14 @@
 \newcommand{\subfigformat}{}
 
 
+%% 定义parbox中内容为空时的占位命令
+\newcommand{\Phantom}[1]{%
+	\ifthenelse{\equal{#1}{}}%
+	{\phantom{占位}}%
+	{#1}%
+}
+
+
 \setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
 \setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
 
@@ -108,6 +119,94 @@
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
 \newcounter{pseudopage}
 \setcounter{pseudopage}{0}
+
+
+% https://www.cnblogs.com/54fire/p/10409570.html
+\setmainfont{Times New Roman}  % 英文正文罗马字体
+\setsansfont{Times New Roman}  % 英文正文无衬线字体
+\setmonofont{Times New Roman}  % 英文正文等宽字体
+\setCJKmainfont{SimSun}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+]   % 正文中文字体——宋体
+\setCJKsansfont{SimHei}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+]   % 正文中文无衬线字体——黑体
+%\setCJKmonofont{STZHONGS}[
+%	AutoFakeBold=2,
+%	AutoFakeSlant=0.3,
+%	Path = ./font/,
+%]   % 正文中文等宽字体——华文中宋
+% 定义ctex包默认字体之外的其他字体：
+% https://blog.csdn.net/ProgramChangesWorld/article/details/51429138
+% https://latex.lierhua.top/zh/docs/%E5%AD%97%E4%BD%93%E6%97%8F/
+\newCJKfontfamily\hwzs{HuaWenZhongSong}  % 为研究生封面添加需要的华文中宋字族
+\setCJKfamilyfont{hwzs}{STZHONGS}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
+
+\newCJKfontfamily\hwxk{HuaWenXingKai}  % 为本科封面添加需要的华文行楷字族
+\setCJKfamilyfont{hwxk}{STXINGKA}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
+
+
+
+%% 构建论文封面
+\newcommand\uestccover[7]{
+	\newpage\thispagestyle{empty}
+	\pdfbookmark[0]{论文封面}{bookmarkcover}%
+	\vspace*{13bp}
+	{\fontsize{22bp}{16.9bp}\selectfont\centering%
+		电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
+		技\hspace{0.35cm}大\hspace{0.35cm}学\hspace{0.35cm} \par}
+	\vspace*{6bp}
+	{\fontsize{12bp}{9.23bp}\selectfont\centering%
+		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+	\vspace*{3cm-34bp}
+	{\fontsize{42bp}{32.31bp}\selectfont\centering%
+		\covertitletext\par}
+	\vspace*{10bp}\par
+	{\fontsize{16bp}{12.31bp}\selectfont\centering%
+		\covertitleentext\par}
+	\vspace*{1.85cm}\par
+	{\centering\includegraphics[height=5.0cm]{uestclogo}\par}
+	\vspace*{1.75cm-5bp}\par
+	{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
+		\parbox[t]{3cm}{\centering 论文题目}%
+		\parbox[t][3.6cm]{10.5cm}{%
+			\begin{centerlastline}%
+				\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+			\end{centerlastline}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+	\par\vspace*{0bp}
+	{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
+		\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+		\par\vspace*{0bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+		\par\vspace*{1bp}\noindent
+		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
+		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+		\par\vspace*{-\baselineskip}\insertemptypage}
+}
+
+
 
 %%%%%%----------------- declaration of options -----------------
 
@@ -140,7 +239,6 @@
 }
 
 
-
 \DeclareOption{bachelor}{
 	\renewcommand{\evenpagemark}{电子科技大学学士学位论文}
 	\renewcommand{\achievementtext}{攻读学士学位期间取得的成果}
@@ -159,8 +257,53 @@
 	\renewcommand{\uestcfigcapmargin}{2em}
 	\setlength\lightrulewidth{0.5bp}
 	\setlength\cmidrulewidth{0.5bp}
+	\renewcommand\uestccover[7]{
+		\newpage\thispagestyle{empty}
+		\pdfbookmark[0]{论文封面}{bookmarkcover}%
+		\vspace*{-12bp}
+		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
+			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
+			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
+		\vspace*{7bp}
+		{\fontsize{12bp}{9.23bp}\selectfont\centering%
+			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+		\vspace*{32bp}
+		{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
+			\covertitletext\par}
+		\vspace*{10bp}\par
+		{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
+			\covertitleentext\par}
+		\vspace*{1.7cm}\par
+		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
+		\vspace*{3.3cm}\par
+		{\bfseries\raggedright%
+			\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
+			\parbox[t][3.6cm]{10.5cm}{%
+				\fontsize{16bp}{26bp}\selectfont
+				\begin{centerlastline}%
+					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+				\end{centerlastline}%
+				\par\vspace*{-\baselineskip}%
+				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+		\par\vspace*{20bp}
+		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+			\par\vspace*{-\baselineskip}\insertemptypage}
+	}
 }
-
 
 \DeclareOption{master}{
 	\renewcommand{\evenpagemark}{电子科技大学硕士学位论文}
@@ -235,10 +378,9 @@
 
 %%%%%%----------------- package loading -----------------
 
-\LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
+
 \RequirePackage{calc}
 \RequirePackage{color}
-\RequirePackage[UTF8]{ctex}
 \RequirePackage{layouts}
 \RequirePackage{zhnumber}
 \RequirePackage{titlesec}
@@ -256,7 +398,6 @@
 ]{hyperref}
 \RequirePackage{graphicx}
 \RequirePackage[font=small]{subfig}
-\RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 %\RequirePackage{soul}
 \RequirePackage[numbers,sort&compress]{natbib}  % 排版参考文献和文献引用样式需要
 \RequirePackage{nomencl}
@@ -302,148 +443,10 @@
 
 \graphicspath{{./fig/}}
 
-% https://www.cnblogs.com/54fire/p/10409570.html
-\setmainfont{Times New Roman}  % 英文正文罗马字体
-\setsansfont{Times New Roman}  % 英文正文无衬线字体
-\setmonofont{Times New Roman}  % 英文正文等宽字体
-\setCJKmainfont{SimSun}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-]   % 正文中文字体——宋体
-\setCJKsansfont{SimHei}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-]   % 正文中文无衬线字体——黑体
-%\setCJKmonofont{STZHONGS}[
-%	AutoFakeBold=2,
-%	AutoFakeSlant=0.3,
-%	Path = ./font/,
-%]   % 正文中文等宽字体——华文中宋
-% 定义ctex包默认字体之外的其他字体：
-% https://blog.csdn.net/ProgramChangesWorld/article/details/51429138
-% https://latex.lierhua.top/zh/docs/%E5%AD%97%E4%BD%93%E6%97%8F/
-\newCJKfontfamily\hwzs{HuaWenZhongSong}  % 为研究生封面添加需要的华文中宋字族
-\setCJKfamilyfont{hwzs}{STZHONGS}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-] % 设置华文行楷字族使用的字体文件和字形等属性
-
-\newCJKfontfamily\hwxk{HuaWenXingKai}  % 为本科封面添加需要的华文行楷字族
-\setCJKfamilyfont{hwxk}{STXINGKA}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-] % 设置华文行楷字族使用的字体文件和字形等属性
-
 \hypersetup{colorlinks=true,linkcolor=black}
 \setcitestyle{numbers,square}
 
 
-%% 定义parbox中内容为空时的占位命令
-\newcommand{\Phantom}[1]{%
-	\ifthenelse{\equal{#1}{}}%
-	{\phantom{占位}}%
-	{#1}%
-}
-
-
-%% 构建论文封面
-
-\newcommand\bachelorcover[7]{
-	\newpage\thispagestyle{empty}
-	\pdfbookmark[0]{论文封面}{bookmarkcover}%
-	\vspace*{-12bp}
-	{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
-		电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
-		技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
-	\vspace*{7bp}
-	{\fontsize{12bp}{9.23bp}\selectfont\centering%
-		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-	\vspace*{32bp}
-	{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
-		\covertitletext\par}
-	\vspace*{10bp}\par
-	{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
-		\covertitleentext\par}
-	\vspace*{1.7cm}\par
-	{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
-	\vspace*{3.3cm}\par
-	{\bfseries\raggedright%
-		\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
-		\parbox[t][3.6cm]{10.5cm}{%
-			\fontsize{16bp}{26bp}\selectfont
-			\begin{centerlastline}%
-				\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
-			\end{centerlastline}%
-			\par\vspace*{-\baselineskip}%
-			\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-	\par\vspace*{20bp}
-	{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
-		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
-		\par\vspace*{-\baselineskip}\insertemptypage}
-}
-
-\newcommand\uestccover[7]{
-	\newpage\thispagestyle{empty}
-	\pdfbookmark[0]{论文封面}{bookmarkcover}%
-	\vspace*{13bp}
-	{\fontsize{22bp}{16.9bp}\selectfont\centering%
-		电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
-		技\hspace{0.35cm}大\hspace{0.35cm}学\hspace{0.35cm} \par}
-	\vspace*{6bp}
-	{\fontsize{12bp}{9.23bp}\selectfont\centering%
-		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-	\vspace*{3cm-34bp}
-	{\fontsize{42bp}{32.31bp}\selectfont\centering%
-		\covertitletext\par}
-	\vspace*{10bp}\par
-	{\fontsize{16bp}{12.31bp}\selectfont\centering%
-		\covertitleentext\par}
-	\vspace*{1.85cm}\par
-	{\centering\includegraphics[height=5.0cm]{uestclogo}\par}
-	\vspace*{1.75cm-5bp}\par
-	{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
-		\parbox[t]{3cm}{\centering 论文题目}%
-		\parbox[t][3.6cm]{10.5cm}{%
-			\begin{centerlastline}%
-				\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
-			\end{centerlastline}%
-			\par\vspace*{-\baselineskip}%
-			\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-	\par\vspace*{0bp}
-	{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
-		\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
-		\par\vspace*{1bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
-		\par\vspace*{-\baselineskip}\insertemptypage}
-}
 
 %% 中文扉页
 \newcommand\uestczhtitlepage{{
