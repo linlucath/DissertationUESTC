@@ -5,6 +5,7 @@
 \begin{document}
 	
 	\definecolor{shadcolor}{RGB}{228, 234, 246}
+	\definecolor{notsored}{RGB}{139, 0, 0}
 	\newcommand{\shad}[1]{\colorbox{shadcolor}{#1}}
 	\newcommand{\shadcmd}[1]{\shad{$\backslash$#1}}
 	
@@ -454,7 +455,7 @@
 		\end{algo}
 	\end{verbatim}
 	
-	算法\ref{alg: algorithm环境伪码示例}和算法\ref{alg: algo环境伪码示例}分别展示了两种环境默认生成的伪码样式；过程\ref{alg: algorithm环境修改伪码标签示例}和过程\ref{alg: algo环境修改伪码标签并调整宽度示例}展示了如何修改伪码中的一些标签，以及调整\shad{alog}伪码宽度的具体做法。
+	算法\ref{alg: algorithm环境伪码示例}和算法\ref{alg: algo环境伪码示例}分别展示了两种环境默认生成的伪码样式；过程\ref{alg: algorithm环境修改伪码标签示例}和过程\ref{alg: algo环境修改伪码标签并调整宽度示例}展示了如何修改伪码中的一些标签，以及调整\shad{algo}伪码宽度的具体做法。
 	
 	\begin{algorithm}[!h]
 		\caption{algorithm环境伪码示例} \label{alg: algorithm环境伪码示例}
@@ -646,7 +647,7 @@
 	
 	在正文中加入脚注直接在需要放置脚注标签的位置使用\\\shadcmd{footnote\{<脚注内容>\}}即可。
 	
-	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
+	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{\color{notsored}LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
 	
 	
 	\section{模板中的各种编号}

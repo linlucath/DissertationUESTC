@@ -223,11 +223,11 @@
 	\renewcommand{\insertevenemptypage}{
 		\addtocounter{pseudopage}{\value{page}}
 		\ifthenelse{\isodd{\value{pseudopage}}}
-		{
-			\insertemptypage
-			\addtocounter{page}{-1}
-			\addtocounter{pseudopage}{1}
-		}{}
+			{
+				\insertemptypage
+				\addtocounter{page}{-1}
+				\addtocounter{pseudopage}{1}
+			}{}
 		\addtocounter{pseudopage}{-\value{page}}
 	}
 }
@@ -439,6 +439,11 @@
 
 %%%%%% 让公式中支持中文，https://zhuanlan.zhihu.com/p/636127392
 \xeCJKsetup{CJKmath=true}
+%% 调整公式段前段后，https://www.zhihu.com/question/379358826
+\abovedisplayskip=8bp plus 1bp minus 1bp
+\abovedisplayshortskip=4bp plus 1bp minus 1bp
+\belowdisplayskip=8bp plus 1bp minus 1bp
+\belowdisplayshortskip=8bp plus 1bp minus 2bp
 
 
 \graphicspath{{./fig/}}
@@ -632,15 +637,15 @@
 			\parbox[b][21bp]{4.25cm}{%
 				\centering%
 				\ifthenelse{\equal{#3}{}}%
-				{\makebox[#1]{}}%
-				{\includegraphics[width=#1]{#3}}%
+					{\makebox[#1]{}}%
+					{\includegraphics[width=#1]{#3}}%
 			}%
 		}%
 		\hfill
 		日期：%
 		\ifthenelse{\equal{#2}{}}%
-		{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
-		{\makebox[4.37cm][r]{#2}}%
+			{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
+			{\makebox[4.37cm][r]{#2}}%
 		\par
 	}
 	\vspace*{32bp}
@@ -662,8 +667,8 @@
 			\parbox[b][21bp]{4.25cm}{%
 				\centering%
 				\ifthenelse{\equal{#3}{}}%
-				{\makebox[#1]{}}%
-				{\includegraphics[width=#1]{#3}}%
+					{\makebox[#1]{}}%
+					{\includegraphics[width=#1]{#3}}%
 			}
 		}
 		\hfill
@@ -671,8 +676,8 @@
 			\parbox[b][21bp]{4.25cm}{%
 				\centering
 				\ifthenelse{\equal{#4}{}}%
-				{\makebox[#1]{}}%
-				{\includegraphics[width=#1]{#4}}%
+					{\makebox[#1]{}}%
+					{\includegraphics[width=#1]{#4}}%
 			}
 	}}
 	
@@ -680,8 +685,8 @@
 	{\zihao{4}\setlength{\baselineskip}{30bp}
 		\hfill 日期：%
 		\ifthenelse{\equal{#2}{}}%
-		{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
-		{\makebox[4.37cm][r]{#2}}%
+			{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
+			{\makebox[4.37cm][r]{#2}}%
 		\par
 	}
 	\par\vspace*{-\baselineskip}\insertemptypage
@@ -724,8 +729,8 @@
 	\stepcounter{subequation}%
 	\tag{\theequation\thesubequation}%
 	\ifthenelse{\equal{#1}{}}%
-	{}%
-	{\label{#1}}%
+		{}%
+		{\label{#1}}%
 }
 
 %%%%%% 调整浮动体与前后文本的间距，https://github.com/CTeX-org/forum/issues/86，需要与caption包配合
@@ -804,17 +809,18 @@
 	\@nobreakfalse
 	\ifx\multicols\@undefined
 	\else
-	\ifnum\col@number>\@ne
-	\@twocolumntrue
-	\fi
+		\ifnum\col@number>\@ne
+			\@twocolumntrue
+		\fi
 	\fi
 	\if@twocolumn
-	\LT@err{longtable not in 1-column mode}\@ehc
+		\LT@err{longtable not in 1-column mode}\@ehc
 	\fi
 	\begingroup
 	\longtableprop % 这里调整字体大小和行距
 	%	\setlength{\tabcolsep}{6pt}  % 调整列间隔
-	\@ifnextchar[\LT@array{\LT@array[x]}}
+	\@ifnextchar[\LT@array{\LT@array[x]}%
+}
 
 \setlength{\LTpre}{12bp}  % 表前间隔
 \setlength{\LTpost}{6bp}  % 表后间隔
@@ -848,8 +854,8 @@
 	\renewcommand{\CPcaptext}{\tablename\ \thetable\ #1（续）}
 	\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
 	\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
-	{\parbox[b]{\CPcapwidth}{\vspace{7bp}\CPcaptext}}%
-	{\parbox[b]{\LTcapwidth}{\vspace{7bp}\CPcaptext}}%
+		{\parbox[b]{\CPcapwidth}{\vspace{7bp}\CPcaptext}}%
+		{\parbox[b]{\LTcapwidth}{\vspace{7bp}\CPcaptext}}%
 	\vspace{4bp}
 }
 
@@ -872,11 +878,11 @@
 		\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont}
 	{\thechapter}{\wordsep}{%
 		\ifthenelse{\equal{\value{chapter}}{1}}%
-		{\stepcounter{pagereset}}%
-		{}%
+			{\stepcounter{pagereset}}%
+			{}%
 		\ifthenelse{\equal{\value{pagereset}}{1}}  % 从第一章开始页码变更为罗马数字
-		{\pagenumbering{arabic}\stepcounter{pagereset}}%
-		{}%
+			{\pagenumbering{arabic}\stepcounter{pagereset}}%
+			{}%
 	}
 \titleformat{\section}[block]
 	{\sffamily\filright
@@ -1035,12 +1041,12 @@
 \setlength{\bibsep}{0bp \@plus 2bp \@minus 1bp}  % 调整参考文献条目间距，设置橡胶长度以减少条目强制不跨页导致的页尾空白
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{{
-		\renewcommand{\rightmark}{\evenpagemark}
-		% 禁止参考文献条目跨页：
-		% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
-		\interlinepenalty=10000
-		\oldbibliography{#1}
-		\addcontentsline{toc}{chapter}{参考文献}
+	\renewcommand{\rightmark}{\evenpagemark}
+	% 禁止参考文献条目跨页：
+	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
+	\interlinepenalty=10000
+	\oldbibliography{#1}
+	\addcontentsline{toc}{chapter}{参考文献}
 }}
 
 
@@ -1121,7 +1127,7 @@
 %% 参考algorithm2e宏包的官方文档
 \SetAlCapFnt{\zihao{5}\setlength\baselineskip{10.5bp}\selectfont}
 \SetAlCapNameFnt{\zihao{5}\setlength\baselineskip{10.5bp}\selectfont}
-\SetAlFnt{\zihao{5}\setlength\baselineskip{10.5bp}\selectfont}
+\SetAlFnt{\zihao{5}\setlength\baselineskip{13bp}\selectfont}
 \SetAlCapHSkip{0.5em}  % 伪代码标题离左框线的距离
 \setlength{\algomargin}{1.5em}  % 伪代码文本离左框线的距离
 
@@ -1174,7 +1180,7 @@
 		\centering
 		\begin{minipage}{\linewidth-#2}
 			\begin{algorithm}[H]
-			}{
+	}{
 			\end{algorithm}
 		\end{minipage}
 	\end{figure}
