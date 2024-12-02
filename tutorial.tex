@@ -213,7 +213,7 @@
 
 	模板的导言区只有两行：
 	\begin{itemize}
-		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设计编译引擎。
+		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设置编译引擎。
 
 		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增四种选项：
 
@@ -224,7 +224,7 @@
    
 			\item \shad{subfigsimple}/\shad{subfigparens}：该选项用于调整正文中对子图标签进行引用生成的编号样式，\shad{subfigsimple}对应样式为\shad{1-1a}，\shad{subfigparens}对应样式为\shad{1-1(a)}，默认为\shad{subfigparens}。
    
-			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行对论文查重时便捷的隐去重要的实验结果图。
+			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行查重时便捷地隐去论文中的图片，而不影响排版。
 
 			\item 另外，\shad{algorithm2e}宏包的\shad{vlined}和\shad{boxruled}选项也可以在加载文档类时设置。
 		\end{itemize}
