@@ -6,8 +6,8 @@
 	
 	\definecolor{shadcolor}{RGB}{228, 234, 246}
 	\definecolor{notsored}{RGB}{139, 0, 0}
-	\newcommand{\shad}[1]{\colorbox{shadcolor}{#1}}
-	\newcommand{\shadcmd}[1]{\shad{$\backslash$#1}}
+	\newcommand{\shad}[1]{\colorbox{shadcolor}{\ttfamily #1}}
+	\newcommand{\shadcmd}[1]{\shad{\ttfamily $\backslash$#1}}
 	
 	\nocite{*}
 	
@@ -207,12 +207,32 @@
 	
 	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。不必慌张，在你正式使用本模板撰写论文时，肯定不需要当前页的内容。
 	
-	\chapter{主体}
+	\chapter{模板使用说明}
 	
+	\section{导言区及模板选项}
+
+	模板的导言区只有两行：
+	\begin{itemize}
+		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设计编译引擎。
+
+		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增四种选项：
+
+		\begin{itemize}
+			\item \shad{print}/\shad{nonprint}：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为\shad{print}。
+
+			\item \shad{doctor}/\shad{prodoctor}/\shad{master}/\shad{promaster}/\shad{bachelor}：该选项设置学位论文类型，分别对应学术学位博士、专业学位博士、学术学位硕士、专业学位硕士以及学士学位。默认为`doctor`。
+   
+			\item \shad{subfigsimple}/\shad{subfigparens}：该选项用于调整正文中对子图标签进行引用生成的编号样式，\shad{subfigsimple}对应样式为\shad{1-1a}，\shad{subfigparens}对应样式为\shad{1-1(a)}，默认为\shad{subfigparens}。
+   
+			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行对论文查重时便捷的隐去重要的实验结果图。
+
+			\item 另外，\shad{algorithm2e}宏包的\shad{vlined}和\shad{boxruled}选项也可以在加载文档类时设置。
+		\end{itemize}
+	\end{itemize}
 	
 	\section{各级标题}
 	
-	本模板基于“book”类，章标题需要使用\shad{$\backslash$chapter\{<章标题>\}} 生成，其他各级标题依次为\shad{$\backslash$section\{<节标题>\}}、\shad{$\backslash$subsection\{<子节标题>\}}、\\ \shad{$\backslash$subsubsection\{<孙节标题>\}}。
+	本模板基于\shad{book}类，章标题需要使用\shad{$\backslash$chapter\{<章标题>\}} 生成，其他各级标题依次为\shad{$\backslash$section\{<节标题>\}}、\shad{$\backslash$subsection\{<子节标题>\}}、\\ \shad{$\backslash$subsubsection\{<孙节标题>\}}。
 	
 	\section{图片}
 	
@@ -271,7 +291,7 @@
 		}
 		\\
 		\subfloat[]{
-			\includegraphics[width=\linewidth]{陆无双程英}
+			\includegraphics[width=0.98\linewidth]{陆无双程英}
 			\label{fig: GG}
 		}
 		\caption{撩妹是我杨过的被动技能。\subref{fig: 绿萼2}好腼腆的姑娘；\subref{fig: 杨过绿萼}你终于肯笑了；\subref{fig: GG}哦吼} \label{fig: 被动技能}
@@ -456,6 +476,7 @@
 	\end{verbatim}
 	
 	算法\ref{alg: algorithm环境伪码示例}和算法\ref{alg: algo环境伪码示例}分别展示了两种环境默认生成的伪码样式；过程\ref{alg: algorithm环境修改伪码标签示例}和过程\ref{alg: algo环境修改伪码标签并调整宽度示例}展示了如何修改伪码中的一些标签，以及调整\shad{algo}伪码宽度的具体做法。
+
 	
 	\begin{algorithm}[!h]
 		\caption{algorithm环境伪码示例} \label{alg: algorithm环境伪码示例}

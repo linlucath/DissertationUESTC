@@ -64,13 +64,15 @@
 模板的导言区只有两行：
 1. `% !TEX Program = xelatex`在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设计编译引擎。
 
-2. `\documentclass[<选项列表>]{DissertUESTC}`表示加载名为`DissertUESTC`的文档类，该文档类基于LaTeX的`book`类编写。此文档类新增~~两种~~三种选项：
+2. `\documentclass[<选项列表>]{DissertUESTC}`表示加载名为`DissertUESTC`的文档类，该文档类基于LaTeX的`book`类编写。此文档类新增~~两种~~~~三种~~四种选项：
 
    - `print`/`nonprint`：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为`print`。
 
    - `doctor`/`prodoctor`/`master`/`promaster`/`bachelor`：该选项设置学位论文类型，分别对应学术学位博士、专业学位博士、学术学位硕士、专业学位硕士以及学士学位。默认为`doctor`。
    
    - [**新增**]`subfigsimple`/`subfigparens`：该选项用于调整正文中对子图标签进行引用生成的编号样式，`subfigsimple`对应样式为`1-1a`，`subfigparens`对应样式为`1-1(a)`，默认为`subfigparens`。
+   
+   - [**新增**]`draftfig`：LaTeX标准文档类提供的`draft`选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。`draftfig`选项则仅将图片替换为方框+文本，而不修改标准`draft`选项涉及的其他内容。其主要用处是在自行对论文查重时便捷的隐去重要的实验结果图。
 
    - 另外，`algorithm2e`宏包的`vlined`和`boxruled`选项也可以在加载文档类时设置。
 

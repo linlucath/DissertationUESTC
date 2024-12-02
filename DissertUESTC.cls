@@ -4,13 +4,10 @@
 
 %%%%%%----------------- initial code -----------------
 
-\LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
-\RequirePackage{ifthen}
-\RequirePackage{amsmath}  % 包含\eqref{}命令
-\RequirePackage{booktabs}  % 调整三线表线宽需要
-\RequirePackage[UTF8]{ctex}
-\RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 
+\RequirePackage{ifthen}
+
+\newcommand{\dissertationtype}{graduate}  % 用于后续判断文档类型
 \newcommand{\insertemptypage}{}
 \newcommand{\insertevenemptypage}{}
 \newcommand{\evenpagemark}{}
@@ -110,101 +107,12 @@
 	{#1}%
 }
 
-
-\setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
-\setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
-
+\newcommand{\uestclightrulewidth}{0.75bp}  % 用于设置\midrule默认线高，本科0.5bp，研究生0.75bp
 
 
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
 \newcounter{pseudopage}
 \setcounter{pseudopage}{0}
-
-
-% https://www.cnblogs.com/54fire/p/10409570.html
-\setmainfont{Times New Roman}  % 英文正文罗马字体
-\setsansfont{Times New Roman}  % 英文正文无衬线字体
-\setmonofont{Times New Roman}  % 英文正文等宽字体
-\setCJKmainfont{SimSun}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-]   % 正文中文字体——宋体
-\setCJKsansfont{SimHei}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-]   % 正文中文无衬线字体——黑体
-%\setCJKmonofont{STZHONGS}[
-%	AutoFakeBold=2,
-%	AutoFakeSlant=0.3,
-%	Path = ./font/,
-%]   % 正文中文等宽字体——华文中宋
-% 定义ctex包默认字体之外的其他字体：
-% https://blog.csdn.net/ProgramChangesWorld/article/details/51429138
-% https://latex.lierhua.top/zh/docs/%E5%AD%97%E4%BD%93%E6%97%8F/
-\newCJKfontfamily\hwzs{HuaWenZhongSong}  % 为研究生封面添加需要的华文中宋字族
-\setCJKfamilyfont{hwzs}{STZHONGS}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-] % 设置华文行楷字族使用的字体文件和字形等属性
-
-\newCJKfontfamily\hwxk{HuaWenXingKai}  % 为本科封面添加需要的华文行楷字族
-\setCJKfamilyfont{hwxk}{STXINGKA}[
-	AutoFakeBold=2,
-	AutoFakeSlant=0.3,
-	Path = ./font/,
-] % 设置华文行楷字族使用的字体文件和字形等属性
-
-
-
-%% 构建论文封面
-\newcommand\uestccover[7]{
-	\newpage\thispagestyle{empty}
-	\pdfbookmark[0]{论文封面}{bookmarkcover}%
-	\vspace*{13bp}
-	{\fontsize{22bp}{16.9bp}\selectfont\centering%
-		电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
-		技\hspace{0.35cm}大\hspace{0.35cm}学\hspace{0.35cm} \par}
-	\vspace*{6bp}
-	{\fontsize{12bp}{9.23bp}\selectfont\centering%
-		UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-	\vspace*{3cm-34bp}
-	{\fontsize{42bp}{32.31bp}\selectfont\centering%
-		\covertitletext\par}
-	\vspace*{10bp}\par
-	{\fontsize{16bp}{12.31bp}\selectfont\centering%
-		\covertitleentext\par}
-	\vspace*{1.85cm}\par
-	{\centering\includegraphics[height=5.0cm]{uestclogo}\par}
-	\vspace*{1.75cm-5bp}\par
-	{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
-		\parbox[t]{3cm}{\centering 论文题目}%
-		\parbox[t][3.6cm]{10.5cm}{%
-			\begin{centerlastline}%
-				\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
-			\end{centerlastline}%
-			\par\vspace*{-\baselineskip}%
-			\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-	\par\vspace*{0bp}
-	{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
-		\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
-		\par\vspace*{0bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
-		\par\vspace*{1bp}\noindent
-		\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
-		\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
-		\par\vspace*{-\baselineskip}\insertemptypage}
-}
 
 
 
@@ -240,6 +148,7 @@
 
 
 \DeclareOption{bachelor}{
+	\renewcommand{\dissertationtype}{bachelor}
 	\renewcommand{\evenpagemark}{电子科技大学学士学位论文}
 	\renewcommand{\achievementtext}{攻读学士学位期间取得的成果}
 	\renewcommand{\covertitletext}{学士学位论文}
@@ -253,56 +162,8 @@
 	\renewcommand{\tocsecindent}{1em}
 	\renewcommand{\tocsubsecindent}{2em}
 	\renewcommand{\tocsubsubsecindent}{3em}
-	\renewcommand{\eqref}[1]{（\ref{#1}）}
 	\renewcommand{\uestcfigcapmargin}{2em}
-	\setlength\lightrulewidth{0.5bp}
-	\setlength\cmidrulewidth{0.5bp}
-	\renewcommand\uestccover[7]{
-		\newpage\thispagestyle{empty}
-		\pdfbookmark[0]{论文封面}{bookmarkcover}%
-		\vspace*{-12bp}
-		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
-			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
-			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
-		\vspace*{7bp}
-		{\fontsize{12bp}{9.23bp}\selectfont\centering%
-			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-		\vspace*{32bp}
-		{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
-			\covertitletext\par}
-		\vspace*{10bp}\par
-		{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
-			\covertitleentext\par}
-		\vspace*{1.7cm}\par
-		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
-		\vspace*{3.3cm}\par
-		{\bfseries\raggedright%
-			\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
-			\parbox[t][3.6cm]{10.5cm}{%
-				\fontsize{16bp}{26bp}\selectfont
-				\begin{centerlastline}%
-					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
-				\end{centerlastline}%
-				\par\vspace*{-\baselineskip}%
-				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-		\par\vspace*{20bp}
-		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
-			\par\vspace*{-\baselineskip}\insertemptypage}
-	}
+	\renewcommand\uestclightrulewidth{0.5bp}
 }
 
 \DeclareOption{master}{
@@ -364,11 +225,14 @@
 
 \DeclareOption*{
 	\ifthenelse{\equal{\CurrentOption}{boxruled}}
-	{\PassOptionsToClass{\CurrentOption}{algorithm2e}}
-	{\ifthenelse{\equal{\CurrentOption}{vlined}}
-		{\PassOptionsToClass{\CurrentOption}{algorithm2e}}
-		{\PassOptionsToClass{\CurrentOption}{book}}
-	}
+		{\PassOptionsToPackage{\CurrentOption}{algorithm2e}}
+		{\ifthenelse{\equal{\CurrentOption}{vlined}}
+			{\PassOptionsToPackage{\CurrentOption}{algorithm2e}}
+			{\ifthenelse{\equal{\CurrentOption}{draftfig}}
+				{\PassOptionsToPackage{draft}{graphicx}}
+				{\PassOptionsToClass{\CurrentOption}{book}}
+			}
+		}
 }
 
 %%%%%%----------------- execution of options -----------------
@@ -378,7 +242,9 @@
 
 %%%%%%----------------- package loading -----------------
 
-
+\LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
+\RequirePackage[UTF8]{ctex}
+\RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 \RequirePackage{calc}
 \RequirePackage{color}
 \RequirePackage{layouts}
@@ -401,7 +267,7 @@
 %\RequirePackage{soul}
 \RequirePackage[numbers,sort&compress]{natbib}  % 排版参考文献和文献引用样式需要
 \RequirePackage{nomencl}
-\RequirePackage{amssymb, amsthm}
+\RequirePackage{amssymb, amsmath, amsthm}
 \RequirePackage{caption}
 \RequirePackage[algochapter, linesnumbered, ruled]{algorithm2e}
 \RequirePackage{appendix}
@@ -412,10 +278,11 @@
 % https://wenku.csdn.net/answer/37441a87026a40a28ff235d24c15c879
 \RequirePackage[perpage]{footmisc}
 \RequirePackage{enumitem}  % 调整list的边距需要
-\RequirePackage{longtable}  % 跨页表格需要
 \RequirePackage{array}
 % https://blog.csdn.net/weixin_43971980/article/details/96514640
 \RequirePackage[flushleft]{threeparttable}  % 排版带附注的表格需要，选项参考宏包文档
+\RequirePackage{booktabs}  % 调整三线表线宽需要
+\RequirePackage{longtable}  % 跨页表格需要
 \RequirePackage{xparse}  % 定义带多个可选参数的命令或环境时需要
 \RequirePackage{centerlastline}  % 设计封面中的标题最后一行居中需要
 \RequirePackage{multirow}  % 表格合并多行单元格需要
@@ -437,6 +304,44 @@
 \setlength{\emergencystretch}{3em}
 
 
+%%%%%% 设置各种字体，https://www.cnblogs.com/54fire/p/10409570.html
+\setmainfont{Times New Roman}  % 英文正文罗马字体
+\setsansfont{Times New Roman}  % 英文正文无衬线字体
+% \setmonofont{Times New Roman}  % 英文正文等宽字体
+\setCJKmainfont{SimSun}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+]   % 正文中文字体——宋体
+\setCJKsansfont{SimHei}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+]   % 正文中文无衬线字体——黑体
+%\setCJKmonofont{STZHONGS}[
+%	AutoFakeBold=2,
+%	AutoFakeSlant=0.3,
+%	Path = ./font/,
+%]   % 正文中文等宽字体——华文中宋
+
+%% 定义ctex包默认字体之外的其他字体：
+% https://blog.csdn.net/ProgramChangesWorld/article/details/51429138
+% https://latex.lierhua.top/zh/docs/%E5%AD%97%E4%BD%93%E6%97%8F/
+\newCJKfontfamily\hwzs{HuaWenZhongSong}  % 为研究生封面添加需要的华文中宋字族
+\setCJKfamilyfont{hwzs}{STZHONGS}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
+
+\newCJKfontfamily\hwxk{HuaWenXingKai}  % 为本科封面添加需要的华文行楷字族
+\setCJKfamilyfont{hwxk}{STXINGKA}[
+	AutoFakeBold=2,
+	AutoFakeSlant=0.3,
+	Path = ./font/,
+] % 设置华文行楷字族使用的字体文件和字形等属性
+
+
 %%%%%% 让公式中支持中文，https://zhuanlan.zhihu.com/p/636127392
 \xeCJKsetup{CJKmath=true}
 %% 调整公式段前段后，https://www.zhihu.com/question/379358826
@@ -450,6 +355,105 @@
 
 \hypersetup{colorlinks=true,linkcolor=black}
 \setcitestyle{numbers,square}
+
+
+
+%% 构建论文封面，研究生和学士差异很大
+\ifthenelse{\equal{\dissertationtype}{graduate}}{
+	\newcommand\uestccover[7]{
+		\newpage\thispagestyle{empty}
+		\pdfbookmark[0]{论文封面}{bookmarkcover}%
+		\vspace*{13bp}
+		{\fontsize{22bp}{16.9bp}\selectfont\centering%
+			电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
+			技\hspace{0.35cm}大\hspace{0.35cm}学\hspace{0.35cm} \par}
+		\vspace*{6bp}
+		{\fontsize{12bp}{9.23bp}\selectfont\centering%
+			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+		\vspace*{3cm-34bp}
+		{\fontsize{42bp}{32.31bp}\selectfont\centering%
+			\covertitletext\par}
+		\vspace*{10bp}\par
+		{\fontsize{16bp}{12.31bp}\selectfont\centering%
+			\covertitleentext\par}
+		\vspace*{1.85cm}\par
+		{\centering\includegraphics[height=5.0cm]{uestclogo}\par}
+		\vspace*{1.75cm-5bp}\par
+		{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
+			\parbox[t]{3cm}{\centering 论文题目}%
+			\parbox[t][3.6cm]{10.5cm}{%
+				\begin{centerlastline}%
+					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+				\end{centerlastline}%
+				\par\vspace*{-\baselineskip}%
+				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+		\par\vspace*{0bp}
+		{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
+			\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+			\par\vspace*{1bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+			\par\vspace*{-\baselineskip}\insertemptypage}
+	}
+}{
+	\newcommand\uestccover[7]{
+		\newpage\thispagestyle{empty}
+		\pdfbookmark[0]{论文封面}{bookmarkcover}%
+		\vspace*{-12bp}
+		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
+			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
+			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
+		\vspace*{7bp}
+		{\fontsize{12bp}{9.23bp}\selectfont\centering%
+			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+		\vspace*{32bp}
+		{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
+			\covertitletext\par}
+		\vspace*{10bp}\par
+		{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
+			\covertitleentext\par}
+		\vspace*{1.7cm}\par
+		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
+		\vspace*{3.3cm}\par
+		{\bfseries\raggedright%
+			\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
+			\parbox[t][3.6cm]{10.5cm}{%
+				\fontsize{16bp}{26bp}\selectfont
+				\begin{centerlastline}%
+					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+				\end{centerlastline}%
+				\par\vspace*{-\baselineskip}%
+				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+		\par\vspace*{20bp}
+		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+			\par\vspace*{-\baselineskip}\insertemptypage}
+	}
+}
+
 
 
 
@@ -764,7 +768,9 @@
 			farskip=4bp,  % 调整纵向子图与上方子图题的间距
 		}
 	}
+
 \robustify{\subref}  % 让\subref更易用：https://tex.stackexchange.com/questions/228973/argument-of-captionydblarg-has-an-extra
+
 \captionsetup[table]{
 	name={表},
 	labelsep=space,
@@ -776,10 +782,10 @@
 }
 % 调整三线表线高：https://tex.stackexchange.com/questions/156122
 \setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的默认线高
-% \setlength\lightrulewidth{0.75bp} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
+\setlength\lightrulewidth{\uestclightrulewidth} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp
 
 % 调整表格中间线条线高：https://tex.stackexchange.com/questions/679523
-% \setlength\cmidrulewidth{0.75bp}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp，要提前在声明选项部分设置
+\setlength\cmidrulewidth{\uestclightrulewidth}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp
 \setlength\aboverulesep{0bp}  % 调整\cmidrule生成框线的上垂直间隔
 \setlength\belowrulesep{0bp}  % 调整\cmidrule生成框线的下垂直间隔
 
@@ -1129,6 +1135,7 @@
 \SetAlCapNameFnt{\zihao{5}\setlength\baselineskip{10.5bp}\selectfont}
 \SetAlFnt{\zihao{5}\setlength\baselineskip{13bp}\selectfont}
 \SetAlCapHSkip{0.5em}  % 伪代码标题离左框线的距离
+\SetCommentSty{textbf}  % 设置伪码中注释文本的排版样式，可选：textbf、textsf、texttt（默认）、emph、text、textit等
 \setlength{\algomargin}{1.5em}  % 伪代码文本离左框线的距离
 
 \SetKwInOut{Input}{输入}
@@ -1298,3 +1305,75 @@
 
 %%%%%% 定义上标引用命令
 \newcommand{\citess}[1]{\textsuperscript{\cite{#1}}}
+
+%%%%%% 调整学士论文引用公式编号的形式
+\ifthenelse{\equal{\dissertationtype}{bachelor}}%
+	{\renewcommand{\eqref}[1]{（\ref{#1}）}}%
+	{}%
+
+
+%% 修改\url{URL}命令的排版字体风格，https://tex.stackexchange.com/questions/261434
+\urlstyle{rm}
+
+
+
+%%%%%% 自定义graphicx宏包在draft选项下排版图片完整文本的方式
+%% 调整fbox框线粗细以及与内容间的距离，https://www.latexstudio.net/archives/51609.html
+\setlength{\fboxrule}{0.5bp}
+\setlength{\fboxsep}{-0.5bp}
+%% 基于graphicx宏包源码进行修改，使之在draft选项下让过长的文本换行，https://ctan.org/tex-archive/macros/latex/required/graphics
+\def\Gin@setfile#1#2#3{%
+	\ifx\\#2\\\Gread@false\fi
+	\ifGin@bbox\else
+	  \ifGread@
+		\csname Gread@%
+		   \expandafter\ifx\csname Gread@#1\endcsname\relax
+			 eps%
+		   \else
+			 #1%
+		   \fi
+		\endcsname{\Gin@base#2}%
+	  \else
+		\Gin@nosize{#3}%
+	  \fi
+	\fi
+	\Gin@viewport@code
+	\Gin@nat@height\Gin@ury bp%
+	\advance\Gin@nat@height-\Gin@lly bp%
+	\Gin@nat@width\Gin@urx bp%
+	\advance\Gin@nat@width-\Gin@llx bp%
+	\Gin@req@sizes
+	\expandafter\ifx\csname Ginclude@#1\endcsname\relax
+	  \Gin@drafttrue
+	  \expandafter\ifx\csname Gread@#1\endcsname\relax
+		\@latex@error{Can not include graphics of type: #1}\@ehc
+		\global\expandafter\let\csname Gread@#1\endcsname\@empty
+	  \fi
+	\fi
+	\leavevmode
+	\ifGin@draft
+		\edef\@tempa{#3}%
+		\fbox{%
+			\parbox[b][\Gin@req@height][c]{\Gin@req@width}{%
+				\,\ttfamily\footnotesize\expandafter\strip@prefix\meaning\@tempa%
+			}%
+		}%
+		% \hb@xt@\Gin@req@width{%
+		%   \vrule\hss
+		%   \vbox to \Gin@req@height{%
+		% 	 \hrule \@width \Gin@req@width
+		% 	 \vss
+		% 	 \edef\@tempa{#3}%
+		% 	 \rlap{ \ttfamily\expandafter\strip@prefix\meaning\@tempa}%
+		% 	 \vss
+		% 	 \hrule}%
+		%   \hss\vrule}%
+	\else
+	  \@addtofilelist{#3}%
+	  \ProvidesFile{#3}[Graphic file (type #1)]%
+	  \setbox\z@\hbox{\csname Ginclude@#1\endcsname{#3}}%
+	  \dp\z@\z@
+	  \ht\z@\Gin@req@height
+	  \wd\z@\Gin@req@width
+	\box\z@
+	\fi}
