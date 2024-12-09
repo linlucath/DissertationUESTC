@@ -1045,6 +1045,7 @@
 %%%%%% 参考文献相关设置
 \renewcommand{\bibfont}{\zihao{5}\setlength{\baselineskip}{20bp}\selectfont}
 \setlength{\bibsep}{0bp \@plus 2bp \@minus 1bp}  % 调整参考文献条目间距，设置橡胶长度以减少条目强制不跨页导致的页尾空白
+\renewcommand\@biblabel[1]{[#1]\hfill}  % 调整参考文献编号为左对齐，https://tex.stackexchange.com/questions/102680
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{{
 	\renewcommand{\rightmark}{\evenpagemark}
@@ -1301,6 +1302,8 @@
 	leftmargin=4em,
 	labelsep=0em,
 	label=（\arabic*）,
+	align=left,
+	itemindent=-0.84em,
 }
 \setlist[enumerate,2]{
 	leftmargin=1.5em,
