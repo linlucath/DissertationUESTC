@@ -1226,6 +1226,17 @@
 	\chapter*{\achievementtext}
 	\markboth{\achievementtext}{\evenpagemark}
 	\addcontentsline{toc}{chapter}{\achievementtext}
+	% 调整成果章的itemize环境缩进、enumerate环境缩进及编号样式
+	\setlist[itemize,1]{
+		leftmargin=2em,
+		label=$\bullet$,
+	}
+	\setlist[enumerate,1]{
+		leftmargin=2em,
+		labelsep=0.3em,
+		label=[\arabic*],
+		align=left,
+	}
 }
 
 
