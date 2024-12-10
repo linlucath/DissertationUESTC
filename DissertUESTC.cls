@@ -40,6 +40,11 @@
 \newcommand{\chairreviewer}{}
 \newcommand{\reviewers}{}
 
+\newlength{\schoolwidth}  % 学院名称实际长度
+\newlength{\schoolwidthlimit}  % 学院名称长度限制
+% \newlength{\engschoolwidth}  % 英文学院名称实际长度
+% \newlength{\engschoolwidthlimit}  % 英文学院名称长度限制
+
 \newcommand{\ClsNum}[1]{
 	\renewcommand{\clsnum}{#1}
 }
@@ -310,7 +315,7 @@
 \setsansfont{Times New Roman}  % 英文正文无衬线字体
 % \setmonofont{Times New Roman}  % 英文正文等宽字体
 \setCJKmainfont{SimSun}[
-	AutoFakeBold=2,
+	AutoFakeBold=3,
 	AutoFakeSlant=0.3,
 	Path = ./font/,
 ]   % 正文中文字体——宋体
@@ -361,7 +366,7 @@
 
 %% 构建论文封面，研究生和学士差异很大
 \ifthenelse{\equal{\dissertationtype}{graduate}}{
-	\newcommand\uestccover[7]{
+	\newcommand\uestccover[8][]{
 		\newpage\thispagestyle{empty}
 		\pdfbookmark[0]{论文封面}{bookmarkcover}%
 		\vspace*{13bp}
@@ -384,38 +389,50 @@
 			\parbox[t]{3cm}{\centering 论文题目}%
 			\parbox[t][3.6cm]{10.5cm}{%
 				\begin{centerlastline}%
-					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#2}}%
 				\end{centerlastline}%
 				\par\vspace*{-\baselineskip}%
 				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-		\par\vspace*{0bp}
+		\ifthenelse{\equal{#1}{par}}%
+			{\par\vspace*{-1cm}}%
+			{\par\vspace*{0bp}}%
 		{\rmfamily\bfseries\zihao{3}\setlength{\baselineskip}{1cm}\noindent%
 			\hspace*{1.5cm}\makebox[3cm][c]{\majlabel}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
 			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
+			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
 			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
+			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
 			\par\vspace*{1bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{%
-				\newlength{\schoolwidth}%
-				\newlength{\schoolwidthlimit}%
-				\settowidth{\schoolwidth}{#7}%
-				\setlength{\schoolwidthlimit}{8.8cm}%
-				\ifthenelse{\schoolwidth < \schoolwidthlimit}%
-					{\makebox[9cm][c]{#7}}%
-					{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#7}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
-			}
+			\ifthenelse{\equal{#1}{par}}%
+				{% 对过长的学院名称换行处理
+					\parbox[t][2cm]{9cm}{%
+						\setlength{\baselineskip}{1cm}
+						\begin{centerlastline}%
+							\CJKunderline*[thickness=0.5bp, depth=4bp]{\Phantom{#8}}%
+						\end{centerlastline}%
+						\par\vspace*{-\baselineskip}%
+						\rule[-4.5bp]{\linewidth}{0.5bp}%
+					}%
+				}{% 对过长的学院名称缩放处理
+					\settowidth{\schoolwidth}{#8}%
+					\setlength{\schoolwidthlimit}{8.8cm}%
+					\CJKunderline*[thickness=0.5bp, depth=4bp]{%
+						\ifthenelse{\schoolwidth < \schoolwidthlimit}%
+							{\makebox[9cm][c]{#8}}%
+							{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					}%
+				}%
 			\par\vspace*{-\baselineskip}\insertemptypage}
 	}
 }{
-	\newcommand\uestccover[7]{
+	\newcommand\uestccover[8][]{
 		\newpage\thispagestyle{empty}
 		\pdfbookmark[0]{论文封面}{bookmarkcover}%
 		\vspace*{-12bp}
@@ -439,34 +456,46 @@
 			\parbox[t][3.6cm]{10.5cm}{%
 				\fontsize{16bp}{26bp}\selectfont
 				\begin{centerlastline}%
-					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#1}}%
+					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#2}}%
 				\end{centerlastline}%
 				\par\vspace*{-\baselineskip}%
 				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
-		\par\vspace*{20bp}
+		\ifthenelse{\equal{#1}{par}}%
+			{\par\vspace*{20bp-1.25cm}}%
+			{\par\vspace*{20bp}}%
 		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{%
-				\newlength{\schoolwidth}%
-				\newlength{\schoolwidthlimit}%
-				\settowidth{\schoolwidth}{#7}%
-				\setlength{\schoolwidthlimit}{8.8cm}%
-				\ifthenelse{\schoolwidth < \schoolwidthlimit}%
-					{\makebox[9cm][c]{#7}}%
-					{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#7}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
-			}
+			\ifthenelse{\equal{#1}{par}}%
+				{% 对过长的学院名称换行处理
+					\parbox[t][2.5cm]{9cm}{%
+						\setlength{\baselineskip}{1.25cm}
+						\begin{centerlastline}%
+							\CJKunderline*[thickness=0.5bp, depth=4bp]{\Phantom{#8}}%
+						\end{centerlastline}%
+						\par\vspace*{-\baselineskip}%
+						\rule[-4.5bp]{\linewidth}{0.5bp}%
+					}%
+				}{% 对过长的学院名称缩放处理
+					\settowidth{\schoolwidth}{#8}%
+					\setlength{\schoolwidthlimit}{8.8cm}%
+					\CJKunderline*[thickness=0.5bp, depth=4bp]{%
+						\ifthenelse{\schoolwidth < \schoolwidthlimit}%
+							{\makebox[9cm][c]{#8}}%
+							{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					}%
+				}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
 			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
 			\par\vspace*{0bp}\noindent
+			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
+			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
 			\par\vspace*{-\baselineskip}\insertemptypage}
 	}
 }
@@ -628,9 +657,9 @@
 			\bfseries%
 			\setlength{\baselineskip}{1.2cm}%
 			\begin{centerlastline}%
-				\ifthenelse{\equal{#2}{}}
-				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #7}}%
+				\ifthenelse{\equal{#7}{}}%
+					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
+					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #7}}%
 			\end{centerlastline}%
 			\par\vspace{-\baselineskip}%
 			\rule[-5.5bp]{\linewidth}{0.5bp}}%

@@ -1,5 +1,5 @@
 % !TEX Program = xelatex
-\documentclass[print, promaster, vlined]{DissertUESTC}
+\documentclass[print, doctor, vlined]{DissertUESTC}
 
 
 \begin{document}
@@ -12,14 +12,23 @@
 	\nocite{*}
 	
 	% 封面
-%	\uestccover{<论文题目>}{<学科专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>}{<学院>} % 学士、研究生通用
+%	\uestccover[<学院名称排版风格>]{<论文题目>}{<学科专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>}{<学院>} % 学士、研究生通用
 	\uestccover{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}
 				{玉女素心剑法}
 				{1182000}
 				{杨\hspace{1em}过}
 				{小龙女}
-				{掌\hspace{1em}门}{终南山古墓派终南山古墓派终南山古墓派终南山古墓派}
-				% {计算机科学与工程学院（网络空间安全学院）}
+				{掌\hspace{1em}门}%{终南山古墓派}
+				{终南山古墓派终南山古墓派终南山古墓派终南山古墓派}
+
+	\uestccover[par]{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}
+				{玉女素心剑法}
+				{1182000}
+				{杨\hspace{1em}过}
+				{小龙女}
+				{掌\hspace{1em}门}%{终南山古墓派}
+				{终南山古墓派终南山古墓派终南山古墓派终南山古墓派}
+
 	
 	% 中文扉页，仅研究生用
 	\ClsNum{TN828.6}  % \ClsNum{<分类号>}
