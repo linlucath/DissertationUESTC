@@ -287,6 +287,7 @@
 \RequirePackage{centerlastline}  % 设计封面中的标题最后一行居中需要
 \RequirePackage{multirow}  % 表格合并多行单元格需要
 \RequirePackage{extarrows} % 带文字的长等号与箭头需要
+\RequirePackage{xintfrac}  % 计算两个长度的比值需要，https://tex.stackexchange.com/questions/200581
 
 
 %%----------------- main code -----------------
@@ -402,7 +403,15 @@
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5\hspace{2em}#6}}%
 			\par\vspace*{1bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{%
+				\newlength{\schoolwidth}%
+				\newlength{\schoolwidthlimit}%
+				\settowidth{\schoolwidth}{#7}%
+				\setlength{\schoolwidthlimit}{8.8cm}%
+				\ifthenelse{\schoolwidth < \schoolwidthlimit}%
+					{\makebox[9cm][c]{#7}}%
+					{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#7}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+			}
 			\par\vspace*{-\baselineskip}\insertemptypage}
 	}
 }{
@@ -437,7 +446,15 @@
 		\par\vspace*{20bp}
 		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#7}}
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{%
+				\newlength{\schoolwidth}%
+				\newlength{\schoolwidthlimit}%
+				\settowidth{\schoolwidth}{#7}%
+				\setlength{\schoolwidthlimit}{8.8cm}%
+				\ifthenelse{\schoolwidth < \schoolwidthlimit}%
+					{\makebox[9cm][c]{#7}}%
+					{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#7}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+			}
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#2}}%
