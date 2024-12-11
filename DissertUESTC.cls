@@ -108,8 +108,8 @@
 %% 定义parbox中内容为空时的占位命令
 \newcommand{\Phantom}[1]{%
 	\ifthenelse{\equal{#1}{}}%
-	{\phantom{占位}}%
-	{#1}%
+		{\phantom{占位}}%
+		{#1}%
 }
 
 \newcommand{\uestclightrulewidth}{0.75bp}  % 用于设置\midrule默认线高，本科0.5bp，研究生0.75bp
@@ -135,12 +135,12 @@
 	% 该命令在当前位置处于奇数页时插入一空白页作为左手边的页面
 	\renewcommand{\insertevenemptypage}{
 		\addtocounter{pseudopage}{\value{page}}
-		\ifthenelse{\isodd{\value{pseudopage}}}
-			{
+		\ifthenelse{\isodd{\value{pseudopage}}}%
+			{%
 				\insertemptypage
 				\addtocounter{page}{-1}
 				\addtocounter{pseudopage}{1}
-			}{}
+			}{}%
 		\addtocounter{pseudopage}{-\value{page}}
 	}
 }
@@ -569,14 +569,14 @@
 	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \major%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-	\ifthenelse{\equal{\profield}{}}
-	{}
-	{
-		\parbox[b][0.9cm][b]{2.75cm}{专业学位领域}%
-		\parbox[b][0.9cm][b]{12.25cm}{\zihao{4}\centering%
-			\hspace*{0.5em} \profield \par\vspace{-\baselineskip}%
-			\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-	}
+	\ifthenelse{\equal{\profield}{}}%
+		{}%
+		{%
+			\parbox[b][0.9cm][b]{2.75cm}{专业学位领域}%
+			\parbox[b][0.9cm][b]{12.25cm}{\zihao{4}\centering%
+				\hspace*{0.5em} \profield \par\vspace{-\baselineskip}%
+				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+		}%
 	\parbox[b][0.9cm][b]{2.75cm}{提交论文日期}%
 	\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \submitdate%
 		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
@@ -613,8 +613,8 @@
 		\centering\vspace*{-17bp} \entitlepagemidtext}%
 	\par\vspace*{0pt}%
 	\ifthenelse{\equal{#6}{}}%
-	{\parbox[t][1.2cm]{15cm}{}}%
-	{\parbox[t][0.8cm]{15cm}{}}%
+		{\parbox[t][1.2cm]{15cm}{}}%
+		{\parbox[t][0.8cm]{15cm}{}}%
 	\par\vspace*{7pt}%
 	\parbox[t][2.4cm][t]{15cm}{%
 		\parbox[t]{3cm}{\filleft Discipline}%
@@ -623,8 +623,8 @@
 			\setlength{\baselineskip}{1.2cm}%
 			\begin{centerlastline}%
 				\ifthenelse{\equal{#2}{}}
-				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-				{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #2}}%
+					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
+					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #2}}%
 			\end{centerlastline}%
 			\par\vspace*{-\baselineskip}%
 			\rule[-5.5bp]{\linewidth}{0.5bp}%
@@ -644,13 +644,13 @@
 		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#5}}}%
 	\par\vspace*{-1pt}%
 	\ifthenelse{\equal{#6}{}}%
-	{}%
-	{%
-		\makebox[3cm][r]{}%
-		\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-			\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#6}}}%
-		\par\vspace*{-1pt}%
-	}%
+		{}%
+		{%
+			\makebox[3cm][r]{}%
+			\CJKunderline*[thickness=0.5bp, depth=5bp]{%
+				\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#6}}}%
+			\par\vspace*{-1pt}%
+		}%
 	\parbox[t][2.4cm][t]{15cm}{%
 		\parbox[t]{3cm}{\filleft School}%
 		\parbox[t][2.4cm]{12cm}{%
