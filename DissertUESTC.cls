@@ -416,7 +416,7 @@
 							\null%
 							\par\vspace{\baselineskip*2*\value{linecount}}%
 							\stepcounter{linecount}%
-							\addtolength{\covertitlewidthlimit}{12cm}%
+							\addtolength{\covertitlewidthlimit}{10.5cm}%
 							\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
 								{%
 									\null%
@@ -464,7 +464,7 @@
 									\null%
 									\par\vspace{\baselineskip*2*\value{linecount}}%
 									\stepcounter{linecount}%
-									\addtolength{\coverschoolwidthlimit}{12cm}%
+									\addtolength{\coverschoolwidthlimit}{9cm}%
 									\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
 										{%
 											\null%
@@ -525,7 +525,7 @@
 							\null%
 							\par\vspace{\baselineskip*2*\value{linecount}}%
 							\stepcounter{linecount}%
-							\addtolength{\covertitlewidthlimit}{12cm}%
+							\addtolength{\covertitlewidthlimit}{10.5cm}%
 							\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
 								{%
 									\null%
@@ -561,7 +561,7 @@
 									\null%
 									\par\vspace{\baselineskip*2*\value{linecount}}%
 									\stepcounter{linecount}%
-									\addtolength{\coverschoolwidthlimit}{12cm}%
+									\addtolength{\coverschoolwidthlimit}{9cm}%
 									\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
 										{%
 											\null%
