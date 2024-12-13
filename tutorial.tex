@@ -1,5 +1,5 @@
 % !TEX Program = xelatex
-\documentclass[print, doctor, vlined]{DissertUESTC}
+\documentclass[print, prodoctor, vlined]{DissertUESTC}
 
 
 \begin{document}
@@ -13,6 +13,8 @@
 	
 	% 封面
 %	\uestccover[<学院名称排版风格>]{<论文题目>}{<学科专业>}{<学号>}{<作者姓名>}{<指导教师>}{<教师职称>}{<学院>} % 学士、研究生通用
+	\uestccover{}{}{}{}{}{}{}
+
 	\uestccover{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}
 				{玉女素心剑法}
 				{1182000}
@@ -29,8 +31,11 @@
 				{掌\hspace{1em}门}%{终南山古墓派}
 				{终南山古墓派终南山古墓派终南山古墓派终南山古墓派}
 
+
 	
 	% 中文扉页，仅研究生用
+	\uestczhtitlepage  % 空白中文扉页
+
 	\ClsNum{TN828.6}  % \ClsNum{<分类号>}
 	\ClsLv{公开}  % \ClsLv{<密级>}
 	\UDC{621.39}  % \UDC{<UDC号>}
@@ -49,15 +54,20 @@
 	
 	% 英文扉页，仅研究生用
 	% \uestcentitlepage{<文题>}{<专业>}{<学号>}{<作者>}{<导师>}{<副导师>}{<学院>}，若无副导师，则将“<副导师>”参数留空即可
+	\uestcentitlepage{}{}{}{}{}{}{}  % 空白英文扉页
 	\uestcentitlepage{How to Take Revenge When My Father's Murderer is Suspected to Be a Famous Hero}
-					{Jade Lady Soul Sword Technique}
+					{Jade Lady Soul Sword Technique Jade Lady Soul Sword Technique}
 					{1182000}
 					{Yang Guo}
 					{Grandmaster Dragondaughter Little}{Grandmaster Northern Beggar}
-					{Ancient Tomb Sect}
+					{Ancient Tomb Sect Ancient Tomb Sect Ancient Tomb Sect Ancient Tomb Sect}
 	
 	% 独创性声明：[签名宽度]{日期}{作者签名图片}{导师签名图片}，送审时使用空强制参数即可，仅研究生用
+	\declaration{}{}{}  % 空白独创性声明
+	
 	\declaration[3cm]{2024年08月31日}{authsign}{spvrsign}
+
+	
 	
 	% 开启中文摘要
 	\zhabstract

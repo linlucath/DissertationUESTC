@@ -5,7 +5,7 @@
 %%%%%%----------------- initial code -----------------
 
 
-\RequirePackage{ifthen}
+\RequirePackage{ifthen}  % \ifthenelse、\whiledo命令
 
 \newcommand{\dissertationtype}{graduate}  % 用于后续判断文档类型
 \newcommand{\insertemptypage}{}
@@ -39,11 +39,18 @@
 \newcommand{\grantdate}{}
 \newcommand{\chairreviewer}{}
 \newcommand{\reviewers}{}
+\newcommand{\uestcauthor}{}
 
-\newlength{\schoolwidth}  % 学院名称实际长度
-\newlength{\schoolwidthlimit}  % 学院名称长度限制
-% \newlength{\engschoolwidth}  % 英文学院名称实际长度
-% \newlength{\engschoolwidthlimit}  % 英文学院名称长度限制
+
+\newlength{\covertitlewidth}  % 封面论文题目长度
+\newlength{\covertitlewidthlimit}  % 封面论文题目长度限制
+\newlength{\coverschoolwidth}  % 封面学院名称实际长度
+\newlength{\coverschoolwidthlimit}  % 封面学院名称长度限制
+\newlength{\engdisciplinewidth}  % 扉页英文专业名称实际长度
+\newlength{\engdisciplinewidthlimit}  % 扉页英文专业名称长度限制
+\newlength{\engschoolwidth}  % 扉页英文学院名称实际长度
+\newlength{\engschoolwidthlimit}  % 扉页英文学院名称长度限制
+
 
 \newcommand{\ClsNum}[1]{
 	\renewcommand{\clsnum}{#1}
@@ -58,7 +65,7 @@
 	\renewcommand{\dissertationtitle}{#1}
 }
 \newcommand{\Author}[1]{
-	\renewcommand{\author}{#1}
+	\renewcommand{\uestcauthor}{#1}
 }
 \newcommand{\Supervisor}[4]{
 	\renewcommand{\supervisor}{#1}
@@ -118,6 +125,10 @@
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
 \newcounter{pseudopage}
 \setcounter{pseudopage}{0}
+
+% 排版英文扉页时用来辅助多行文本添加下划线
+\newcounter{linecount}
+
 
 
 
@@ -388,11 +399,34 @@
 		{\hwzs\bfseries\fontsize{18bp}{0.77cm}\selectfont\raggedright%
 			\parbox[t]{3cm}{\centering 论文题目}%
 			\parbox[t][3.6cm]{10.5cm}{%
-				\begin{centerlastline}%
-					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#2}}%
-				\end{centerlastline}%
-				\par\vspace*{-\baselineskip}%
-				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+				\centering%
+				\setcounter{linecount}{0}%
+				\settowidth{\covertitlewidth}{#2}%
+				\setlength{\covertitlewidthlimit}{10.5cm}%
+				\Phantom{#2}%
+				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
+					{%
+						\null\par\vspace{-\baselineskip}%
+						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+					}{%
+						\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
+							\null%
+							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+							\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+							\null%
+							\par\vspace{\baselineskip*2*\value{linecount}}%
+							\stepcounter{linecount}%
+							\addtolength{\covertitlewidthlimit}{12cm}%
+							\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
+								{%
+									\null%
+									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+									\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+								}{}%
+						}%
+					}%
+			}%
+		}%
 		\ifthenelse{\equal{#1}{par}}%
 			{\par\vspace*{-1cm}}%
 			{\par\vspace*{0bp}}%
@@ -410,79 +444,140 @@
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
 			\par\vspace*{1bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
+			\settowidth{\coverschoolwidth}{#8}%
+			\setlength{\coverschoolwidthlimit}{9cm}%
 			\ifthenelse{\equal{#1}{par}}%
 				{% 对过长的学院名称换行处理
 					\parbox[t][2cm]{9cm}{%
-						\setlength{\baselineskip}{1cm}
-						\begin{centerlastline}%
-							\CJKunderline*[thickness=0.5bp, depth=4bp]{\Phantom{#8}}%
-						\end{centerlastline}%
-						\par\vspace*{-\baselineskip}%
-						\rule[-4.5bp]{\linewidth}{0.5bp}%
+						\centering\setlength{\baselineskip}{1cm}%
+						\setcounter{linecount}{0}%
+						\Phantom{#8}%
+						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+							{%
+								\null\par\vspace{-\baselineskip}%
+								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+							}{%
+								\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
+									\null%
+									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+									\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+									\null%
+									\par\vspace{\baselineskip*2*\value{linecount}}%
+									\stepcounter{linecount}%
+									\addtolength{\coverschoolwidthlimit}{12cm}%
+									\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
+										{%
+											\null%
+											\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+											\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+										}{}%
+								}%
+							}%
 					}%
 				}{% 对过长的学院名称缩放处理
-					\settowidth{\schoolwidth}{#8}%
-					\setlength{\schoolwidthlimit}{8.8cm}%
-					\CJKunderline*[thickness=0.5bp, depth=4bp]{%
-						\ifthenelse{\schoolwidth < \schoolwidthlimit}%
-							{\makebox[9cm][c]{#8}}%
-							{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
-					}%
+					\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+						{\makebox[9cm][c]{#8}}%
+						{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					\null\par\vspace{-\baselineskip}%
+					\noindent\hspace*{4.5cm}%
+					\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
 				}%
-			\par\vspace*{-\baselineskip}\insertemptypage}
-	}
-}{
-	\newcommand\uestccover[8][]{
-		\newpage\thispagestyle{empty}
+			\par\vspace*{-\baselineskip}\insertemptypage}%
+	}%
+}{%
+	\newcommand\uestccover[8][]{%
+		\newpage\thispagestyle{empty}%
 		\pdfbookmark[0]{论文封面}{bookmarkcover}%
-		\vspace*{-12bp}
+		\vspace*{-12bp}%
 		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
 			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
 			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
-		\vspace*{7bp}
+		\vspace*{7bp}%
 		{\fontsize{12bp}{9.23bp}\selectfont\centering%
 			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-		\vspace*{32bp}
+		\vspace*{32bp}%
 		{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
-			\covertitletext\par}
-		\vspace*{10bp}\par
+			\covertitletext\par}%
+		\vspace*{10bp}\par%
 		{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
-			\covertitleentext\par}
-		\vspace*{1.7cm}\par
-		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}
-		\vspace*{3.3cm}\par
+			\covertitleentext\par}%
+		\vspace*{1.7cm}\par%
+		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}%
+		\vspace*{3.3cm}\par%
 		{\bfseries\raggedright%
 			\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
 			\parbox[t][3.6cm]{10.5cm}{%
-				\fontsize{16bp}{26bp}\selectfont
-				\begin{centerlastline}%
-					\CJKunderline*[thickness=0.5bp, depth=8bp]{\Phantom{#2}}%
-				\end{centerlastline}%
-				\par\vspace*{-\baselineskip}%
-				\rule[-8.5bp]{\linewidth}{0.5bp}}}%
+				\fontsize{16bp}{26bp}\selectfont%
+				\centering%
+				\setcounter{linecount}{0}%
+				\settowidth{\covertitlewidth}{#2}%
+				\setlength{\covertitlewidthlimit}{10.5cm}%
+				\Phantom{#2}%
+				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
+					{%
+						\null\par\vspace{-\baselineskip}%
+						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+					}{%
+						\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
+							\null%
+							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+							\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+							\null%
+							\par\vspace{\baselineskip*2*\value{linecount}}%
+							\stepcounter{linecount}%
+							\addtolength{\covertitlewidthlimit}{12cm}%
+							\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
+								{%
+									\null%
+									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+									\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+								}{}%
+						}%
+					}%
+			}%
+		}%
 		\ifthenelse{\equal{#1}{par}}%
 			{\par\vspace*{20bp-1.25cm}}%
 			{\par\vspace*{20bp}}%
 		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
+			\settowidth{\coverschoolwidth}{#8}%
+			\setlength{\coverschoolwidthlimit}{9cm}%
 			\ifthenelse{\equal{#1}{par}}%
 				{% 对过长的学院名称换行处理
 					\parbox[t][2.5cm]{9cm}{%
-						\setlength{\baselineskip}{1.25cm}
-						\begin{centerlastline}%
-							\CJKunderline*[thickness=0.5bp, depth=4bp]{\Phantom{#8}}%
-						\end{centerlastline}%
-						\par\vspace*{-\baselineskip}%
-						\rule[-4.5bp]{\linewidth}{0.5bp}%
+						\centering\setlength{\baselineskip}{1.25cm}%
+						\setcounter{linecount}{0}%
+						\Phantom{#8}%
+						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+							{%
+								\null\par\vspace{-\baselineskip}%
+								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+							}{%
+								\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
+									\null%
+									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+									\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+									\null%
+									\par\vspace{\baselineskip*2*\value{linecount}}%
+									\stepcounter{linecount}%
+									\addtolength{\coverschoolwidthlimit}{12cm}%
+									\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
+										{%
+											\null%
+											\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+											\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+										}{}%
+								}%
+							}%
 					}%
 				}{% 对过长的学院名称缩放处理
-					\settowidth{\schoolwidth}{#8}%
-					\setlength{\schoolwidthlimit}{8.8cm}%
-					\CJKunderline*[thickness=0.5bp, depth=4bp]{%
-						\ifthenelse{\schoolwidth < \schoolwidthlimit}%
-							{\makebox[9cm][c]{#8}}%
-							{\makebox[9cm][c]{\scalebox{\xintRound{2}{\schoolwidthlimit / \schoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
-					}%
+					\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+						{\makebox[9cm][c]{#8}}%
+						{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					\null\par\vspace{-\baselineskip}%
+					\noindent\hspace*{4.5cm}%
+					\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
 				}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
@@ -496,9 +591,10 @@
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
-			\par\vspace*{-\baselineskip}\insertemptypage}
-	}
-}
+			\par\vspace*{-\baselineskip}\insertemptypage%
+		}%
+	}%
+}%
 
 
 
@@ -526,7 +622,7 @@
 		\rule[-8bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
 	\parbox[b][0.8cm]{15cm}{\centering （题名和副题名）}\par\vspace*{0bp}
 	\hspace*{5cm}\parbox[b][1.5cm][b]{5cm}{\zihao{3}\centering\bfseries%
-		\author\par\vspace{-\baselineskip}%
+		\uestcauthor\par\vspace{-\baselineskip}%
 		\rule[-5bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
 	\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering%
 		（作者姓名）}\par\vspace*{1.3cm+1bp}
@@ -617,17 +713,35 @@
 		{\parbox[t][0.8cm]{15cm}{}}%
 	\par\vspace*{7pt}%
 	\parbox[t][2.4cm][t]{15cm}{%
-		\parbox[t]{3cm}{\filleft Discipline}%
+		\parbox[t]{3cm}{\filleft Discipline}\hspace*{1bp}%
 		\parbox[t][2.4cm]{12cm}{%
-			\bfseries%
+			\bfseries\centering%
+			\setcounter{linecount}{0}
 			\setlength{\baselineskip}{1.2cm}%
-			\begin{centerlastline}%
-				\ifthenelse{\equal{#2}{}}
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #2}}%
-			\end{centerlastline}%
-			\par\vspace*{-\baselineskip}%
-			\rule[-5.5bp]{\linewidth}{0.5bp}%
+			\settowidth{\engdisciplinewidth}{#2}%
+			\setlength{\engdisciplinewidthlimit}{12cm}%
+			\Phantom{#2}%
+			\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
+				{
+					\null\par\vspace*{-\baselineskip}%
+					\rule[-5.5bp]{\linewidth}{0.5bp}%
+				}{%
+					\whiledo{\engdisciplinewidthlimit < \engdisciplinewidth}{%
+						\null%
+						\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+						\rule[-5.5bp]{\linewidth}{0.5bp}%
+						\null%
+						\par\vspace{\baselineskip*2*\value{linecount}}%
+						\stepcounter{linecount}%
+						\addtolength{\engdisciplinewidthlimit}{12cm}%
+						\ifthenelse{\engdisciplinewidthlimit > \engdisciplinewidth}
+							{%
+								\null
+								\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+								\rule[-5.5bp]{\linewidth}{0.5bp}%
+							}{}%
+					}%
+				}%
 		}%
 	}
 	\par\vspace*{0pt}%
@@ -652,17 +766,36 @@
 			\par\vspace*{-1pt}%
 		}%
 	\parbox[t][2.4cm][t]{15cm}{%
-		\parbox[t]{3cm}{\filleft School}%
+		\parbox[t]{3cm}{\filleft School}\hspace*{1bp}%
 		\parbox[t][2.4cm]{12cm}{%
-			\bfseries%
+			\bfseries\centering%
+			\setcounter{linecount}{0}%
 			\setlength{\baselineskip}{1.2cm}%
-			\begin{centerlastline}%
-				\ifthenelse{\equal{#7}{}}%
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\phantom{placeholder}}}%
-					{\CJKunderline*[thickness=0.5bp, depth=5bp]{\space #7}}%
-			\end{centerlastline}%
-			\par\vspace{-\baselineskip}%
-			\rule[-5.5bp]{\linewidth}{0.5bp}}%
+			\settowidth{\engschoolwidth}{#7}%
+			\setlength{\engschoolwidthlimit}{12cm}%
+			\Phantom{#7}%
+			\ifthenelse{\engschoolwidth < \engschoolwidthlimit}%
+				{%
+					\null\par\vspace{-\baselineskip}%
+					\rule[-5.5bp]{\linewidth}{0.5bp}%
+				}{%
+					\whiledo{\engschoolwidthlimit < \engschoolwidth}{%
+						\null%
+						\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+						\rule[-5.5bp]{\linewidth}{0.5bp}%
+						\null%
+						\par\vspace{\baselineskip*2*\value{linecount}}%
+						\stepcounter{linecount}%
+						\addtolength{\engschoolwidthlimit}{12cm}%
+						\ifthenelse{\engschoolwidthlimit > \engschoolwidth}%
+							{%
+								\null%
+								\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+								\rule[-5.5bp]{\linewidth}{0.5bp}%
+							}{}%
+					}%
+				}%
+		}%
 	}%
 	\par\vspace*{-\baselineskip}\insertemptypage}}
 
