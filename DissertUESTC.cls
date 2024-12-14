@@ -46,6 +46,8 @@
 \newlength{\covertitlewidthlimit}  % 封面论文题目长度限制
 \newlength{\coverschoolwidth}  % 封面学院名称实际长度
 \newlength{\coverschoolwidthlimit}  % 封面学院名称长度限制
+\newlength{\reviewerswidth}  % 中文扉页评阅人实际长度
+\newlength{\reviewerswidthlimit}  % 中文扉页评阅人长度限制
 \newlength{\engdisciplinewidth}  % 扉页英文专业名称实际长度
 \newlength{\engdisciplinewidthlimit}  % 扉页英文专业名称长度限制
 \newlength{\engschoolwidth}  % 扉页英文学院名称实际长度
@@ -691,9 +693,18 @@
 		\hspace*{0.5em} \chairreviewer \par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
 	\parbox[b][0.9cm][b]{1.5cm}{评阅人}%
-	\parbox[b][0.9cm][b]{13.5cm}{\zihao{4}\filright\bfseries%
-		\hspace*{0.5em} \mbox{\reviewers} \par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-2bp}
+	\parbox[b][0.9cm][b]{13.5cm}{%
+		\zihao{4}\filright\bfseries%
+		\settowidth{\reviewerswidth}{\reviewers}%
+		\setlength{\reviewerswidthlimit}{13.5cm-0.5em}%
+		\hspace*{0.5em}%
+		\ifthenelse{\reviewerswidth < \reviewerswidthlimit}%
+			{\Phantom{\reviewers}}%
+			{\scalebox{\xintRound{2}{\reviewerswidthlimit / \reviewerswidth}}[1]{\reviewers}}%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-2bp}
 	\parbox[b][1.5cm][b]{15cm}{注1：注明《国际十进分类法UDC》的类号。}
 	\par\vspace*{-\baselineskip}\insertemptypage}}
 
