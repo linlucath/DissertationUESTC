@@ -103,6 +103,9 @@
 	\renewcommand{\reviewers}{#2}
 }
 
+\newboolean{reviewflag}
+\setboolean{reviewflag}{false}
+
 
 \newcommand{\uestctocname}{目\hspace{1em}录}
 % 控制目录中各级标题的缩进距离
@@ -115,11 +118,19 @@
 
 
 %% 定义parbox中内容为空时的占位命令
-\newcommand{\Phantom}[1]{%
+\newcommand{\replaceempty}[1]{%
 	\ifthenelse{\equal{#1}{}}%
 		{\phantom{占位}}%
 		{#1}%
 }
+
+
+\newcommand{\ifreview}[1]{%
+	\ifthenelse{\equal{#1}{} \or \boolean{reviewflag}}%
+		{\phantom{占位}}%
+		{#1}%
+}
+
 
 \newcommand{\uestclightrulewidth}{0.75bp}  % 用于设置\midrule默认线高，本科0.5bp，研究生0.75bp
 
@@ -135,6 +146,10 @@
 
 
 %%%%%%----------------- declaration of options -----------------
+
+\DeclareOption{review}{%
+	\setboolean{reviewflag}{true}%
+}%
 
 \DeclareOption{print}{
 	% 该命令插入无任何内容的空白页
@@ -405,7 +420,7 @@
 				\setcounter{linecount}{0}%
 				\settowidth{\covertitlewidth}{#2}%
 				\setlength{\covertitlewidthlimit}{10.5cm}%
-				\Phantom{#2}%
+				\replaceempty{#2}%
 				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
 					{%
 						\null\par\vspace{-\baselineskip}%
@@ -437,13 +452,13 @@
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}号}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#4}}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{作者姓名}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#5}}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#6}\hspace{2em}\ifreview{#7}}}%
 			\par\vspace*{1bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{学\hspace{2em}院}%
 			\settowidth{\coverschoolwidth}{#8}%
@@ -453,7 +468,7 @@
 					\parbox[t][2cm]{9cm}{%
 						\centering\setlength{\baselineskip}{1cm}%
 						\setcounter{linecount}{0}%
-						\Phantom{#8}%
+						\replaceempty{#8}%
 						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
 							{%
 								\null\par\vspace{-\baselineskip}%
@@ -514,7 +529,7 @@
 				\setcounter{linecount}{0}%
 				\settowidth{\covertitlewidth}{#2}%
 				\setlength{\covertitlewidthlimit}{10.5cm}%
-				\Phantom{#2}%
+				\replaceempty{#2}%
 				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
 					{%
 						\null\par\vspace{-\baselineskip}%
@@ -550,7 +565,7 @@
 					\parbox[t][2.5cm]{9cm}{%
 						\centering\setlength{\baselineskip}{1.25cm}%
 						\setcounter{linecount}{0}%
-						\Phantom{#8}%
+						\replaceempty{#8}%
 						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
 							{%
 								\null\par\vspace{-\baselineskip}%
@@ -586,13 +601,13 @@
 			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#4}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#4}}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#5}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#5}}}%
 			\par\vspace*{0bp}\noindent
 			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#6\hspace{2em}#7}}%
+			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#6}\hspace{2em}\ifreview{#7}}}%
 			\par\vspace*{-\baselineskip}\insertemptypage%
 		}%
 	}%
@@ -608,90 +623,170 @@
 	\vspace*{-\baselineskip}\par\vspace*{4bp}%
 	\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage}%
 	\parbox[b][0.8cm][b]{1.5cm}{\filright 分类号}%
-	\parbox[b][0.8cm][b]{6cm}{\centering%
-		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clsnum \hfill}}%
+	\parbox[b][0.8cm][b]{6cm}{%
+		\centering%
+		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clsnum \hfill}%
+	}%
 	\parbox[b][0.8cm][b]{1.5cm}{\centering 密级}%
-	\parbox[b][0.8cm][b]{6cm}{\centering%
-		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clslv%
-			\hfill}}\par\vspace*{-3bp}
+	\parbox[b][0.8cm][b]{6cm}{%
+		\centering%
+		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \clslv \hfill}%
+	}%
+	\par\vspace*{-3bp}
 	\parbox[b][0.8cm][b]{1.5cm}{\filright UDC\textsuperscript{注1}}%
-	\parbox[b][0.8cm][b]{6cm}{\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \udc%
-			\hfill}}\par\vspace*{-8bp}
-	\parbox[b][2.5cm][b]{15cm}{\hwzs\zihao{-0}\centering%
-		学\hspace{1em}位\hspace{1em}论\hspace{1em}文\par\vspace*{1bp}}
-	\parbox[b][2.5cm][b]{15cm}{\hwzs\zihao{-2}\hspace*{2cm}%
-		\parbox[b]{11cm}{\centering\bfseries \dissertationtitle} \par\vspace{-\baselineskip}%
-		\rule[-8bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
-	\parbox[b][0.8cm]{15cm}{\centering （题名和副题名）}\par\vspace*{0bp}
-	\hspace*{5cm}\parbox[b][1.5cm][b]{5cm}{\zihao{3}\centering\bfseries%
-		\uestcauthor\par\vspace{-\baselineskip}%
-		\rule[-5bp]{\linewidth}{0.5bp}}\par\vspace*{-8bp}
-	\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering%
-		（作者姓名）}\par\vspace*{1.3cm+1bp}
+	\parbox[b][0.8cm][b]{6cm}{%
+		\CJKunderline*[thickness=0.5bp, depth=2bp]{\hfill \udc \hfill}%
+	}%
+	\par\vspace*{-15bp}
+	\parbox[b][2.5cm][b]{15cm}{%
+		\hwzs\zihao{-0}\centering%
+		学\hspace{1em}位\hspace{1em}论\hspace{1em}文%
+	}%
+	\par\vspace*{1bp}
+	\parbox[b][2.5cm][b]{15cm}{%
+		\hwzs\zihao{-2}\hspace*{2cm}%
+		\parbox[b]{11cm}{\centering\bfseries \dissertationtitle}%
+		\par\vspace{-\baselineskip}%
+		\rule[-8bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-8bp}
+	\parbox[b][0.8cm]{15cm}{\centering （题名和副题名）}%
+	\par\vspace*{0bp}
+	\hspace*{5cm}\parbox[b][1.5cm][b]{5cm}{%
+		\zihao{3}\centering\bfseries%
+		\ifreview{\uestcauthor}%
+		\par\vspace{-\baselineskip}%
+		\rule[-5bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-8bp}
+	\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering （作者姓名）}%
+	\par\vspace*{1.3cm+1bp}
 	\parbox[b][0.9cm][b]{2.75cm}{\filleft 指导教师}%
-	\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries \supervisor%
+	\parbox[b][0.9cm][b]{6.5cm}{%
+		\zihao{3}\centering\bfseries%
+		\ifreview{\supervisor}%
 		\par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}%
-	\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries \supervisortitle%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\parbox[b][0.9cm][b]{3.25cm}{%
+		\zihao{3}\filright\bfseries%
+		\ifreview{\supervisortitle}%
 		\par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-	\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
-		\supervisororg \par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}%
-	\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
-		\supervisorloc \par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par%
-	\parbox[b][3.3cm][t]{15cm}{
-		\ifthenelse{\equal{\associatesupervisor}{}}{
-			\vspace*{\nametitleorgskip}\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}}{
-			\vspace*{-4bp}\filright
-			\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering%
-				\bfseries \associatesupervisor \par\vspace{-\baselineskip}%
-				\rule[-4bp]{\linewidth}{0.5bp}}%
-			\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries%
-				\associatesupervisortitle \par\vspace{-\baselineskip}%
-				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
-			\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{\zihao{3}\centering\bfseries%
-				\associatesupervisororg \par\vspace{-\baselineskip}%
-				\rule[-4bp]{\linewidth}{0.5bp}}%
-			\parbox[b][0.9cm][b]{3.25cm}{\zihao{3}\filright\bfseries% 
-				\associatesupervisorloc \par\vspace{-\baselineskip}%
-				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{\nametitleorgskip}
-			\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}
-		}
-	}\par\vspace*{-5bp}
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-4bp}
+	\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+		\zihao{3}\centering\bfseries%
+		\supervisororg%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\parbox[b][0.9cm][b]{3.25cm}{%
+		\zihao{3}\filright\bfseries%
+		\supervisorloc%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}\par%
+	\parbox[b][3.3cm][t]{15cm}{%
+		\ifthenelse{\equal{\associatesupervisor}{}}{%
+				\vspace*{\nametitleorgskip}%
+				\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}%
+			}{%
+				\vspace*{-4bp}\filright%
+				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+					\zihao{3}\centering\bfseries%
+					\ifreview{\associatesupervisor}%
+					\par\vspace{-\baselineskip}%
+					\rule[-4bp]{\linewidth}{0.5bp}%
+				}%
+				\parbox[b][0.9cm][b]{3.25cm}{%
+					\zihao{3}\filright\bfseries%
+					\ifreview{\associatesupervisortitle}%
+					\par\vspace{-\baselineskip}%
+					\rule[-4bp]{\linewidth}{0.5bp}%
+				}%
+				\par\vspace*{-4bp}
+				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+					\zihao{3}\centering\bfseries%
+					\associatesupervisororg%
+					\par\vspace{-\baselineskip}%
+					\rule[-4bp]{\linewidth}{0.5bp}%
+				}%
+				\parbox[b][0.9cm][b]{3.25cm}{%
+					\zihao{3}\filright\bfseries%
+					\associatesupervisorloc%
+					\par\vspace{-\baselineskip}%
+					\rule[-4bp]{\linewidth}{0.5bp}%
+				}%
+				\par\vspace*{\nametitleorgskip}%
+				\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}%
+			}%
+	}%
+	\par\vspace*{-5bp}
 	\parbox[b][0.9cm][b]{2.75cm}{申请学位级别}%
-	\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \deglv%
-		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
-	\parbox[b][0.9cm][b]{2.75cm}{\centering \majorlabel}%
-	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \major%
+	\parbox[b][0.9cm][b]{4.5cm}{%
+		\zihao{4}\centering\bfseries%
+		\deglv%
 		\par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\parbox[b][0.9cm][b]{2.75cm}{\centering \majorlabel}%
+	\parbox[b][0.9cm][b]{5cm}{%
+		\zihao{4}\centering\bfseries%
+		\major%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-4bp}
 	\ifthenelse{\equal{\profield}{}}%
 		{}%
 		{%
 			\parbox[b][0.9cm][b]{2.75cm}{专业学位领域}%
-			\parbox[b][0.9cm][b]{12.25cm}{\zihao{4}\centering%
-				\hspace*{0.5em} \profield \par\vspace{-\baselineskip}%
-				\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+			\parbox[b][0.9cm][b]{12.25cm}{%
+				\zihao{4}\centering\hspace*{0.5em}%
+				\profield%
+				\par\vspace{-\baselineskip}%
+				\rule[-4bp]{\linewidth}{0.5bp}%
+			}%
+			\par\vspace*{-4bp}
 		}%
 	\parbox[b][0.9cm][b]{2.75cm}{提交论文日期}%
-	\parbox[b][0.9cm][b]{4.5cm}{\zihao{4}\centering\bfseries \submitdate%
-		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
+	\parbox[b][0.9cm][b]{4.5cm}{%
+		\zihao{4}\centering\bfseries%
+		\ifreview{\submitdate}%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}
+	}%
 	\parbox[b][0.9cm][b]{2.75cm}{\centering 论文答辩日期}%
-	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \debatedate%
+	\parbox[b][0.9cm][b]{5cm}{%
+		\zihao{4}\centering\bfseries%
+		\ifreview{\debatedate}%
 		\par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-5bp}
 	\parbox[b][0.9cm][b]{4cm}{学位授予单位和日期}%
-	\parbox[b][0.9cm][b]{6cm}{\zihao{4}\centering\bfseries \grantorg%
-		\par\vspace{-\baselineskip}\rule[-4bp]{\linewidth}{0.5bp}}%
-	\parbox[b][0.9cm][b]{5cm}{\zihao{4}\centering\bfseries \grantdate%
+	\parbox[b][0.9cm][b]{6cm}{%
+		\zihao{4}\centering\bfseries%
+		\grantorg%
 		\par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-5bp}
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\parbox[b][0.9cm][b]{5cm}{%
+		\zihao{4}\centering\bfseries%
+		\ifreview{\grantdate}%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-5bp}
 	\parbox[b][0.9cm][b]{3.25cm}{答辩委员会主席}%
-	\parbox[b][0.9cm][b]{11.75cm}{\zihao{4}\filright\bfseries%
-		\hspace*{0.5em} \chairreviewer \par\vspace{-\baselineskip}%
-		\rule[-4bp]{\linewidth}{0.5bp}}\par\vspace*{-4bp}
+	\parbox[b][0.9cm][b]{11.75cm}{%
+		\zihao{4}\filright\bfseries\hspace*{0.5em}%
+		\ifreview{\chairreviewer}%
+		\par\vspace{-\baselineskip}%
+		\rule[-4bp]{\linewidth}{0.5bp}%
+	}%
+	\par\vspace*{-4bp}
 	\parbox[b][0.9cm][b]{1.5cm}{评阅人}%
 	\parbox[b][0.9cm][b]{13.5cm}{%
 		\zihao{4}\filright\bfseries%
@@ -699,8 +794,8 @@
 		\setlength{\reviewerswidthlimit}{13.5cm-0.5em}%
 		\hspace*{0.5em}%
 		\ifthenelse{\reviewerswidth < \reviewerswidthlimit}%
-			{\Phantom{\reviewers}}%
-			{\scalebox{\xintRound{2}{\reviewerswidthlimit / \reviewerswidth}}[1]{\reviewers}}%
+			{\ifreview{\reviewers}}%
+			{\scalebox{\xintRound{2}{\reviewerswidthlimit / \reviewerswidth}}[1]{\ifreview{\reviewers}}}%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}%
 	}%
@@ -713,16 +808,22 @@
 	\newpage\thispagestyle{empty}%
 	\zihao{3}\centering%
 	\pdfbookmark[0]{英文扉页}{bookmarkentitlepage}%
-	\parbox[t][5cm][c]{13cm}{\zihao{-2}\setlength{\baselineskip}{18bp}%
-		\bfseries\centering\vspace*{-15bp} \Phantom{#1}}%
+	\parbox[t][5cm][c]{13cm}{%
+		\zihao{-2}\setlength{\baselineskip}{18bp}%
+		\bfseries\centering\vspace*{-15bp}%
+		\replaceempty{#1}%
+	}%
 	\par\vspace*{0pt}%
-	\parbox[t][8cm][c]{13cm}{\zihao{-3}\setlength{\baselineskip}{22.5bp}%
-		\centering\vspace*{-17bp} \entitlepagemidtext}%
+	\parbox[t][8cm][c]{13cm}{%
+		\zihao{-3}\setlength{\baselineskip}{22.5bp}%
+		\centering\vspace*{-17bp}%
+		\entitlepagemidtext%
+	}%
 	\par\vspace*{0pt}%
 	\ifthenelse{\equal{#6}{}}%
 		{\parbox[t][1.2cm]{15cm}{}}%
 		{\parbox[t][0.8cm]{15cm}{}}%
-	\par\vspace*{7pt}%
+	\par\vspace*{6pt}%
 	\parbox[t][2.4cm][t]{15cm}{%
 		\parbox[t]{3cm}{\filleft Discipline}\hspace*{1bp}%
 		\parbox[t][2.4cm]{12cm}{%
@@ -731,7 +832,7 @@
 			\setlength{\baselineskip}{1.2cm}%
 			\settowidth{\engdisciplinewidth}{#2}%
 			\setlength{\engdisciplinewidthlimit}{12cm}%
-			\Phantom{#2}%
+			\replaceempty{#2}%
 			\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
 				{
 					\null\par\vspace*{-\baselineskip}%
@@ -754,26 +855,30 @@
 					}%
 				}%
 		}%
-	}
+	}%
 	\par\vspace*{0pt}%
 	\parbox[t][1.2cm]{3cm}{\filleft Student ID}%
 	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#3}}}%
-	\par\vspace*{0pt}%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering\ifreview{#3}}%
+	}%
+	\par\vspace*{-1.5pt}%
 	\parbox[t][1.2cm]{3cm}{\filleft Author}%
 	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#4}}}%
-	\par\vspace*{-1pt}%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering\ifreview{#4}}%
+	}%
+	\par\vspace*{-2.5pt}%
 	\parbox[t][1.2cm]{3cm}{\filleft Supervisor}%
 	\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-		\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#5}}}%
-	\par\vspace*{-1pt}%
+		\parbox[t][1.2cm]{12cm}{\bfseries\centering\ifreview{#5}}%
+	}%
+	\par\vspace*{-2pt}%
 	\ifthenelse{\equal{#6}{}}%
 		{}%
 		{%
 			\makebox[3cm][r]{}%
 			\CJKunderline*[thickness=0.5bp, depth=5bp]{%
-				\parbox[t][1.2cm]{12cm}{\bfseries\centering \Phantom{#6}}}%
+				\parbox[t][1.2cm]{12cm}{\bfseries\centering\ifreview{#6}}%
+			}%
 			\par\vspace*{-1pt}%
 		}%
 	\parbox[t][2.4cm][t]{15cm}{%
@@ -784,7 +889,7 @@
 			\setlength{\baselineskip}{1.2cm}%
 			\settowidth{\engschoolwidth}{#7}%
 			\setlength{\engschoolwidthlimit}{12cm}%
-			\Phantom{#7}%
+			\replaceempty{#7}%
 			\ifthenelse{\engschoolwidth < \engschoolwidthlimit}%
 				{%
 					\null\par\vspace{-\baselineskip}%
@@ -827,19 +932,20 @@
 	
 	\vspace*{16bp}
 	{\zihao{4}\setlength{\baselineskip}{21bp}\selectfont
-		作者签名：\CJKunderline*[thickness=0.7bp, depth=3bp]{%
-			\parbox[b][21bp]{4.25cm}{%
-				\centering%
-				\ifthenelse{\equal{#3}{}}%
-					{\makebox[#1]{}}%
-					{\includegraphics[width=#1]{#3}}%
-			}%
+		作者签名：%
+		\parbox[b][21bp]{4.25cm}{%
+			\centering%
+			\ifthenelse{\equal{#3}{} \or \boolean{reviewflag}}%
+				{\makebox[#1]{}}%
+				{\includegraphics[width=#1]{#3}}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-3.5bp]{\linewidth}{0.7bp}%
 		}%
 		\hfill
 		日期：%
-		\ifthenelse{\equal{#2}{}}%
-			{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
-			{\makebox[4.37cm][r]{#2}}%
+		\ifthenelse{\equal{#2}{} \or \boolean{reviewflag}}%
+			{\hspace*{3em-5.5bp}年\hspace*{1.5em}月\hspace*{1.5em}日}%
+			{\makebox[4.25cm][r]{#2}}%
 		\par
 	}
 	\vspace*{32bp}
@@ -857,30 +963,33 @@
 	
 	\vspace*{17bp}
 	{\zihao{4}\setlength{\baselineskip}{21bp}\selectfont
-		作者签名：\CJKunderline*[thickness=0.7bp, depth=3bp]{%
-			\parbox[b][21bp]{4.25cm}{%
-				\centering%
-				\ifthenelse{\equal{#3}{}}%
-					{\makebox[#1]{}}%
-					{\includegraphics[width=#1]{#3}}%
-			}
-		}
+		作者签名：%
+		\parbox[b][21bp]{4.25cm}{%
+			\centering%
+			\ifthenelse{\equal{#3}{} \or \boolean{reviewflag}}%
+				{\makebox[#1]{}}%
+				{\includegraphics[width=#1]{#3}}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-3.5bp]{\linewidth}{0.7bp}%
+		}%
 		\hfill
-		导师签名：\CJKunderline*[thickness=0.7bp, depth=3bp]{%
-			\parbox[b][21bp]{4.25cm}{%
-				\centering
-				\ifthenelse{\equal{#4}{}}%
-					{\makebox[#1]{}}%
-					{\includegraphics[width=#1]{#4}}%
-			}
-	}}
+		导师签名：%
+		\parbox[b][21bp]{4.25cm}{%
+			\centering
+			\ifthenelse{\equal{#4}{} \or \boolean{reviewflag}}%
+				{\makebox[#1]{}}%
+				{\includegraphics[width=#1]{#4}}%
+			\par\vspace*{-\baselineskip}%
+			\rule[-3.5bp]{\linewidth}{0.7bp}%
+		}%
+	}%
 	
 	\vspace*{4bp}
 	{\zihao{4}\setlength{\baselineskip}{30bp}
 		\hfill 日期：%
-		\ifthenelse{\equal{#2}{}}%
-			{\hspace*{3em}年\hspace*{1.5em}月\hspace*{1.5em}日}%
-			{\makebox[4.37cm][r]{#2}}%
+		\ifthenelse{\equal{#2}{} \or \boolean{reviewflag}}%
+			{\hspace*{3em-5.5bp}年\hspace*{1.5em}月\hspace*{1.5em}日}%
+			{\makebox[4.25cm][r]{#2}}%
 		\par
 	}
 	\par\vspace*{-\baselineskip}\insertemptypage
