@@ -1351,8 +1351,12 @@
 	% 禁止参考文献条目跨页：
 	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
 	\interlinepenalty=10000
-	\oldbibliography{#1}
+	% 让参考文献出现在目录中，且目录链接能正确跳转到参考文献起始页
+	% https://blog.csdn.net/weixin_34204057/article/details/91812554
+	\clearpage
+	\phantomsection
 	\addcontentsline{toc}{chapter}{参考文献}
+	\oldbibliography{#1}
 }}
 
 
