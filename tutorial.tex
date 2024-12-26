@@ -416,9 +416,9 @@
 	\clearpage
 	\subsection{跨页表格}
 	
-	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\shad{longtable}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<跨页表题>\}}来正确排版跨页之后的表题，务必使用此命令，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致。
+	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\shad{longtable}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<跨页表题>\}}来正确排版跨页之后的表题。\textbf{务必使用此命令}，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致；并且在跨页表题长度超过表宽时，无法产生预期的排版结果。
 	
-	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见下方示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}。
+	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见下方示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}和表\ref{tab: 中国计算机学会部分推荐期刊及会议简表}。
 	
 	\begin{longtable}{p{2em} p{4.5em} p{11em} p{6em} p{11em}}
 		\caption{中国计算机学会部分推荐期刊及会议} \label{tab: 中国计算机学会部分推荐期刊及会议} \\
@@ -437,7 +437,7 @@
 		
 		% 在这里设计首页以外的表尾
 		\bottomrule
-		& & & & \hfill 续下页 \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\multicolumn{5}{l}{续下页} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
 		\endfoot
 		
 		\bottomrule
@@ -479,6 +479,94 @@
 		10 & IMC & ACM Internet Measurement Conference & ACM/USENIX & http://dblp.uni-trier.de/db/conf/imc/ \\
 		
 	\end{longtable}
+
+	\newpage
+
+	\begin{longtable}{p{2em} p{4.5em}}
+		\caption{中国计算机学会部分推荐期刊及会议简表（用于测试跨页表宽低于表题长度的情况）} \label{tab: 中国计算机学会部分推荐期刊及会议简表} \\
+		
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\multicolumn{2}{c}{\CPcaption{中国计算机学会部分推荐期刊及会议简表（用于测试跨页表宽低于表题长度的情况）}}\\
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		\multicolumn{2}{r}{续下页} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\endlastfoot
+		
+		1 & JSAC \\
+		2 & TMC \\
+		3 & TON \\
+		1 & TOIT \\
+		2 & TOMM \\
+		3 & TOSN \\
+		4 & CN \\
+		5 & TCOM \\
+		6 & TWC \\
+		2 & CC \\
+		3 & TNSM \\
+		5 & JNCA \\
+		6 & MONET \\
+		8 & PPNA \\
+		9 & WCMC \\
+		11 & IOT \\
+		1 & SIGCOMM \\
+		2 & MobiCom \\
+		3 & INFOCOM \\
+		4 & NSDI \\
+		1 & SenSys \\
+		2 & CoNEXT \\
+		3 & SECON \\
+		4 & IPSN \\
+		5 & MobiSys \\
+		6 & ICNP \\
+		7 & MobiHoc \\
+		8 & NOSSDAV \\
+		9 & IWQoS \\
+		10 & IMC \\
+		1 & JSAC \\
+		2 & TMC \\
+		3 & TON \\
+		1 & TOIT \\
+		2 & TOMM \\
+		3 & TOSN \\
+		4 & CN \\
+		5 & TCOM \\
+		6 & TWC \\
+		2 & CC \\
+		3 & TNSM \\
+		5 & JNCA \\
+		6 & MONET \\
+		8 & PPNA \\
+		9 & WCMC \\
+		11 & IOT \\
+		1 & SIGCOMM \\
+		2 & MobiCom \\
+		3 & INFOCOM \\
+		4 & NSDI \\
+		1 & SenSys \\
+		2 & CoNEXT \\
+		3 & SECON \\
+		4 & IPSN \\
+		5 & MobiSys \\
+		6 & ICNP \\
+		7 & MobiHoc \\
+		8 & NOSSDAV \\
+		9 & IWQoS \\
+		10 & IMC \\
+	\end{longtable}
+
 	
 	\clearpage
 	\section{伪代码}

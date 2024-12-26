@@ -1159,8 +1159,8 @@
 	\renewcommand{\CPcaptext}{\tablename\ \thetable\ #1（续）}
 	\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
 	\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
-		{\parbox[b]{\CPcapwidth}{\vspace{7bp}\CPcaptext}}%
-		{\parbox[b]{\LTcapwidth}{\vspace{7bp}\CPcaptext}}%
+		{\makebox[0.5em][c]{\vspace{7bp}\CPcaptext}}% 外层套极窄的\makebox以应对跨页表宽低于表题长度的情况
+		{\makebox[0.5em][c]{\hspace*{-5.5bp}\parbox[b]{\LTcapwidth}{\small\vspace{7bp}\CPcaptext}}}%
 	\vspace{4bp}
 }
 
