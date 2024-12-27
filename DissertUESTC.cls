@@ -396,7 +396,7 @@
 \ifthenelse{\equal{\dissertationtype}{graduate}}{
 	\newcommand\uestccover[8][]{
 		\newpage\thispagestyle{empty}
-		\pdfbookmark[0]{论文封面}{bookmarkcover}%
+		\pdfbookmark[0]{论文封面}{bookmarkcover\thepage}%
 		\vspace*{13bp}
 		{\fontsize{22bp}{16.9bp}\selectfont\centering%
 			电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
@@ -504,7 +504,7 @@
 }{%
 	\newcommand\uestccover[8][]{%
 		\newpage\thispagestyle{empty}%
-		\pdfbookmark[0]{论文封面}{bookmarkcover}%
+		\pdfbookmark[0]{论文封面}{bookmarkcover\thepage}%
 		\vspace*{-12bp}%
 		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
 			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
@@ -621,7 +621,7 @@
 	\newpage\thispagestyle{empty}
 	\rmfamily\zihao{-4}\raggedright%
 	\vspace*{-\baselineskip}\par\vspace*{4bp}%
-	\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage}%
+	\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage\thepage}%
 	\parbox[b][0.8cm][b]{1.5cm}{\filright 分类号}%
 	\parbox[b][0.8cm][b]{6cm}{%
 		\centering%
@@ -807,7 +807,7 @@
 \newcommand{\uestcentitlepage}[7]{{%
 	\newpage\thispagestyle{empty}%
 	\zihao{3}\centering%
-	\pdfbookmark[0]{英文扉页}{bookmarkentitlepage}%
+	\pdfbookmark[0]{英文扉页}{bookmarkentitlepage\thepage}%
 	\parbox[t][5cm][c]{13cm}{%
 		\zihao{-2}\setlength{\baselineskip}{18bp}%
 		\bfseries\centering\vspace*{-15bp}%
@@ -920,7 +920,7 @@
 	\newpage\thispagestyle{empty}
 	
 	\vspace*{18bp}%
-	\pdfbookmark[0]{独创性声明}{bookmarkdeclaration}%
+	\pdfbookmark[0]{独创性声明}{bookmarkdeclaration\thepage}%
 	{\hwzs\bfseries\centering
 		\zihao{-2}\setlength{\baselineskip}{18bp}\selectfont
 		独创性声明 \par}
@@ -1216,15 +1216,15 @@
 
 \newcommand{\zhabstract}{%
 	\newpage% 这里是为了让书签能够准确定位到“摘要”所在的行
+	\pagenumbering{Roman}
 	% 参考hyperref宏包文档，手动添加书签，part属于-1级，chapter属于0级，section属于1级
-	\pdfbookmark[0]{摘\hspace{1em}要}{bookmarkzhabstract}%
+	\pdfbookmark[0]{摘\hspace{1em}要}{bookmarkzhabstract\thepage}%
 	\chapter*{摘\hspace{1em}要}%
 	\markboth{摘\hspace{1em}要}{摘\hspace{1em}要}
-	\pagenumbering{Roman}
 }
 \newcommand{\enabstract}{%
 	\newpage%
-	\pdfbookmark[0]{ABSTRACT}{bookmarkabstract}%
+	\pdfbookmark[0]{ABSTRACT}{bookmarkabstract\thepage}%
 	\chapter*{ABSTRACT}%
 	\markboth{ABSTRACT}{ABSTRACT}
 }
@@ -1258,7 +1258,7 @@
 \let\oldtableofcontents\tableofcontents
 \renewcommand{\tableofcontents}{%
 	\newpage%
-	\pdfbookmark[0]{目\hspace{1em}录}{bookmarktoc}%
+	\pdfbookmark[0]{目\hspace{1em}录}{bookmarktoc\thepage}%
 	\oldtableofcontents
 	\insertevenemptypage  % 为目录部分添加偶空白页
 }
@@ -1275,7 +1275,7 @@
 	\addtolength{\cftfignumwidth}{1.4em}  % 调整图目录条目悬挂缩进量
 	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
 	\newpage%
-	\pdfbookmark[0]{图目录}{bookmarklof}%
+	\pdfbookmark[0]{图目录}{bookmarklof\thepage}%
 	\oldlistoffigures
 	\insertevenemptypage
 }}
@@ -1289,7 +1289,7 @@
 	\addtolength{\cfttabnumwidth}{1.4em}  % 调整表目录条目悬挂缩进量
 	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
 	\newpage%
-	\pdfbookmark[0]{表目录}{bookmarklot}%
+	\pdfbookmark[0]{表目录}{bookmarklot\thepage}%
 	\oldlistoftables
 	\insertevenemptypage
 }}
@@ -1299,7 +1299,7 @@
 %%%%%% 主要符号表
 \newcommand{\listofsymbs}{
 	\newpage%
-	\pdfbookmark[0]{主要符号表}{bookmarklistofsymbs}%
+	\pdfbookmark[0]{主要符号表}{bookmarklistofsymbs\thepage}%
 	\chapter*{主要符号表}%
 	\markboth{主要符号表}{主要符号表}%
 	%	\insertevenemptypage
@@ -1332,7 +1332,7 @@
 \RenewDocumentCommand{\printnomenclature}{O{5em} D(){7.5em}}{
 	\newpage%
 	\markboth{缩略词表}{缩略词表}%
-	\pdfbookmark[0]{缩略词表}{bookmarknomenclature}%
+	\pdfbookmark[0]{缩略词表}{bookmarknomenclature\thepage}%
 	\renewcommand{\nompreamble}{{\noindent \bfseries \makebox[#1][l]{英文缩写} \makebox[\linewidth-#1-#2-\tabcolsep][l]{英文全称} \makebox[#2][l]{中文全称}}}  % 缩略词表额外注释
 	\setlength{\nomdescrchnwidth}{#2}
 	\oldprintnomenclature[#1]
