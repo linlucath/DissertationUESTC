@@ -215,9 +215,9 @@
 \end{algo}
 ```
 
-### 定义、定理、命题、推论、引理、证明
+### 定义、定理、命题、推论、引理、假设、证明
 
-本模板为上述内容分别定义了环境：`definition`、`theorem`、`proposition`、`corollary`、`lemma`和`proof`。
+本模板为上述内容分别定义了环境：`definition`、`theorem`、`proposition`、`corollary`、`lemma`、`assumption`和`proof`。
 
 ### 脚注
 
