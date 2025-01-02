@@ -997,6 +997,14 @@
 	    month={04},
 	    day={25},
 	}
+
+	@phdthesis{陈念永2001毫米波细胞生物效应及抗肿瘤研究无页码,
+	    author={陈念永},
+	    title={毫米波细胞生物效应及抗肿瘤研究（无页码测试）},
+	    address={成都},
+	    school={电子科技大学},
+	    year={2001},
+	}
 	\end{verbatim}
 	
 	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
@@ -1014,8 +1022,24 @@
 		\item 对中文参考文献，如果希望将它们的第四顺位及以后的作者显示为\shad{“等”}，则必须要在它们的bib条目中加入\shad{language=\{\}}域，并将值设置为\shad{schinese}。这是文献编译引擎判断该条参考文献是否是中文的唯一依据。类似的，\cite{罗杰斯2011}中的\shad{“等译”}、\shad{“2版”}均靠设置\shad{language=\{schinese\}}实现。我的建议是，虽然\shad{language}域并非是强制添加的，但对于中文文献，最好将其添加进去。
 		
 		\item 对电子文献，其类型众多，因此需要用户通过\shad{type=\{\}}域显式指定，如文献\cite{电子文献1}和\cite{电子文献2}；而对其他的文献类型，只要在\shad{@}符号后输入了正确的类型标识，对应的类型标签会自动生成，无需用户手动逐条添加。
+		
+		\item （2025.01.02）需要特别说明的参考文献类型是\shad{mastersthesis/phdthesis}，即学位论文。学校在撰写规范中提到参考文献排版应该遵循国标\href{https://lib.tsinghua.edu.cn/wj/GBT7714-2015.pdf}{\color{blue}GB/T 7714-2015}，在此国标中，对学位论文的引用不需要页码信息。但是，\textbf{学校的规范中又明确为学位论文引用添加了页码信息}。为此，我询问了学位办的相关老师，得到的答复大致是：“\textit{我翻阅了手边信通学院学生的论文，他们是写了页码信息的。但这个要求并没有那么严格，不会说没写就评审不过，历年也没有出现因为这个不过的情况，评审老师也没有严格挑。学位论文的质量并不是通过这个来评判的，不过我们这边还是建议写上}”。
+   
+		本模板原本的实现方式是遵循学校的撰写规范，将学位论文的页码信息设置为了强制域。如果缺少该信息，使用VScode作为编辑器时将报错而无法完成编译；TeXstudio则能跳过这种小问题继续编译，但BibTeX仍会输出错误提醒。GitHub用户\href{https://github.com/zealrussell}{\color{blue}@zealrussell}在使用VScode撰写论文时，发现不为学位论文这类参考文献添加页码信息将无法顺利编译，遂发起了issue。
+		
+		经过查阅相关文件，以及向学位办老师求证，本模板调整了此类文献的排版规则。现在，学位论文的`pages`域将不再是强制域，缺少该信息不会再中断编译过程，但会输出警告，提醒用户某条参考文献条目缺少页码信息，见参考文献\cite{陈念永2001毫米波细胞生物效应及抗肿瘤研究无页码}。如果你使用TeXstudio，则在编译参考文献辅助文件时BibTeX会发出该警告（图\ref{fig: TeXstudio对参考文献缺失信息的提醒}）；如果你使用VScode，则需要去检查\shad{problems}窗口输出的信息。它是按文件对警告进行分类的，你需要先定位到\shad{ref.bib}（图\ref{fig: VScode对参考文献缺失信息的提醒}）。本模板将是否在引用学位论文时添加页码信息的选择权交予用户，但我个人仍建议各位遵循学校的规范。
 	\end{itemize}
 	
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.9\linewidth]{TeXstudio_bibtex}
+		\caption{TeXstudio对参考文献缺失可选域的提醒} \label{fig: TeXstudio对参考文献缺失信息的提醒}
+	\end{figure}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.9\linewidth]{VScode_bibtex}
+		\caption{VScode对参考文献缺失可选域的提醒} \label{fig: VScode对参考文献缺失信息的提醒}
+	\end{figure}
 	
 	\acknowledgement
 	

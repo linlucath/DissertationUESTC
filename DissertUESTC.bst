@@ -1422,7 +1422,13 @@ FUNCTION {mastersthesis}
   address "address" bibinfo.warn output
   ": " * write$
   school "school" bibinfo.warn
-  format.date ": " * format.pages * "year" output.check
+  pages missing$
+    {
+      pages "pages" bibinfo.warn pop$
+      format.date "year" output.check
+    }
+    {format.date ": " * format.pages * "pages" output.check}
+  if$
   new.block
   format.url output
   new.block
@@ -1442,7 +1448,13 @@ FUNCTION {phdthesis}
   address "address" bibinfo.warn output
   ": " * write$
   school "school" bibinfo.warn
-  format.date ": " * format.pages * "year" output.check
+  pages missing$
+    {
+      pages "pages" bibinfo.warn pop$
+      format.date "year" output.check
+    }
+    {format.date ": " * format.pages * "pages" output.check}
+  if$
   new.block
   format.url output
   new.block
