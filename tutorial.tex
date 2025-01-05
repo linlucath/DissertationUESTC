@@ -675,7 +675,7 @@
 		\item 第六项强制参数就是附注的实际内容了。
 	\end{itemize}
 
-	\textcolor{red}{\textbf{注意：}}使用\shadcmd{tablenotetext}命令的前提是对表格首列进行特定设置，用户\textbf{必须}通过\shad{p{<长度>}}或\shad{m{<长度>}}来人为指定\shad{longtable}的首列宽度，\textcolor{red}{\textbf{切不可}}将之设置为\shad{c}、\shad{r}或\shad{l}，否则第三项参数将失去原有的作用，导致怪异的排版结果。另外，表格中最后一条\shadcmd{tablenotetext}之后不需要\shadcmd{\shadcmd{}}，否则表尾与下方文本的间隔将偏大。
+	\textcolor{red}{\textbf{注意：}}使用\shadcmd{tablenotetext}命令的前提是对表格首列进行特定设置，用户\textbf{必须}通过\shad{p{<长度>}}或\shad{m{<长度>}}来人为指定\shad{longtable}的首列宽度，\textcolor{red}{\textbf{切不可}}将之设置为\shad{c}、\shad{r}或\shad{l}。另外，表格中最后一条\shadcmd{tablenotetext}之后不需要\shadcmd{\shadcmd{}}，否则表尾与下方文本的间隔将偏大。
 
 	还有一种特殊情况是，跨页表格恰好在附注开始处发生了分页，此时也会产生另类的排版结果。要解决该问题，用户得手动在表格内容的适当位置使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{notsored}longtable}}宏包提供的\shadcmd{pagebreak}命令提前断页，代价是前一页底部可能有更多空白，参考表\ref{tab: 跨页带附注表格恰巧在附注开始处换页示例}中的做法。如果你运气尤其差，附注特别长，而且在附注中间跨页了，那我实在无能为力了。
 
