@@ -4,11 +4,13 @@
 
 \begin{document}
 	
-	% 以下四条命令均为高亮示例文档中的关键内容而设，正式撰写时切不可使用
+	% 以下几条命令均为高亮示例文档中的关键内容而设，正式撰写时切不可使用
 	\definecolor{shadcolor}{RGB}{228, 234, 246}
 	\definecolor{notsored}{RGB}{139, 0, 0}
-	\newcommand{\shad}[1]{\colorbox{shadcolor}{\ttfamily #1}}
-	\newcommand{\shadcmd}[1]{\shad{\ttfamily $\backslash$#1}}
+	% \definecolor{darkblue}{RGB}{1, 0, 138}
+	\definecolor{darkblue}{RGB}{20, 144, 255}
+	\newcommand{\shad}[1]{\textcolor{darkblue}{\ttfamily #1}}
+	\newcommand{\shadcmd}[1]{\shad{$\backslash$#1}}
 	
 	\nocite{*}  % 为了便于在示例文档中展示参考文献而设，正式撰写时需要注释掉
 	
@@ -220,17 +222,72 @@
 	\nomchn{QoS}{Quality of Service}{服务质量}
 	\nomchn{SLA}{Service Level Agreement}{服务水平协议}
 	\nomchn{NLP}{non-linear programming}{非线性规划}
+	\nomchn{4G}{Fourth Generation Mobile Communication Technology}{第四代移动通信技术}
+	\nomchn{5G}{Fifth Generation Mobile Communication Technology}{第五代移动通信技术}
+	\nomchn{B5G}{Beyond 5G}{超五代移动通信技术}
+	\nomchn{NSA}{Non-Standalone}{非独立组网}
+	\nomchn{mMIMO}{massive Multiple Input Multiple Output}{大规模多输入多输出}
+	\nomchn{FDMA}{Frequency Division Multiple Access}{频分多址}
+	\nomchn{TDMA}{Time Division Multiple Access}{时分多址}
+	\nomchn{IP}{Internet Protocol}{网际互连协议}
+	\nomchn{CDMA}{Code Division Multiple Access}{码分多址}
+	\nomchn{LTE}{Long Term Evolution}{长期演进}
+	\nomchn{OFDM}{Orthogonal Frequency Division Multiplexing}{正交频分复用}
+	\nomchn{SDMA}{Space Division Multiple Access}{空分多址}
+	\nomchn{MIMO}{Multiple Input Multiple Output}{多输入多输出}
+	\nomchn{MBS}{Macro Base Station}{宏基站}
+	\nomchn{SBS}{Small Base Station}{微基站}
+	\nomchn{PBS}{Pico Base Station}{微微基站}
+	\nomchn{FBS}{Femto Base Station}{毫微微基站}
+	\nomchn{NR}{New Radio}{新空口}
+	\nomchn{EPC}{Evolved Packet Core}{演进分组核心}
+	\nomchn{5GC}{The Fifth Generation Core Network}{5G核心网}
+	\nomchn{RAN}{Radio Access Network}{无线接入网络}
+	\nomchn{Multi-RAT}{Multi Radio Access Technology}{多制式}
+	\nomchn{HetNet}{Heterogeneous Network}{异构网络}
+	\nomchn{CSI}{Channel State Information}{信道状态信息}
+	\nomchn{3GPP}{3rd Generation Partnership Project}{第三代合作伙伴计划}
+	\nomchn{PDCP}{Packet Data Convergence Protocol}{分组数据汇聚协议}
+	\nomchn{MME}{Mobile Management Entity}{移动管理实体}
+	\nomchn{S-GW}{Serving GateWay}{服务网关}
+	\nomchn{RLC}{Radio Link Control}{无线链路控制协议}
+	\nomchn{MAC}{Media Access Control}{媒体访问控制协议}
+	\nomchn{SDN}{Software-Defined Networking}{软件定义网络}
+	\nomchn{NFV}{Network Functions Virtualization}{网络功能虚拟化}
+	\nomchn{NSI}{Network Slice Instance}{网络切片实例}
+	\nomchn{MANO}{Management and Network Orchestration}{管理和网络编排}
+	\nomchn{SDM-X}{Software-Defined Mobile Network Coordinator}{软件定义移动网络协调器}
+	\nomchn{SDM-C}{Software-Defined Mobile Network Controller}{软件定义移动网络控制器}
+	\nomchn{VNF}{Virtual Network Function}{虚拟网络功能}
+	\nomchn{PNF}{Physical Network Function}{物理网络功能}
+	\nomchn{ETSI}{European Telecommunications Standards Institute}{欧洲电信标准化协会}
+	\nomchn{NFVO}{Network Function Virtualization Orchestrator}{虚拟网络功能编排器}
+	\nomchn{VNFM}{Virtual Network Function Manager}{虚拟网络功能管理器}
+	\nomchn{VIM}{Virtual Infrastructure Manager}{虚拟基础设施管理器}
+	\nomchn{NSMF}{Network Slice Management Function}{网络切片管理功能}
+	\nomchn{NSSMF}{Network Sub-Slice Management Function}{网络子切片管理功能}
+	\nomchn{SDM-O}{Software-Defined Mobile Network Orchestrator}{软件定义移动网络编排器}
+	\nomchn{SLA}{Service Level Agreement}{服务水平协议}
+	\nomchn{5GPPP}{5G Infrastructure Public Private Partnership}{5G基础设施公私合作伙伴关系}
+	\nomchn{InP}{Infrastructure Provider}{基础设施提供商}
+	\nomchn{QoS}{Quality of Service}{服务质量}
+	\nomchn{NFC}{Network Function Component}{网络功能组件}
+	\nomchn{QoE}{Quality of Experience}{服务体验}
+	\nomchn{AI}{Artificial Intelligence}{人工智能}
+	\nomchn{RSRP}{Reference Singal Receiving Power}{参考信号接收功率}
+	\nomchn{RSSI}{Received Signal Strength Indicator}{接收信号强度指标}
 	
 	生成缩略词表相对复杂一些：
 	\begin{enumerate}
 		\item 先使用\shadcmd{printnomenclature[<英文缩写宽度>](<中文全称宽度>)}，第一项可选参数控制\textbf{英文缩写}的列宽，默认为\shad{5em}；第二项可选参数控制\textbf{中文全称}的列宽，默认为\shad{7.5em}。
 		
-		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。
+		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn[<排序前缀>]\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。其中\shad{排序前缀}是可选参数，仅在对特定条目有特殊排序需求时才使用。具体细节参考\href{https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf}{\shad{\color{notsored}nomencl}}宏包对\shadcmd{nomenclature}命令的参数说明。
 	\end{enumerate}
 	
 	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\shad{编译缩略词表}}。Overleaf用户则可以一键搞定，无需额外操作。
 	
-	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。不必慌张，在你正式使用本模板撰写论文时，肯定不需要当前页的内容。
+	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。提示一下，当你正式使用本模板撰写论文时，肯定不需要此页的内容。
+
 	
 	\chapter{模板使用说明}
 	
@@ -251,7 +308,7 @@
    
 			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行查重时便捷地隐去论文中的图片，而不影响排版。
 
-			\item 另外，\shad{algorithm2e}宏包的\shad{vlined}和\shad{boxruled}选项也可以在加载文档类时设置。
+			\item 另外，\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{notsored}algorithm2e}}宏包的\shad{vlined}和\shad{boxruled}选项也能通过文档类设置。
 		\end{itemize}
 	\end{itemize}
 	
@@ -337,7 +394,7 @@
 	
 	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合研究生规范中对线高的要求（\shad{1.5}磅、\shad{0.75}磅、\shad{1.5}磅）。注意不要用\shad{$\backslash$hline}。而对于本科生，学士学位论文规范要求表格中的线高统一为\shad{0.5}磅，在\shad{bachelor}选项下，\shad{$\backslash$midrule}的线高设置为\shad{0.5}磅。因此，本科生在表格中只需要也只可以使用\shad{$\backslash$midrule}和\shadcmd{cmidrule}，否则线高将不符合要求。
 	
-	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\shad{booktabs}宏包的官方文档。
+	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{notsored}booktabs}}宏包的官方文档。
 	
 	\begin{table}[htbp]
 		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
@@ -360,6 +417,7 @@
 			\end{tablenotes}
 		\end{threeparttable}
 	\end{table}
+
 	
 	\newpage
 	\subsection{带附注表格}
@@ -387,7 +445,7 @@
 				\bottomrule
 			\end{tabular}
 			\begin{tablenotes}
-				\item[1] 自创武功
+				\item[1] 左右互搏术是金庸小说《射雕英雄传》中「老顽童」周伯通在桃花岛的地洞中创出的武功，本质是一心二用，能够两手同时做不同的事情，在金庸武侠体系中是一门非常精妙的武学，其对于人物本身的战斗力加成堪称台阶性。
 				\item[2] 云南大理段氏嫡传的武功，在点穴功夫中位居天下第一，运功后以右手食指点穴，出指可缓可快，缓时潇洒飘逸，快则疾如闪电，但着指之处，分毫不差。当与敌挣搏凶险之际，用此指法既可贴近径点敌人穴道，也可从远处欺近身去，一中即离，一攻而退，实为克敌保身的无上妙术。
 			\end{tablenotes}
 		\end{threeparttable}
@@ -412,15 +470,45 @@
 			\end{tablenotes}
 		\end{threeparttable}
 	\end{table}
+
+	上述方式排版的带附注表格无法通过点击表格中的编号跳转到对应附注。为此，本模板提供命令\shadcmd{puttablenotelabel\{<标签>\}}和\shadcmd{tablenoteref\{<标签>\}}来实现该操作。\textcolor{red}{（2025.01.05新增）}
+
+	用户只需要将\shad{tablenotes}环境中手动设置的编号替换为\shadcmd{puttablenotelabel\{<标签>\}}，然后在表格内容的对应位置使用\shadcmd{tablenoteref\{<标签>\}}即可。编号将自动生成，并按照使用\shadcmd{puttablenotelabel}的顺序递加。
+
+	这种方式由于需要建立交叉引用，通常需要用户编译两次。切记，\textbf{标签必须全文唯一}。表\ref{tab: 江湖势力背调（基于puttablenotelabel和tablenoteref）}提供了使用示例。
+
+	\begin{table}[!ht]
+		\caption{江湖势力背调（基于\shadcmd{puttablenotelabel}和\shadcmd{tablenoteref}）} \label{tab: 江湖势力背调（基于puttablenotelabel和tablenoteref）}
+		\begin{threeparttable}
+			\begin{tabular}{p{2cm} p{3cm} p{7cm}}
+				\toprule
+				\textbf{姓名} & \textbf{所属势力} & \textbf{武功绝学} \\
+				\midrule
+				郭靖 & 重阳宫 & 降龙十八掌 \\
+				黄蓉 & 丐帮 & 打狗棒法 \\
+				洪七公 & 丐帮 & 降龙十八掌、打狗棒法 \\
+				黄老邪 & 桃花岛 & 弹指神通、落英神剑掌、玉箫剑法 \\
+				老顽童 & 重阳宫 & 左右互博术\tablenoteref{tn: 左右互搏术} \\
+				一灯 & 云南大理 & 一阳指\tablenoteref{tn: 一阳指}、千里传音 \\
+				\bottomrule
+			\end{tabular}
+			\begin{tablenotes}
+				\item[\puttablenotelabel{tn: 左右互搏术}] 左右互搏术是金庸小说《射雕英雄传》中「老顽童」周伯通在桃花岛的地洞中创出的武功，本质是一心二用，能够两手同时做不同的事情，在金庸武侠体系中是一门非常精妙的武学，其对于人物本身的战斗力加成堪称台阶性。
+				\item[\puttablenotelabel{tn: 一阳指}] 云南大理段氏嫡传的武功，在点穴功夫中位居天下第一，运功后以右手食指点穴，出指可缓可快，缓时潇洒飘逸，快则疾如闪电，但着指之处，分毫不差。当与敌挣搏凶险之际，用此指法既可贴近径点敌人穴道，也可从远处欺近身去，一中即离，一攻而退，实为克敌保身的无上妙术。
+			\end{tablenotes}
+		\end{threeparttable}
+	\end{table}
 	
 	
 	\clearpage
 	\subsection{跨页表格}
 	
-	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\shad{longtable}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<跨页表题>\}}来正确排版跨页之后的表题。\textbf{务必使用此命令}，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致；并且在跨页表题长度超过表宽时，无法产生预期的排版结果。
+	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{notsored}longtable}}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<当前表格总列数>\}\{<跨页表题>\}}来正确排版跨页之后的表题\textcolor{red}{（2025.01.05日更新该命令的使用方式）}。\textbf{务必使用此命令}，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致；并且在跨页表题长度超过表宽时，无法产生预期的排版结果。
 	
-	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见下方示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}和表\ref{tab: 中国计算机学会部分推荐期刊及会议简表}。
+	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见本小节示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}和表\ref{tab: 中国计算机学会部分推荐期刊及会议简表}。
 	
+	% \newpage
+
 	\begin{longtable}{p{2em} p{4.5em} p{11em} p{6em} p{11em}}
 		\caption{中国计算机学会部分推荐期刊及会议} \label{tab: 中国计算机学会部分推荐期刊及会议} \\
 		
@@ -430,7 +518,7 @@
 		\endfirsthead
 		
 		% 在这里设计首页以外的表题和表头
-		\multicolumn{5}{c}{\CPcaption{中国计算机学会部分推荐期刊及会议}}\\
+		\CPcaption{5}{中国计算机学会部分推荐期刊及会议}\\
 		\toprule
 		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} & \textbf{网址} \\
 		\midrule
@@ -479,6 +567,7 @@
 		9 & IWQoS & IEEE/ACM International Workshop on Quality of Service & IEEE & http://dblp.uni-trier.de/db/conf/iwqos/ \\
 		10 & IMC & ACM Internet Measurement Conference & ACM/USENIX & http://dblp.uni-trier.de/db/conf/imc/ \\
 		
+		
 	\end{longtable}
 
 	\newpage
@@ -492,7 +581,7 @@
 		\endfirsthead
 		
 		% 在这里设计首页以外的表题和表头
-		\multicolumn{2}{c}{\CPcaption{中国计算机学会部分推荐期刊及会议简表（用于测试跨页表宽低于表题长度的情况）}}\\
+		\CPcaption{2}{中国计算机学会部分推荐期刊及会议简表（用于测试跨页表宽低于表题长度的情况）}\\
 		\toprule
 		\textbf{序号} & \textbf{刊物简称} \\
 		\midrule
@@ -568,13 +657,173 @@
 		10 & IMC \\
 	\end{longtable}
 
+	\clearpage
+	\subsection{跨页带附注表格（2025.01.05）}
+
+	很遗憾，\shad{threeparttable}无法做到跨页，而\shad{longtable}又无法像前者那样稳定完美地排版附注。无奈之下，本模板提供了一种繁琐但可行的做法。
+
+	思路是利用\shad{longtable}提供的表尾自定义功能来插入附注，即用户需要修改\shad{longtable}在\shadcmd{endlastfoot}前对表格尾部的设置。为此，模板提供命令：
+	
+	\shadcmd{tablenotetext(online)(<附注编号悬挂距离>)[<附注上方垂直间隔>]\{<附注总宽度>\}\{<附注标签>\}\{<附注内容>\}}。
+
+	\begin{itemize}
+		\item 此命令的第一项可选参数以\shad{()}标识，它仅接受参数\shad{online}，作用是将附注编号从默认的上标形式更改为行内形式，即模仿\shad{tablenotes}环境的选项。此间差异可参考表\ref{tab: 跨页带附注表格示例}的附注；
+		\item 第二项可选参数仅在设置了第一项可选参数为\shad{online}时有效，用于调整附注编号的悬挂缩进距离，默认是\shad{1em}。如果表格的附注特别多，导致编号过长而与后方文字重叠，那就需要用户手动调整该可选参数，见表\ref{tab: 跨页带附注表格恰巧在附注开始处换页示例}；
+		\item 第三项可选参数以\shad{[]}标识，在生成的附注与上方内容间的垂直距离不合适时，可通过此可选参数手动对其进行调整，默认为\shad{0bp}；
+		\item 第四项强制参数对应附注整体的宽度，这个数值需要用户根据表格排版后的宽度反复调整，直至附注与表格尾线等宽为止。我知道这很繁琐，但实在能力有限，想不出更好的办法，自动确定表格的实际宽度真的很难；
+		\item 第五项强制参数负责设置附注编号对应的标签，以便后续在表格中使用\shadcmd{tablenoteref\{\}}进行引用，标签同样需要全文唯一；
+		\item 第六项强制参数就是附注的实际内容了。
+	\end{itemize}
+
+	\textcolor{red}{\textbf{注意：}}使用\shadcmd{tablenotetext}命令的前提是对表格首列进行特定设置，用户\textbf{必须}通过\shad{p{<长度>}}或\shad{m{<长度>}}来人为指定\shad{longtable}的首列宽度，\textcolor{red}{\textbf{切不可}}将之设置为\shad{c}、\shad{r}或\shad{l}，否则第三项参数将失去原有的作用，导致怪异的排版结果。另外，表格中最后一条\shadcmd{tablenotetext}之后不需要\shadcmd{\shadcmd{}}，否则表尾与下方文本的间隔将偏大。
+
+	还有一种特殊情况是，跨页表格恰好在附注开始处发生了分页，此时也会产生另类的排版结果。要解决该问题，用户得手动在表格内容的适当位置使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{notsored}longtable}}宏包提供的\shadcmd{pagebreak}命令提前断页，代价是前一页底部可能有更多空白，参考表\ref{tab: 跨页带附注表格恰巧在附注开始处换页示例}中的做法。如果你运气尤其差，附注特别长，而且在附注中间跨页了，那我实在无能为力了。
+
+	必须要承认，\shadcmd{tablenotetext}命令很不稳定。其参数在不同的表格中需要特调，甚至在同一表格的不同排版设置下都是如此，可谓一表一参。如遇到不得不用的时候，用户必须要投入很多精力。可惜，这已经是我目前所能做到的极限。
+
+
+	\newpage
+
+	\begin{longtable}{p{2em} p{4.5em} p{20em} p{6em}}
+		\caption{跨页带附注表格示例} \label{tab: 跨页带附注表格示例} \\
+		
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\CPcaption{4}{跨页带附注表格示例}\\
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		\multicolumn{4}{l}{续下页} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\tablenotetext[-7bp]{37.2em}{tn: 手动跨页表格附注标签IEEE}{IEEE是指电气和电子工程师学会，是一个国际性的专业学会，以促进电气工程、电子工程、计算机科学和相关领域的科学和技术发展为宗旨。成立于1884年，总部位于美国纽约。IEEE 的会员包括来自世界各地的专业人士、工程师、学者和学生，是全球最大的技术专业组织之一。} \\
+		\tablenotetext(online)[6bp]{37.2em}{tn: 手动跨页表格附注标签ACM}{ACM是指国际计算机学会，成立于1947年，是一个国际性的科技教育组织，是世界上第一个科学性及教育性计算机学会，总部设在美国纽约。国际计算机学会是世界上最大的计算机领域专业性学术组织，汇集了国际计算机领域教育家，研究人员，工业界人士及学生。ACM致力于提高在中国的活动的规格与影响力。在此基础上，学会成立了ACM中国理事会，为在中国的学会会员与学会活动提供支持。}% 注意这里不需要\\
+		\endlastfoot
+		
+		1 & JSAC & IEEE Journal on Selected Areas in Communications & IEEE \\
+		2 & TMC & IEEE Transactions on Mobile Computing & IEEE \\
+		3 & TON & IEEE/ACM Transactions on Networking & IEEE/ACM \\
+		1 & TOIT & ACM Transactions on Internet Technology & ACM \\
+		2 & TOMM & ACM Transactions on Multimedia Computing, Communications and Applications & ACM \\
+		3 & TOSN & ACM Transactions on Sensor Networks & ACM \\
+		4 & CN & Computer Networks & Elsevier \\
+		5 & TCOM & IEEE Transactions on Communications & IEEE \\
+		6 & TWC & IEEE Transactions on Wireless Communications & IEEE \\
+		1 & & Ad Hoc Networks & Elsevier \\
+		2 & CC & Computer Communications & Elsevier \\
+		3 & TNSM & IEEE Transactions on Network and Service Management & IEEE \\
+		4 & & IET Communications & IET \\
+		5 & JNCA & Journal of Network and Computer Applications & Elsevier \\
+		6 & MONET & Mobile Networks and Applications & Springer \\
+		7 & & Networks & Wiley \\
+		8 & PPNA & Peer-to-Peer Networking and Applications & Springer \\
+		9 & WCMC & Wireless Communications and Mobile Computing & Wiley \\
+		10 & & Wireless Networks & Springer \\
+		11 & IOT & IEEE Internet of Things Journal & IEEE \\
+		1 & SIGCOMM & ACM International Conference on Applications, Technologies, Architectures, and Protocols for Computer Communication & ACM \\
+		2 & MobiCom & ACM International Conference on Mobile Computing and Networking & ACM \\
+		3 & INFOCOM & IEEE International Conference on Computer Communications & IEEE \\
+		4 & NSDI & Symposium on Network System Design and Implementation & USENIX \\
+		1 & SenSys & ACM Conference on Embedded Networked Sensor Systems & ACM \\
+		2 & CoNEXT & ACM International Conference on Emerging Networking Experiments and Technologies & ACM \\
+		3 & SECON & IEEE International Conference on Sensing, Communication, and Networking & IEEE \\
+		4 & IPSN & International Conference on Information Processing in Sensor Networks & IEEE/ACM \\
+		5 & MobiSys & ACM International Conference on Mobile Systems, Applications, and Services & ACM \\
+		6 & ICNP & IEEE International Conference on Network Protocols & IEEE\tablenoteref{tn: 手动跨页表格附注标签IEEE} \\
+		7 & MobiHoc & International Symposium on Theory, Algorithmic Foundations, and Protocol Design for Mobile Networks and Mobile Computing & ACM/IEEE \\
+		8 & NOSSDAV & International Workshop on Network and Operating System Support for Digital Audio and Video & ACM\tablenoteref{tn: 手动跨页表格附注标签ACM} \\
+		9 & IWQoS & IEEE/ACM International Workshop on Quality of Service & IEEE \\
+		10 & IMC & ACM Internet Measurement Conference & ACM/USENIX \\
+		
+		
+	\end{longtable}
+
+	表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本
+
+	\newpage
+
+	\begin{longtable}{m{2em}<{\centering} p{4.5em} p{15em} p{6em}}
+		\caption{跨页带附注表格恰巧在附注开始处换页示例} \label{tab: 跨页带附注表格恰巧在附注开始处换页示例} \\
+		
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\CPcaption{4}{跨页带附注表格恰巧在附注中需要换页示例}\\
+		\toprule
+		\textbf{序号} & \textbf{刊物简称} & \textbf{刊物全称} & \textbf{出版社} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		\multicolumn{4}{l}{续下页} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\tablenotetext[5bp]{32.1em}{tn: 手动跨页表格附注标签Elsevier}{爱思唯尔，创办于1880年，属于RELX集团旗下，总部位于阿姆斯特丹。爱思唯尔是一家荷兰的国际化多媒体出版集团，主要为科学家、研究人员、学生、医学以及信息处理的专业人士提供信息产品和革新性工具。爱思唯尔是全球领先的科学与医学信息服务机构，旗下出版《柳叶刀》《细胞》等2800多种学术期刊。} \setcounter{tablenote}{99}\\
+		\tablenotetext(online)(2em)[5bp]{32.1em}{tn: 手动跨页表格附注标签USENIX}{USENIX成立于1975年，当时的名字叫做Unix用户群。它的主要目的是学习及开发Unix以及类似系统。1977年六月，美国电话电报公司的律师告诉用户群他们不能继续使用UNIX这个名字，因为UNIX是美国电话电报公司所拥有的一个商标。所以这个用户群更名成USENIX.从那以后，USENIX逐渐发展成一个倍受尊敬的由计算机操作系统用户，开发者和研究者所组成的机构。}% 注意这里不需要\\
+		\endlastfoot
+		
+		1 & JSAC & IEEE Journal on Selected Areas in Communications & IEEE \\
+		2 & TMC & IEEE Transactions on Mobile Computing & IEEE \\
+		3 & TON & IEEE/ACM Transactions on Networking & IEEE/ACM \\
+		1 & TOIT & ACM Transactions on Internet Technology & ACM \\
+		2 & TOMM & ACM Transactions on Multimedia Computing, Communications and Applications & ACM \\
+		3 & TOSN & ACM Transactions on Sensor Networks & ACM \\
+		4 & CN & Computer Networks & Elsevier \\
+		5 & TCOM & IEEE Transactions on Communications & IEEE \\
+		6 & TWC & IEEE Transactions on Wireless Communications & IEEE \\
+		1 & & Ad Hoc Networks & Elsevier \\
+		2 & CC & Computer Communications & Elsevier\tablenoteref{tn: 手动跨页表格附注标签Elsevier} \\
+		3 & TNSM & IEEE Transactions on Network and Service Management & IEEE \\
+		% 4 & & IET Communications & IET \\
+		% 5 & JNCA & Journal of Network and Computer Applications & Elsevier \\
+		% 6 & MONET & Mobile Networks and Applications & Springer \\
+		% 7 & & Networks & Wiley \\
+		% 8 & PPNA & Peer-to-Peer Networking and Applications & Springer \\
+		% 9 & WCMC & Wireless Communications and Mobile Computing & Wiley \\
+		% 10 & & Wireless Networks & Springer \\
+		% 11 & IOT & IEEE Internet of Things Journal & IEEE \\
+		1 & SIGCOMM & ACM International Conference on Applications, Technologies, Architectures, and Protocols for Computer Communication & ACM \\
+		2 & MobiCom & ACM International Conference on Mobile Computing and Networking & ACM \\
+		3 & INFOCOM & IEEE International Conference on Computer Communications & IEEE \\
+		4 & NSDI & Symposium on Network System Design and Implementation & USENIX\tablenoteref{tn: 手动跨页表格附注标签USENIX} \\
+		1 & SenSys & ACM Conference on Embedded Networked Sensor Systems & ACM \\
+		\pagebreak  % 用户可以尝试注释掉这条命令看看现象
+		2 & CoNEXT & ACM International Conference on Emerging Networking Experiments and Technologies & ACM \\
+		% 3 & SECON & IEEE International Conference on Sensing, Communication, and Networking & IEEE \\
+		% 4 & IPSN & International Conference on Information Processing in Sensor Networks & IEEE/ACM \\
+		% 5 & MobiSys & ACM International Conference on Mobile Systems, Applications, and Services & ACM \\
+		% 6 & ICNP & IEEE International Conference on Network Protocols & IEEE \\
+		% 7 & MobiHoc & International Symposium on Theory, Algorithmic Foundations, and Protocol Design for Mobile Networks and Mobile Computing & ACM/IEEE \\
+		% 8 & NOSSDAV & International Workshop on Network and Operating System Support for Digital Audio and Video & ACM \\
+		% 9 & IWQoS & IEEE/ACM International Workshop on Quality of Service & IEEE \\
+		% 10 & IMC & ACM Internet Measurement Conference & ACM/USENIX \\
+		
+		
+		
+	\end{longtable}
+
+	表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本表格后参照文本
 	
 	\clearpage
 	\section{伪代码}
 	
-	伪代码基于\shad{algorithm2e}宏包提供的\shad{algorithm}环境，默认不添加左右侧框线，且顶部框线和底部框线类比规范对表格的要求进行了加粗，字体大小也调整到了\textbf{五号字}，与表格保持一致。用户可以在载入文档类时添加\shad{boxruled}选项来恢复左右侧框线。该环境生成的伪码与正文文本保持相同宽度。
+	伪代码基于\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{notsored}algorithm2e}}宏包提供的\shad{algorithm}环境，默认不添加左右侧框线，且顶部框线和底部框线类比规范对表格的要求进行了加粗，字体大小也调整到了\textbf{五号字}，与表格保持一致。用户可以在载入文档类时添加\shad{boxruled}选项来恢复左右侧框线。该环境生成的伪码与正文文本保持相同宽度。
 	
-	除了\shad{algorithm2e}宏包本身提供的各种条件、循环语句，本模板基于宏包提供的接口，追加了\shad{Do While}和\shad{Loop}循环语句：
+	除了\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{notsored}algorithm2e}}宏包本身提供的各种条件、循环语句，本模板基于宏包提供的接口，追加了\shad{Do While}和\shad{Loop}循环语句：
 	\begin{itemize}
 		\item \shadcmd{DoWhile(<紧跟关键字do的文本，可用于添加注释>)\{<循环条件>\}\{<循环体>\}}
 		\item \shadcmd{Loop(<紧跟关键字loop的文本，可用于添加注释>)\{<循环体>\}}
@@ -785,9 +1034,9 @@
 	
 	本模板使用包含了带圈数字的字体来替换LaTeX绘制的带圈数字，提供了充足的带圈编号数量，同时保证了带圈脚注编号足够优雅。
 	
-	在正文中加入脚注直接在需要放置脚注标签的位置使用\\\shadcmd{footnote\{<脚注内容>\}}即可。
+	在正文中加入脚注直接在需要放置脚注标签的位置使用\shadcmd{footnote\{<脚注内容>\}}即可。
 	
-	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\\\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{\color{notsored}LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
+	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{\color{notsored}LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
 	
 	
 	\section{模板中的各种编号}
@@ -1013,7 +1262,9 @@
 	}
 	\end{verbatim}
 	
-	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
+	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{\color{notsored}研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
+
+	当用户漏掉了参考文献需要的强制域时，BibTeX编译会报错。在VScode中，编译将直接中断；在TeXstudio中，编译不会中断，但log窗口会打印错误信息。这是一种规范控制手段，并非模板bug。遇到这类问题，用户应该自行筛查漏掉了哪些信息。
 	
 	生成参考文献最耗费精力的是维护正确的\shad{ref.bib}数据库。在这之后，只需要在正文的对应位置使用以下两行代码即可插入完整的参考文献列表：
 	\begin{verbatim}
@@ -1029,9 +1280,9 @@
 		
 		\item 对电子文献，其类型众多，因此需要用户通过\shad{type=\{\}}域显式指定，如文献\cite{电子文献1}和\cite{电子文献2}；而对其他的文献类型，只要在\shad{@}符号后输入了正确的类型标识，对应的类型标签会自动生成，无需用户手动逐条添加。
 		
-		\item （2025.01.02）需要特别说明的参考文献类型是\shad{mastersthesis/phdthesis}，即学位论文。学校在撰写规范中提到参考文献排版应该遵循国标\href{https://lib.tsinghua.edu.cn/wj/GBT7714-2015.pdf}{\color{blue}GB/T 7714-2015}，在此国标中，对学位论文的引用不需要页码信息。但是，\textbf{学校的规范中又明确为学位论文引用添加了页码信息}。为此，我询问了学位办的相关老师，得到的答复大致是：“\textit{我翻阅了手边信通学院学生的论文，他们是写了页码信息的。但这个要求并没有那么严格，不会说没写就评审不过，历年也没有出现因为这个不过的情况，评审老师也没有严格挑。学位论文的质量并不是通过这个来评判的，不过我们这边还是建议写上}”。
+		\item （2025.01.02）需要特别说明的参考文献类型是\shad{mastersthesis/phdthesis}，即学位论文。学校在撰写规范中提到参考文献排版应该遵循国标\href{https://lib.tsinghua.edu.cn/wj/GBT7714-2015.pdf}{\color{notsored}GB/T 7714-2015}，在此国标中，对学位论文的引用不需要页码信息。但是，\textbf{学校的规范中又明确为学位论文引用添加了页码信息}。为此，我询问了学位办的相关老师，得到的答复大致是：“\textit{我翻阅了手边信通学院学生的论文，他们是写了页码信息的。但这个要求并没有那么严格，不会说没写就评审不过，历年也没有出现因为这个不过的情况，评审老师也没有严格挑。学位论文的质量并不是通过这个来评判的，不过我们这边还是建议写上}”。
    
-		本模板原本的实现方式是遵循学校的撰写规范，将学位论文的页码信息设置为了强制域。如果缺少该信息，使用VScode作为编辑器时将报错而无法完成编译；TeXstudio则能跳过这种小问题继续编译，但BibTeX仍会输出错误提醒。GitHub用户\href{https://github.com/zealrussell}{\color{blue}@zealrussell}在使用VScode撰写论文时，发现不为学位论文这类参考文献添加页码信息将无法顺利编译，遂发起了issue。
+		本模板原本的实现方式是遵循学校的撰写规范，将学位论文的页码信息设置为了强制域。如果缺少该信息，使用VScode作为编辑器时将报错而无法完成编译；TeXstudio则能跳过这种小问题继续编译，但BibTeX仍会输出错误提醒。GitHub用户\href{https://github.com/zealrussell}{\color{notsored}@zealrussell}在使用VScode撰写论文时，发现不为学位论文这类参考文献添加页码信息将无法顺利编译，遂发起了issue。
 		
 		经过查阅相关文件，以及向学位办老师求证，本模板调整了此类文献的排版规则。现在，学位论文的`pages`域将不再是强制域，缺少该信息不会再中断编译过程，但会输出警告，提醒用户某条参考文献条目缺少页码信息，见参考文献\cite{陈念永2001毫米波细胞生物效应及抗肿瘤研究无页码}。如果你使用TeXstudio，则在编译参考文献辅助文件时BibTeX会发出该警告（图\ref{fig: TeXstudio对参考文献缺失信息的提醒}）；如果你使用VScode，则需要去检查\shad{problems}窗口输出的信息。它是按文件对警告进行分类的，你需要先定位到\shad{ref.bib}（图\ref{fig: VScode对参考文献缺失信息的提醒}）。本模板将是否在引用学位论文时添加页码信息的选择权交予用户，但我个人仍建议各位遵循学校的规范。
 	\end{itemize}

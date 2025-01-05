@@ -299,7 +299,7 @@
 \RequirePackage[font=small]{subfig}
 %\RequirePackage{soul}
 \RequirePackage[numbers,sort&compress]{natbib}  % 排版参考文献和文献引用样式需要
-\RequirePackage{nomencl}
+\RequirePackage[nomentbl]{nomencl}
 \RequirePackage{amssymb, amsmath, amsthm}
 \RequirePackage{caption}
 \RequirePackage[algochapter, linesnumbered, ruled]{algorithm2e}
@@ -1154,15 +1154,56 @@
 
 \newlength{\CPcapwidth}  % 记录长表格跨页表题的宽度
 \newcommand{\CPcaptext}{} % 记录跨页表题完整文本
-\newcommand{\CPcaption}[1]{%
-	\small%
-	\renewcommand{\CPcaptext}{\tablename\ \thetable\ #1（续）}
-	\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
-	\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
-		{\makebox[0.5em][c]{\vspace{7bp}\CPcaptext}}% 外层套极窄的\makebox以应对跨页表宽低于表题长度的情况
-		{\makebox[0.5em][c]{\hspace*{-5.5bp}\parbox[b]{\LTcapwidth}{\small\vspace{7bp}\CPcaptext}}}%
-	\vspace{4bp}
-}
+\newcommand{\CPcaption}[2]{%
+	\multicolumn{#1}{c}{%
+		\small%
+		\renewcommand{\CPcaptext}{\tablename\ \thetable\ #2（续）}
+		\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
+		\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
+			{\makebox[0.5em][c]{\vspace{7bp}\CPcaptext}}% 外层套极窄的\makebox以应对跨页表宽低于表题长度的情况
+			{\makebox[0.5em][c]{\hspace*{-5.5bp}\parbox[b]{\LTcapwidth}{\small\vspace{7bp}\CPcaptext}}}%
+		\vspace{4bp}%
+	}%
+}%
+
+
+%%%%%% 处理带附注长表格
+\newcounter{tablenote}  % 表格附注编号
+\counterwithin{tablenote}{table}  % 表格附注编号随表格编号重置
+\renewcommand{\thetablenote}{\arabic{tablenote}}
+
+%% 处理附注内容
+\NewDocumentCommand{\tablenotetext}{D(){} D(){1em} O{0bp} m m m}{%
+	\refstepcounter{tablenote}\label{#5}%
+	\vspace*{#3}%
+	\ifthenelse{\equal{#1}{online}}%
+		{%
+			\raggedright%
+			\makebox[\linewidth][l]{%
+				\hspace*{-\tabcolsep}%
+				\rlap{\makebox[#2][l]{\thetablenote}\parbox[t]{#4-#2}{#6}}%
+			}%
+		}%
+		{%
+			\raggedright%
+			\makebox[\linewidth][l]{%
+				\hspace*{-\tabcolsep}%
+				\rlap{\parbox[t]{#4}{\textsuperscript{\thetablenote\,}#6}}%
+			}%
+		}%
+}%
+
+%% 在表格中引用附注
+\newcommand{\tablenoteref}[1]{%
+	\textsuperscript{\makebox[1bp][l]{\ref{#1}}}%
+}%
+
+% 用于为threeparttable排版的附注添加交叉引用功能
+\newcommand{\puttablenotelabel}[1]{%
+	\refstepcounter{tablenote}\label{#1}%
+	\thetablenote%
+}%
+
 
 
 %%%%%% 若要调整图、表计数器和其他计数器的关联关系，使用：
@@ -1311,33 +1352,85 @@
 % 设置术语行间距，https://blog.csdn.net/weixin_46046053/article/details/121183785
 \setlength{\nomitemsep}{0bp}
 % 缩略词表添加新条目，https://blog.csdn.net/ya6543/article/details/113075774
-\newlength{\nomdescrchnwidth}
+\newlength{\nomdescrchnwidth}  % 用于控制缩略词中文描述的宽度
 \newcommand{\nomdescr}[1]{%
-	\parbox[t]{\linewidth-\nomdescrchnwidth}{\raggedright\strut #1 \strut}%
+	\parbox[t]{\linewidth-\nomdescrchnwidth-\tabcolsep}{\raggedright\strut#1\strut}%
 	\ignorespaces%
 }%
 \newcommand{\nomdescrchn}[1]{%
-	\parbox[t]{\nomdescrchnwidth}{\strut #1 \strut}%
+	\parbox[t]{\nomdescrchnwidth}{\strut#1\strut}%
 	\ignorespaces%
 }%
 \newcommand{\nomchn}[4][]{%
 	\nomenclature[#1]{#2}{%
 		\nomdescr{#3}%
+		\hspace*{\tabcolsep}%
 		\nomdescrchn{#4}%
-	}%
+	}{}{}%
 }%
+\newcommand{\nomheadpartone}{}  % 用于设置缩略词表表头的第一部分，即“英文缩写”
+\newcommand{\nomheadparttwo}{}  % 用户设置缩略词表表头的第二部分，即“英文全称”加“中文全称”
 
-% 重定义缩略词表打印命令，加入书签，并设置单面印刷
+%%% 重定义缩略词表打印命令，加入书签，并设置单面印刷
 \let\oldprintnomenclature\printnomenclature
-\RenewDocumentCommand{\printnomenclature}{O{5em} D(){7.5em}}{
+\RenewDocumentCommand{\printnomenclature}{O{5em} D(){7.5em}}{{% 多加一层{}限制\longtableprop的作用域
 	\newpage%
 	\markboth{缩略词表}{缩略词表}%
 	\pdfbookmark[0]{缩略词表}{bookmarknomenclature\thepage}%
-	\renewcommand{\nompreamble}{{\noindent \bfseries \makebox[#1][l]{英文缩写} \makebox[\linewidth-#1-#2-\tabcolsep][l]{英文全称} \makebox[#2][l]{中文全称}}}  % 缩略词表额外注释
-	\setlength{\nomdescrchnwidth}{#2}
-	\oldprintnomenclature[#1]
-	\insertevenemptypage
+	\renewcommand{\longtableprop}{%
+		\zihao{-4}\setlength\baselineskip{12bp}\selectfont%
+		\renewcommand{\arraystretch}{1.3}%
+	}% 修改前面重定义\longtable时插入的属性命令来调整缩略词表的字体、行距
+	\setnomtableformat{p{#1}p{\textwidth-#1-4\tabcolsep}@{}l@{}l@{}l}% 设置缩略词表在nomentbl选项下的各列，抑制不需要的列，参考nomencl宏包说明
+	\renewcommand{\nompreamble}{\vspace*{-15bp}}% 利用nompreamble调整缩略词表表头和表题的垂直间距
+	\renewcommand{\nomheadpartone}{{\noindent \bfseries \makebox[#1][l]{英文缩写}}}%
+	\renewcommand{\nomheadparttwo}{{\noindent \bfseries \makebox[\linewidth-#2-\tabcolsep][l]{英文全称}\hspace*{\tabcolsep}\makebox[#2][l]{中文全称}}}%
+	\setlength{\nomdescrchnwidth}{#2}%
+	\oldprintnomenclature[#1]%
+	\insertevenemptypage%
+}}%
+
+%% 修改nomemcl宏包定义的\thenomenclature，让缩略词表在每一页都显示表头
+\def\thenomenclature{%
+  \providecommand*{\listofnlsname}{\nomname}%
+  \if@nomencl@tocbasic
+    \let\list@fname\listofnlsname
+    \def\@currext{nls}%
+    \tocbasic@listhead{\list@fname}%
+  \else
+    \@ifundefined{chapter}%
+    {
+      \section*{\nomname}
+      \if@intoc\addcontentsline{toc}{section}{\nomname}\fi%
+    }%
+    {
+      \chapter*{\nomname}
+      \@mkboth{\nomname}{\nomname}%
+      \if@intoc\addcontentsline{toc}{chapter}{\nomname}\fi%
+    }%
+  \fi
+  \nompreamble
+  \if@nomentbl
+    \let\itemOrig=\item
+    \def\item{\gdef\item{\\}}%
+    \expandafter\longtable\expandafter{\@nomtableformat}
+    & \nomheadpartone & \nomheadparttwo \\
+    \endfirsthead
+    & \nomheadpartone & \nomheadparttwo \\
+    \endhead
+    \endfoot
+    \endlastfoot
+  \else
+    \list{}{%
+      \labelwidth\nom@tempdim
+      \leftmargin\labelwidth
+      \advance\leftmargin\labelsep
+      \itemsep\nomitemsep
+      \let\makelabel\nomlabel}%
+  \fi
 }
+
+
 \makenomenclature
 
 
