@@ -106,8 +106,76 @@
 \newboolean{reviewflag}
 \setboolean{reviewflag}{false}
 
+\newboolean{isinternational}
+\setboolean{isinternational}{false}
 
+
+\newcommand{\uestccovername}{论文封面}
+\newcommand{\uestctitlepagename}{中文扉页}
+\newcommand{\uestcentitlepagename}{英文扉页}
+\newcommand{\uestcdeclarationname}{独创性声明}
 \newcommand{\uestctocname}{目\hspace{1em}录}
+\newcommand{\uestclofname}{图目录}
+\newcommand{\uestcfigurename}{图}
+\newcommand{\uestclotname}{表目录}
+\newcommand{\uestctablename}{表}
+\newcommand{\uestclosname}{主要符号表}
+\newcommand{\uestcloaname}{缩略词表}
+\newcommand{\uestcacknowledgementname}{致\hspace{1em}谢}
+\newcommand{\uestcreferencename}{参考文献}
+\newcommand{\uestcappendixname}{附录}
+\newcommand{\uestcdefinitionname}{定义}
+\newcommand{\uestcaxiomname}{公理}
+\newcommand{\uestctheoremname}{定理}
+\newcommand{\uestcpropositionname}{命题}
+\newcommand{\uestccorollaryname}{推论}
+\newcommand{\uestclemmaname}{引理}
+\newcommand{\uestcassumptionname}{假设}
+\newcommand{\uestcexamplename}{示例}
+\newcommand{\uestcproofname}{证明}
+\newcommand{\uestcalgorithmname}{算法}
+\newcommand{\uestcinputname}{输入}
+\newcommand{\uestcoutputname}{输出}
+\newcommand{\uestccolon}{：}
+\newcommand{\tablecontinuedtag}{（续）}
+\newcommand{\uestclofnumwidth}{1.4em}
+\newcommand{\uestclotnumwidth}{1.4em}
+
+% 将上述信息切换成留学生版本
+\newcommand{\changetointernational}{%
+	\renewcommand{\uestccovername}{Cover}
+	\renewcommand{\uestctitlepagename}{Chinese Title Page}
+	\renewcommand{\uestcentitlepagename}{English Title Page}
+	\renewcommand{\uestcdeclarationname}{Declaration}
+	\renewcommand{\uestctocname}{C\MakeLowercase{ontents}}% 页眉部分小写，https://latexstudio.net/archives/7919.html
+	\renewcommand{\uestclofname}{F\MakeLowercase{igures}}
+	\renewcommand{\uestcfigurename}{Figure}
+	\renewcommand{\uestclotname}{T\MakeLowercase{ables}}
+	\renewcommand{\uestctablename}{Table}
+	\renewcommand{\uestclosname}{Symbols}
+	\renewcommand{\uestcloaname}{A\MakeLowercase{cronyms}}
+	\renewcommand{\uestcacknowledgementname}{Acknowledgements}
+	\renewcommand{\uestcreferencename}{R\MakeLowercase{eferences}}
+	\renewcommand{\uestcappendixname}{Appendix~}
+	\renewcommand{\uestcdefinitionname}{Definition\,\!}
+	\renewcommand{\uestcaxiomname}{Axiom\,\!}
+	\renewcommand{\uestctheoremname}{Theorem\,\!}
+	\renewcommand{\uestcpropositionname}{Proposition\,\!}
+	\renewcommand{\uestccorollaryname}{Corollary\,\!}
+	\renewcommand{\uestclemmaname}{Lemma\,\!}
+	\renewcommand{\uestcassumptionname}{Assumption\,\!}
+	\renewcommand{\uestcexamplename}{Example\,\!}
+	\renewcommand{\uestcproofname}{Proof}
+	\renewcommand{\uestcalgorithmname}{Algorithm\,\!}
+	\renewcommand{\uestcinputname}{Input}
+	\renewcommand{\uestcoutputname}{Output}
+	\renewcommand{\uestccolon}{:\space}
+	\renewcommand{\tablecontinuedtag}{ (continued)}
+	\setboolean{isinternational}{true}
+	\renewcommand{\uestclofnumwidth}{3em}
+	\renewcommand{\uestclotnumwidth}{2.6em}
+}
+
 % 控制目录中各级标题的缩进距离
 \newcommand{\tocsecindent}{1.7em}
 \newcommand{\tocsubsecindent}{3.6em}
@@ -223,6 +291,19 @@
 	\DegLv{硕士}
 }
 
+\DeclareOption{intmaster}{
+	\renewcommand{\evenpagemark}{Master Thesis of University of Electronic Science and Technology of China}
+	\renewcommand{\achievementtext}{Research Results Obtained During the Study for Master's Degree}
+	\renewcommand{\covertitletext}{硕士学位论文}
+	\renewcommand{\covertitleentext}{MASTER THESIS}
+	\renewcommand{\majlabel}{学科专业}
+	\setlength{\nametitleorgskip}{6bp}
+	\renewcommand{\majorlabel}{学科专业}
+	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
+	\DegLv{硕士}
+	\changetointernational
+}
+
 \DeclareOption{doctor}{
 	\renewcommand{\evenpagemark}{电子科技大学博士学位论文}
 	\renewcommand{\achievementtext}{攻读博士学位期间取得的成果}
@@ -246,6 +327,20 @@
 	\renewcommand{\entitlepagemidtext}{A Doctoral Dissertation Submitted to \\ University of Electronic Science and Technology of China}
 	\DegLv{博士}
 }
+
+\DeclareOption{intdoctor}{
+	\renewcommand{\evenpagemark}{Doctoral Dissertation of University of Electronic Science and Technology of China}
+	\renewcommand{\achievementtext}{Research Results Obtained During the Study for Doctoral Degree}
+	\renewcommand{\covertitletext}{博士学位论文}
+	\renewcommand{\covertitleentext}{DOCTORAL DISSERTATION}
+	\renewcommand{\majlabel}{学科专业}
+	\setlength{\nametitleorgskip}{6bp}
+	\renewcommand{\majorlabel}{学科专业}
+	\renewcommand{\entitlepagemidtext}{A Doctoral Dissertation Submitted to \\ University of Electronic Science and Technology of China}
+	\DegLv{博士}
+	\changetointernational
+}
+
 
 \DeclareOption{subfigsimple}{
 	\renewcommand{\subfigformat}{simple}
@@ -321,6 +416,8 @@
 \RequirePackage{multirow}  % 表格合并多行单元格需要
 \RequirePackage{extarrows} % 带文字的长等号与箭头需要
 \RequirePackage{xintfrac}  % 计算两个长度的比值需要，https://tex.stackexchange.com/questions/200581
+\RequirePackage{pifont}  % 实心五角星符号需要，https://dl.icdst.org/pdfs/files3/1900293ae8829c4c53fe55f2c9f0077c.pdf
+\RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
 
 
 %%----------------- main code -----------------
@@ -391,13 +488,28 @@
 \setcitestyle{numbers,square}
 
 
+\newcommand{\confidential}{%
+	\begin{textblock*}{1cm}(18cm,2cm)%
+		\phantom{占位}%
+	\end{textblock*}%
+}%
+
+\NewDocumentCommand{\setconfidential}{D(){18cm,2cm} O{\zihao{4}\bfseries} m m }{%
+	\renewcommand{\confidential}{%
+		\begin{textblock*}{1cm}(#1)
+			\makebox[1bp][r]{#2#3\ding{72}#4}
+		\end{textblock*}
+	}%
+}%
+
 
 %% 构建论文封面，研究生和学士差异很大
 \ifthenelse{\equal{\dissertationtype}{graduate}}{
 	\newcommand\uestccover[8][]{
 		\newpage\thispagestyle{empty}
-		\pdfbookmark[0]{论文封面}{bookmarkcover\thepage}%
-		\vspace*{13bp}
+		\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
+		\vspace*{13bp}%
+		\confidential%
 		{\fontsize{22bp}{16.9bp}\selectfont\centering%
 			电\hspace{0.35cm}子\hspace{0.35cm}科\hspace{0.35cm}%
 			技\hspace{0.35cm}大\hspace{0.35cm}学\hspace{0.35cm} \par}
@@ -504,8 +616,9 @@
 }{%
 	\newcommand\uestccover[8][]{%
 		\newpage\thispagestyle{empty}%
-		\pdfbookmark[0]{论文封面}{bookmarkcover\thepage}%
+		\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
 		\vspace*{-12bp}%
+		\confidential%
 		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
 			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
 			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
@@ -621,7 +734,7 @@
 	\newpage\thispagestyle{empty}
 	\rmfamily\zihao{-4}\raggedright%
 	\vspace*{-\baselineskip}\par\vspace*{4bp}%
-	\pdfbookmark[0]{中文扉页}{bookmarkzhtitlepage\thepage}%
+	\pdfbookmark[0]{\uestctitlepagename}{bookmarkzhtitlepage\thepage}%
 	\parbox[b][0.8cm][b]{1.5cm}{\filright 分类号}%
 	\parbox[b][0.8cm][b]{6cm}{%
 		\centering%
@@ -807,7 +920,7 @@
 \newcommand{\uestcentitlepage}[7]{{%
 	\newpage\thispagestyle{empty}%
 	\zihao{3}\centering%
-	\pdfbookmark[0]{英文扉页}{bookmarkentitlepage\thepage}%
+	\pdfbookmark[0]{\uestcentitlepagename}{bookmarkentitlepage\thepage}%
 	\parbox[t][5cm][c]{13cm}{%
 		\zihao{-2}\setlength{\baselineskip}{18bp}%
 		\bfseries\centering\vspace*{-15bp}%
@@ -920,7 +1033,7 @@
 	\newpage\thispagestyle{empty}
 	
 	\vspace*{18bp}%
-	\pdfbookmark[0]{独创性声明}{bookmarkdeclaration\thepage}%
+	\pdfbookmark[0]{\uestcdeclarationname}{bookmarkdeclaration\thepage}%
 	{\hwzs\bfseries\centering
 		\zihao{-2}\setlength{\baselineskip}{18bp}\selectfont
 		独创性声明 \par}
@@ -1013,7 +1126,9 @@
 
 
 %%%%%% 重定义各种编号的打印形式
-\renewcommand{\thechapter}{第\zhnum{chapter}章}
+\ifthenelse{\boolean{isinternational}}%
+	{\renewcommand{\thechapter}{Chapter \arabic{chapter}}}
+	{\renewcommand{\thechapter}{第\zhnum{chapter}章}}%
 \renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
@@ -1042,8 +1157,9 @@
 \setlength{\floatsep}{6bp} % 相邻两个浮动体之间的垂直距离
 \setlength{\intextsep}{6bp}  % h模式浮动体前后间距
 \setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或页面中第一个b模式的浮动体与文本的间距。
+\renewcommand{\figurename}{\uestcfigurename}% 如此才能修改图目录里的图标签前缀
 \captionsetup[figure]{%
-	name={图},%
+	name={\uestcfigurename},%
 	labelsep=space,%
 	font=small,%
 	margin={\uestcfigcapmargin, \uestcfigcapmargin},%
@@ -1070,8 +1186,9 @@
 
 \robustify{\subref}  % 让\subref更易用：https://tex.stackexchange.com/questions/228973/argument-of-captionydblarg-has-an-extra
 
+\renewcommand{\tablename}{\uestctablename}% 如此才能修改表目录和longtable里的表标签前缀
 \captionsetup[table]{
-	name={表},
+	name={\uestctablename},
 	labelsep=space,
 	font=small,
 	margin={4em, 4em},
@@ -1157,7 +1274,7 @@
 \newcommand{\CPcaption}[2]{%
 	\multicolumn{#1}{c}{%
 		\small%
-		\renewcommand{\CPcaptext}{\tablename\ \thetable\ #2（续）}
+		\renewcommand{\CPcaptext}{\tablename\ \thetable\ #2\tablecontinuedtag}
 		\settowidth{\CPcapwidth}{\CPcaptext}% 先记录当前跨页表题的排版长度
 		\ifthenelse{\LTcapwidth > \CPcapwidth}% 比较规范要求的表题宽度和表题实际宽度，再做决断，https://runebook.dev/cn/docs/latex/_005csettowidth
 			{\makebox[0.5em][c]{\vspace{7bp}\CPcaptext}}% 外层套极窄的\makebox以应对跨页表宽低于表题长度的情况
@@ -1250,9 +1367,12 @@
 \titlespacing{\subsubsection}{0pt}{12bp}{6bp}
 
 %%%%%% 根据chapter对页眉页脚进行设置，并禁止section修改页眉页脚
-\newcommand\chaptermarkprefix{第\zhnum{chapter}章}
-\renewcommand\chaptermark[1]
-{\markboth{\chaptermarkprefix \hspace{\wordsep} #1}{\evenpagemark}}
+\ifthenelse{\boolean{isinternational}}%
+	{\newcommand\chaptermarkprefix{Chapter \arabic{chapter}}}%
+	{\newcommand\chaptermarkprefix{第\zhnum{chapter}章}}%
+\renewcommand{\chaptermark}[1]{%
+	\markboth{\chaptermarkprefix \hspace{\wordsep} #1}{\evenpagemark}%
+}%
 \renewcommand\sectionmark[1]{}
 
 \newcommand{\zhabstract}{%
@@ -1299,13 +1419,13 @@
 \let\oldtableofcontents\tableofcontents
 \renewcommand{\tableofcontents}{%
 	\newpage%
-	\pdfbookmark[0]{目\hspace{1em}录}{bookmarktoc\thepage}%
+	\pdfbookmark[0]{\uestctocname}{bookmarktoc\thepage}%
 	\oldtableofcontents
 	\insertevenemptypage  % 为目录部分添加偶空白页
 }
 
-\renewcommand{\listfigurename}{图目录}  % 修改图目录标题
-\renewcommand{\listtablename}{表目录}   % 修改表目录标题
+\renewcommand{\listfigurename}{\uestclofname}  % 修改图目录标题
+\renewcommand{\listtablename}{\uestclotname}   % 修改表目录标题
 \let\oldlistoffigures\listoffigures
 \renewcommand{\listoffigures}{{
 	%	\let\oldnumberline\numberline
@@ -1313,10 +1433,10 @@
 	\renewcommand\addvspace[1]{}  % 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
 	\renewcommand{\cftfigpresnum}{\figurename~}  % 给图目录条目加上标签“图”
 	\setlength{\cftfigindent}{0em}  % 取消图目录条目左边距
-	\addtolength{\cftfignumwidth}{1.4em}  % 调整图目录条目悬挂缩进量
+	\addtolength{\cftfignumwidth}{\uestclofnumwidth}  % 调整图目录条目悬挂缩进量
 	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
 	\newpage%
-	\pdfbookmark[0]{图目录}{bookmarklof\thepage}%
+	\pdfbookmark[0]{\uestclofname}{bookmarklof\thepage}%
 	\oldlistoffigures
 	\insertevenemptypage
 }}
@@ -1327,10 +1447,10 @@
 	\renewcommand\addvspace[1]{}  % 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
 	\renewcommand{\cfttabpresnum}{\tablename~}  % 给表目录条目加上标签“图”
 	\setlength{\cfttabindent}{0em}  % 取消表目录条目左边距，参考tocloft宏包文档
-	\addtolength{\cfttabnumwidth}{1.4em}  % 调整表目录条目悬挂缩进量
+	\addtolength{\cfttabnumwidth}{\uestclotnumwidth}  % 调整表目录条目悬挂缩进量
 	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
 	\newpage%
-	\pdfbookmark[0]{表目录}{bookmarklot\thepage}%
+	\pdfbookmark[0]{\uestclotname}{bookmarklot\thepage}%
 	\oldlistoftables
 	\insertevenemptypage
 }}
@@ -1340,15 +1460,15 @@
 %%%%%% 主要符号表
 \newcommand{\listofsymbs}{
 	\newpage%
-	\pdfbookmark[0]{主要符号表}{bookmarklistofsymbs\thepage}%
-	\chapter*{主要符号表}%
-	\markboth{主要符号表}{主要符号表}%
+	\pdfbookmark[0]{\uestclosname}{bookmarklistofsymbs\thepage}%
+	\chapter*{\uestclosname}%
+	\markboth{\uestclosname}{\uestclosname}%
 	%	\insertevenemptypage
 }
 
 
 %%%%%% 缩略词表，https://blog.csdn.net/xovee/article/details/118604572
-\renewcommand{\nomname}{缩略词表}  % 修改缩略词表标题
+\renewcommand{\nomname}{\uestcloaname}  % 修改缩略词表标题
 % 设置术语行间距，https://blog.csdn.net/weixin_46046053/article/details/121183785
 \setlength{\nomitemsep}{0bp}
 % 缩略词表添加新条目，https://blog.csdn.net/ya6543/article/details/113075774
@@ -1375,8 +1495,8 @@
 \let\oldprintnomenclature\printnomenclature
 \RenewDocumentCommand{\printnomenclature}{O{5em} D(){7.5em}}{{% 多加一层{}限制\longtableprop的作用域
 	\newpage%
-	\markboth{缩略词表}{缩略词表}%
-	\pdfbookmark[0]{缩略词表}{bookmarknomenclature\thepage}%
+	\markboth{\uestcloaname}{\uestcloaname}%
+	\pdfbookmark[0]{\uestcloaname}{bookmarknomenclature\thepage}%
 	\renewcommand{\longtableprop}{%
 		\zihao{-4}\setlength\baselineskip{12bp}\selectfont%
 		\renewcommand{\arraystretch}{1.3}%
@@ -1435,12 +1555,12 @@
 
 
 %%%%%% 参考文献相关设置
+\renewcommand{\bibname}{\uestcreferencename}
 \renewcommand{\bibfont}{\zihao{5}\setlength{\baselineskip}{20bp}\selectfont}
 \setlength{\bibsep}{0bp \@plus 2bp \@minus 1bp}  % 调整参考文献条目间距，设置橡胶长度以减少条目强制不跨页导致的页尾空白
 \renewcommand\@biblabel[1]{[#1]\hfill}  % 调整参考文献编号为左对齐，https://tex.stackexchange.com/questions/102680
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{{
-	\renewcommand{\rightmark}{\evenpagemark}
 	% 禁止参考文献条目跨页：
 	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
 	\interlinepenalty=10000
@@ -1448,7 +1568,10 @@
 	% https://blog.csdn.net/weixin_34204057/article/details/91812554
 	\clearpage
 	\phantomsection
-	\addcontentsline{toc}{chapter}{参考文献}
+	\addcontentsline{toc}{chapter}{\uestcreferencename}
+	\renewcommand{\rightmark}{\evenpagemark}
+	\renewcommand{\rightmark}{\evenpagemark}
+	\markboth{\uestcreferencename}{\evenpagemark}
 	\oldbibliography{#1}
 }}
 
@@ -1466,18 +1589,22 @@
 	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
 	{} % <定理头格式指定> 一般留空
 \theoremstyle{uestc} % plain: regular+italic, definition: regular++, remark: italic+regular
-\newtheorem{definition}{定义}
-\newtheorem{theorem}{定理}
-\newtheorem{proposition}{命题}
-\newtheorem{corollary}{推论}
-\newtheorem{lemma}{引理}
-\newtheorem{assumption}{假设}
+\newtheorem{definition}{\uestcdefinitionname}
+\newtheorem{axiom}{\uestcaxiomname}
+\newtheorem{theorem}{\uestctheoremname}
+\newtheorem{proposition}{\uestcpropositionname}
+\newtheorem{corollary}{\uestccorollaryname}
+\newtheorem{lemma}{\uestclemmaname}
+\newtheorem{example}{\uestcexamplename}
+\newtheorem{assumption}{\uestcassumptionname}
 % 让这些环境随章节重置编号
 \counterwithin{definition}{chapter}
+\counterwithin{axiom}{chapter}
 \counterwithin{theorem}{chapter}
 \counterwithin{proposition}{chapter}
 \counterwithin{corollary}{chapter}
 \counterwithin{lemma}{chapter}
+\counterwithin{example}{chapter}
 \counterwithin{assumption}{chapter}
 %\renewenvironment{proof}{{\sffamily 证明：}}{\hfill $\blacksquare$\par}  % https://blog.csdn.net/robert_chen1988/article/details/61204853
 \renewenvironment{proof}[1][\proofname]{\par
@@ -1487,17 +1614,19 @@
 	\item[\hskip\labelsep
 	\sffamily\upshape
 	\hspace*{\parindent-3pt}
-	#1\@addpunct{：}\hspace*{-5pt}]\ignorespaces
+	#1\@addpunct{\uestccolon}\hspace*{-5pt}]\ignorespaces
 }{
 	\popQED\endtrivlist\@endpefalse
 }  % https://ask.latexstudio.net/index.php/ask/article/647.html
-\renewcommand{\proofname}{证明}
+\renewcommand{\proofname}{\uestcproofname}
 %\renewcommand{\proofname}{\sffamily\upshape \hspace*{\parindent}证明：\hspace*{-0.45em}\nopunct}  % https://zhuanlan.zhihu.com/p/680966530
 \renewcommand{\thedefinition}{\arabic{chapter}.\arabic{definition}}
+\renewcommand{\theaxiom}{\arabic{chapter}.\arabic{axiom}}
 \renewcommand{\thetheorem}{\arabic{chapter}.\arabic{theorem}}
 \renewcommand{\theproposition}{\arabic{chapter}.\arabic{proposition}}
 \renewcommand{\thecorollary}{\arabic{chapter}.\arabic{corollary}}
 \renewcommand{\thelemma}{\arabic{chapter}.\arabic{lemma}}
+\renewcommand{\theexample}{\arabic{chapter}.\arabic{example}}
 \renewcommand{\theassumption}{\arabic{chapter}.\arabic{assumption}}
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
@@ -1515,7 +1644,7 @@
 
 
 %%%%%%% 修改伪代码相关设置
-\renewcommand{\algorithmcfname}{算法}  % 修改伪代码标题标签， https://blog.csdn.net/zhenaoxi1077/article/details/90449433
+\renewcommand{\algorithmcfname}{\uestcalgorithmname}  % 修改伪代码标题标签， https://blog.csdn.net/zhenaoxi1077/article/details/90449433
 \renewcommand{\thealgocf}{\arabic{chapter}-\arabic{algocf}}  % 修改伪代码编号样式， https://tex.stackexchange.com/questions/62240
 \SetAlgoHangIndent{0bp}  % 去掉伪码段首的首行悬挂缩进，https://tex.stackexchange.com/questions/581839
 
@@ -1538,8 +1667,8 @@
 \SetCommentSty{textbf}  % 设置伪码中注释文本的排版样式，可选：textbf、textsf、texttt（默认）、emph、text、textit等
 \setlength{\algomargin}{1.5em}  % 伪代码文本离左框线的距离
 
-\SetKwInOut{Input}{输入}
-\SetKwInOut{Output}{输出}
+\SetKwInOut{Input}{\uestcinputname}
+\SetKwInOut{Output}{\uestcoutputname}
 \SetKwRepeat{DoWhile}{do}{while}  % \DoWhile{条件}{循环体}
 \SetKwBlock{Loop}{loop}{end}  %  \Loop{循环体}，https://tex.stackexchange.com/questions/264256
 
@@ -1596,9 +1725,9 @@
 
 %%%%%% 致谢
 \newcommand{\acknowledgement}{
-	\chapter*{致\hspace{1em}谢}
-	\markboth{致\hspace{1em}谢}{\evenpagemark}
-	\addcontentsline{toc}{chapter}{致\hspace{1em}谢}
+	\chapter*{\uestcacknowledgementname}
+	\markboth{\uestcacknowledgementname}{\evenpagemark}
+	\addcontentsline{toc}{chapter}{\uestcacknowledgementname}
 }
 
 
@@ -1606,19 +1735,21 @@
 \let\oldappendix\appendix
 \renewcommand{\appendix}{
 	\oldappendix
-	\renewcommand{\thechapter}{附录\Alph{chapter}}
+	\renewcommand{\thechapter}{\uestcappendixname\Alph{chapter}}
 	\renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
 	\renewcommand{\thefigure}{\Alph{chapter}-\arabic{figure}}
 	\renewcommand{\thetable}{\Alph{chapter}-\arabic{table}}
 	\renewcommand{\theequation}{\Alph{chapter}-\arabic{equation}}
 	\renewcommand{\thedefinition}{\Alph{chapter}.\arabic{definition}}
+	\renewcommand{\theaxiom}{\Alph{chapter}.\arabic{axiom}}
 	\renewcommand{\thetheorem}{\Alph{chapter}.\arabic{theorem}}
 	\renewcommand{\theproposition}{\Alph{chapter}.\arabic{proposition}}
 	\renewcommand{\thecorollary}{\Alph{chapter}.\arabic{corollary}}
 	\renewcommand{\thelemma}{\Alph{chapter}.\arabic{lemma}}
+	\renewcommand{\theexample}{\Alph{chapter}.\arabic{example}}
 	\renewcommand{\theassumption}{\Alph{chapter}.\arabic{assumption}}
 	\renewcommand{\thealgocf}{\Alph{chapter}-\arabic{algocf}}
-	\renewcommand\chaptermarkprefix{附录\Alph{chapter}}
+	\renewcommand\chaptermarkprefix{\uestcappendixname\Alph{chapter}}
 }
 
 
