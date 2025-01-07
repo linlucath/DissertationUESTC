@@ -916,6 +916,9 @@
 	\parbox[b][1.5cm][b]{15cm}{注1：注明《国际十进分类法UDC》的类号。}
 	\par\vspace*{-\baselineskip}\insertemptypage}}
 
+
+
+\newlength{\disciplineheight}
 %% 英文扉页
 \newcommand{\uestcentitlepage}[7]{{%
 	\newpage\thispagestyle{empty}%
@@ -937,14 +940,17 @@
 		{\parbox[t][1.2cm]{15cm}{}}%
 		{\parbox[t][0.8cm]{15cm}{}}%
 	\par\vspace*{6pt}%
-	\parbox[t][2.4cm][t]{15cm}{%
+	\settowidth{\bfseries\engdisciplinewidth}{#2}%
+	\setlength{\engdisciplinewidthlimit}{12cm}%
+	\ifthenelse{\engdisciplinewidth > \engdisciplinewidthlimit}%
+		{\setlength{\disciplineheight}{2.4cm}}%
+		{\setlength{\disciplineheight}{1.2cm}}%
+	\parbox[t][\disciplineheight][t]{15cm}{%
 		\parbox[t]{3cm}{\filleft Discipline}\hspace*{1bp}%
-		\parbox[t][2.4cm]{12cm}{%
+		\parbox[t][\disciplineheight]{12cm}{%
 			\bfseries\centering%
 			\setcounter{linecount}{0}
 			\setlength{\baselineskip}{1.2cm}%
-			\settowidth{\engdisciplinewidth}{#2}%
-			\setlength{\engdisciplinewidthlimit}{12cm}%
 			\replaceempty{#2}%
 			\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
 				{
