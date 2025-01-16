@@ -140,6 +140,14 @@
 \newcommand{\tablecontinuedtag}{（续）}
 \newcommand{\uestclofnumwidth}{1.4em}
 \newcommand{\uestclotnumwidth}{1.4em}
+\newcommand{\uestcenumerateouterlabel}{（\arabic*）}
+\newcommand{\uestcenumerateinnerlabel}{\arabic*）}
+\newcommand{\uestcenumerateouterlabelsep}{0em}
+\newcommand{\uestcenumerateinnerlabelsep}{0em}
+\newcommand{\uestcenumerateouterleftmargin}{4em}
+\newcommand{\uestcenumerateinnerleftmargin}{1.5em}
+\newcommand{\uestcenumerateitemindent}{-0.84em}
+\newcommand{\uestctitleseries}{\mdseries}% 本土标题黑体不加粗，留学生标题要加粗
 
 % 将上述信息切换成留学生版本
 \newcommand{\changetointernational}{%
@@ -171,9 +179,60 @@
 	\renewcommand{\uestcoutputname}{Output}
 	\renewcommand{\uestccolon}{:\space}
 	\renewcommand{\tablecontinuedtag}{ (continued)}
-	\setboolean{isinternational}{true}
 	\renewcommand{\uestclofnumwidth}{3em}
 	\renewcommand{\uestclotnumwidth}{2.6em}
+	\renewcommand{\uestcenumerateouterlabel}{(\arabic*)}
+	\renewcommand{\uestcenumerateinnerlabel}{\arabic*)}
+	\renewcommand{\uestcenumerateouterlabelsep}{-2bp}
+	\renewcommand{\uestcenumerateinnerlabelsep}{3bp}
+	\renewcommand{\uestcenumerateouterleftmargin}{3.6em}
+	\renewcommand{\uestcenumerateinnerleftmargin}{1em}
+	\renewcommand{\uestcenumerateitemindent}{0em}
+	\renewcommand{\uestctitleseries}{\bfseries}
+	\setboolean{isinternational}{true}
+}
+
+% 将上述信息回滚成本土版本
+\newcommand{\rollbackfrominternational}{%
+	\renewcommand{\uestccovername}{论文封面}
+	\renewcommand{\uestctitlepagename}{中文扉页}
+	\renewcommand{\uestcentitlepagename}{英文扉页}
+	\renewcommand{\uestcdeclarationname}{独创性声明}
+	\renewcommand{\uestctocname}{目\hspace{1em}录}
+	\renewcommand{\uestclofname}{图目录}
+	\renewcommand{\uestcfigurename}{图}
+	\renewcommand{\uestclotname}{表目录}
+	\renewcommand{\uestctablename}{表}
+	\renewcommand{\uestclosname}{主要符号表}
+	\renewcommand{\uestcloaname}{缩略词表}
+	\renewcommand{\uestcacknowledgementname}{致\hspace{1em}谢}
+	\renewcommand{\uestcreferencename}{参考文献}
+	\renewcommand{\uestcappendixname}{附录}
+	\renewcommand{\uestcdefinitionname}{定义}
+	\renewcommand{\uestcaxiomname}{公理}
+	\renewcommand{\uestctheoremname}{定理}
+	\renewcommand{\uestcpropositionname}{命题}
+	\renewcommand{\uestccorollaryname}{推论}
+	\renewcommand{\uestclemmaname}{引理}
+	\renewcommand{\uestcassumptionname}{假设}
+	\renewcommand{\uestcexamplename}{示例}
+	\renewcommand{\uestcproofname}{证明}
+	\renewcommand{\uestcalgorithmname}{算法}
+	\renewcommand{\uestcinputname}{输入}
+	\renewcommand{\uestcoutputname}{输出}
+	\renewcommand{\uestccolon}{：}
+	\renewcommand{\tablecontinuedtag}{（续）}
+	\renewcommand{\uestclofnumwidth}{1.4em}
+	\renewcommand{\uestclotnumwidth}{1.4em}
+	\renewcommand{\uestcenumerateouterlabel}{（\arabic*）}
+	\renewcommand{\uestcenumerateinnerlabel}{\arabic*）}
+	\renewcommand{\uestcenumerateouterlabelsep}{0em}
+	\renewcommand{\uestcenumerateinnerlabelsep}{0em}
+	\renewcommand{\uestcenumerateouterleftmargin}{4em}
+	\renewcommand{\uestcenumerateinnerleftmargin}{1.5em}
+	\renewcommand{\uestcenumerateitemindent}{-0.84em}
+	\renewcommand{\uestctitleseries}{\mdseries}
+	\setboolean{isinternational}{false}
 }
 
 % 控制目录中各级标题的缩进距离
@@ -940,40 +999,38 @@
 		{\parbox[t][1.2cm]{15cm}{}}%
 		{\parbox[t][0.8cm]{15cm}{}}%
 	\par\vspace*{6pt}%
-	\settowidth{\bfseries\engdisciplinewidth}{#2}%
+	\bfseries\settowidth{\engdisciplinewidth}{#2}\mdseries%
 	\setlength{\engdisciplinewidthlimit}{12cm}%
 	\ifthenelse{\engdisciplinewidth > \engdisciplinewidthlimit}%
 		{\setlength{\disciplineheight}{2.4cm}}%
 		{\setlength{\disciplineheight}{1.2cm}}%
-	\parbox[t][\disciplineheight][t]{15cm}{%
-		\parbox[t]{3cm}{\filleft Discipline}\hspace*{1bp}%
-		\parbox[t][\disciplineheight]{12cm}{%
-			\bfseries\centering%
-			\setcounter{linecount}{0}
-			\setlength{\baselineskip}{1.2cm}%
-			\replaceempty{#2}%
-			\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
-				{
-					\null\par\vspace*{-\baselineskip}%
+	\parbox[t]{3cm}{\filleft Discipline}\hspace*{1bp}%
+	\parbox[t][\disciplineheight]{12cm}{%
+		\bfseries\centering%
+		\setcounter{linecount}{0}
+		\setlength{\baselineskip}{1.2cm}%
+		\replaceempty{#2}%
+		\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
+			{
+				\null\par\vspace*{-\baselineskip}%
+				\rule[-5.5bp]{\linewidth}{0.5bp}%
+			}{%
+				\whiledo{\engdisciplinewidthlimit < \engdisciplinewidth}{%
+					\null%
+					\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
 					\rule[-5.5bp]{\linewidth}{0.5bp}%
-				}{%
-					\whiledo{\engdisciplinewidthlimit < \engdisciplinewidth}{%
-						\null%
-						\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
-						\rule[-5.5bp]{\linewidth}{0.5bp}%
-						\null%
-						\par\vspace{\baselineskip*2*\value{linecount}}%
-						\stepcounter{linecount}%
-						\addtolength{\engdisciplinewidthlimit}{12cm}%
-						\ifthenelse{\engdisciplinewidthlimit > \engdisciplinewidth}
-							{%
-								\null
-								\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
-								\rule[-5.5bp]{\linewidth}{0.5bp}%
-							}{}%
-					}%
+					\null%
+					\par\vspace{\baselineskip*2*\value{linecount}}%
+					\stepcounter{linecount}%
+					\addtolength{\engdisciplinewidthlimit}{12cm}%
+					\ifthenelse{\engdisciplinewidthlimit > \engdisciplinewidth}
+						{%
+							\null
+							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+							\rule[-5.5bp]{\linewidth}{0.5bp}%
+						}{}%
 				}%
-		}%
+			}%
 	}%
 	\par\vspace*{0pt}%
 	\parbox[t][1.2cm]{3cm}{\filleft Student ID}%
@@ -1342,32 +1399,48 @@
 
 %%%%%% 修改各级标题样式，参见titlesec宏包官方文档
 %%%%%% \titleformat{⟨command⟩}[⟨shape⟩]{⟨format⟩}{⟨label ⟩}{⟨sep⟩}{⟨before-code⟩}[⟨after-code⟩]
-\titleformat{\chapter}[block]
-	{\thispagestyle{fancy}\sffamily\filcenter
-		\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont}
-	{\thechapter}{\wordsep}{%
+\titleformat{\chapter}[block]%
+	{%
+		\thispagestyle{fancy}\sffamily\uestctitleseries\filcenter%
+		\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont%
+	}%
+	{\thechapter}%
+	{\wordsep}%
+	{%
 		\ifthenelse{\equal{\value{chapter}}{1}}%
 			{\stepcounter{pagereset}}%
 			{}%
 		\ifthenelse{\equal{\value{pagereset}}{1}}  % 从第一章开始页码变更为罗马数字
 			{\pagenumbering{arabic}\stepcounter{pagereset}}%
 			{}%
-	}
-\titleformat{\section}[block]
-	{\sffamily\filright
-		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
-	{\thesection}{\wordsep}{}
-\titleformat{\subsection}[block]
-	{\sffamily\filright
-		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont}
-	{\thesubsection}{\wordsep}{}
-\titleformat{\subsubsection}[block]
-	{\sffamily\filright
-		\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont}
-	{\thesubsubsection}{\wordsep}{}
+	}%
+\titleformat{\section}[block]%
+	{%
+		\sffamily\uestctitleseries\filright%
+		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont%
+	}%
+	{\thesection}%
+	{\wordsep}%
+	{}%
+\titleformat{\subsection}[block]%
+	{%
+		\sffamily\uestctitleseries\filright%
+		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont%
+	}%
+	{\thesubsection}%
+	{\wordsep}%
+	{}%
+\titleformat{\subsubsection}[block]%
+	{%
+		\sffamily\uestctitleseries\filright%
+		\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont%
+	}%
+	{\thesubsubsection}%
+	{\wordsep}%
+	{}%
 
 % 标准\chapter似乎会在标题上方默认添加大小为\baselineskip的垂直空间
-\titlespacing{\chapter}{0bp}{24bp-\baselineskip}{18bp}
+\titlespacing{\chapter}{0bp}{28bp-\baselineskip}{15bp}
 \titlespacing{\section}{0pt}{18bp}{6bp}
 \titlespacing{\subsection}{0pt}{12bp}{6bp}
 \titlespacing{\subsubsection}{0pt}{12bp}{6bp}
@@ -1392,7 +1465,7 @@
 \newcommand{\enabstract}{%
 	\newpage%
 	\pdfbookmark[0]{ABSTRACT}{bookmarkabstract\thepage}%
-	\chapter*{ABSTRACT}%
+	\chapter*{\bfseries ABSTRACT}%
 	\markboth{ABSTRACT}{ABSTRACT}
 }
 \newcommand\zhkeywords[1]{\par\vspace{\baselineskip}\noindent
@@ -1408,8 +1481,8 @@
 \renewcommand{\contentsname}{\uestctocname}  % 修改目录标题
 %% 调整主目录条目的缩进、字体、导航线型、页码编号等样式，参考titlesec宏包文档。
 \titlecontents{chapter}[0bp]
-	{\sffamily\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
+	{\sffamily\uestctitleseries\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
+	{\contentspush{\thecontentslabel\enspace}}{}{\mdseries~\titlerule*[4bp]{.}\contentspage}
 \titlecontents{section}[\tocsecindent]
 	{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
 	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
@@ -1566,7 +1639,7 @@
 \setlength{\bibsep}{0bp \@plus 2bp \@minus 1bp}  % 调整参考文献条目间距，设置橡胶长度以减少条目强制不跨页导致的页尾空白
 \renewcommand\@biblabel[1]{[#1]\hfill}  % 调整参考文献编号为左对齐，https://tex.stackexchange.com/questions/102680
 \let\oldbibliography\bibliography
-\renewcommand{\bibliography}[1]{{
+\renewcommand{\bibliography}[1]{
 	% 禁止参考文献条目跨页：
 	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
 	\interlinepenalty=10000
@@ -1576,10 +1649,9 @@
 	\phantomsection
 	\addcontentsline{toc}{chapter}{\uestcreferencename}
 	\renewcommand{\rightmark}{\evenpagemark}
-	\renewcommand{\rightmark}{\evenpagemark}
 	\markboth{\uestcreferencename}{\evenpagemark}
 	\oldbibliography{#1}
-}}
+}
 
 
 
@@ -1836,16 +1908,16 @@
 	label=$\circ$,
 }
 \setlist[enumerate,1]{
-	leftmargin=4em,
-	labelsep=0em,
-	label=（\arabic*）,
+	leftmargin=\uestcenumerateouterleftmargin,
+	labelsep=\uestcenumerateouterlabelsep,
+	label=\uestcenumerateouterlabel,
 	align=left,
-	itemindent=-0.84em,
+	itemindent=\uestcenumerateitemindent,
 }
 \setlist[enumerate,2]{
-	leftmargin=1.5em,
-	labelsep=0em,
-	label=\arabic*）,
+	leftmargin=\uestcenumerateinnerleftmargin,
+	labelsep=\uestcenumerateinnerlabelsep,
+	label=\uestcenumerateinnerlabel,
 }
 \setlist[description]{
 	leftmargin=3em,
