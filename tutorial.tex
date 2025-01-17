@@ -1416,4 +1416,501 @@
 
 	\newpage
 	\section*{多页测试}
+
+	%%%%%% 开启“外文资料原文”
+	%% \originalliterature{<外文标题>}{<外文作者>}
+	\originalliterature{How to Take Revenge When My Father's
+	Murderer is Suspected to Be a Famous Hero}{Yang Guo}
+
+	%% 这部分内容务必使用模板提供的首字母大写的标题命令生成对应的外文原文标题，
+	%% 否则，对应内容将出现在正文的目录和pdf的书签中，非常冗余。
+	%% 另外，可使用的各级标题有\Section{}、\Subsection{}、\Subsubsection{}，没有chapter
+
+	\textit{Abstract}——When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life. When he met Guo Jing and his wife, they took care of him. However, due to the conflict between Yang and Guo Fu, Guo Jing sent him to learn martial arts in the Quanzhen Sect.
+
+	\textit{Index Terms}——Martial arts, apostasy, revenge, fighting against the enemy, martial arts, apostasy, revenge, fighting against the enemy
+
+	\Section{Introduction}
+
+	\begin{table}[htbp]
+		\captionsetup{list=no}% 阻止此表格显示在表目录中
+		\caption{Example of a table}
+		\begin{tabular}{ccccc}
+			\toprule
+			\multirow{2}{*}{Column0} &  \multicolumn{2}{c}{Column1\tnote{1}} & \multicolumn{2}{c}{Column2\tnote{2}} \\
+			\cmidrule(lr){2-3}\cmidrule(l){4-5}
+			~     & subcolumn1 & subcolumn2 & subcolumn1 & subcolumn2 \\
+			\midrule
+			Row1  & element11 & element12 &element13 & element14 \\
+			Row2  & element21 & element22 &element23 & element24 \\
+			\cmidrule{2-3}\cmidrule{4-5}
+			Row3  & element31 & element32 &element33 & element34 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+
+	\Subsection{Contributions}
+
+
+	\Subsubsection{While while while}
+
+	\begin{longtable}{p{2em} p{6em}}
+		\captionsetup{list=no}% 阻止此表格显示在表目录中
+		\caption{Recommended journals and conferences}\\
+		
+		\toprule
+		\textbf{Num} & \textbf{Abbreviation} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\CPcaption{2}{Recommended journals and conferences}\\
+		\toprule
+		\textbf{Num} & \textbf{Abbreviation} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		\multicolumn{2}{l}{to next page} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\endlastfoot
+		
+		1 & JSAC \\
+		2 & TMC \\
+		3 & TON \\
+		1 & TOIT \\
+		2 & TOMM \\
+		3 & TOSN \\
+		4 & CN \\
+		5 & TCOM \\
+		6 & TWC \\
+		2 & CC \\
+		3 & TNSM \\
+		5 & JNCA \\
+		6 & MONET \\
+		8 & PPNA \\
+		9 & WCMC \\
+		11 & IOT \\
+		% 1 & SIGCOMM \\
+		% 2 & MobiCom \\
+		% 3 & INFOCOM \\
+		% 4 & NSDI \\
+		% 1 & SenSys \\
+		% 2 & CoNEXT \\
+		% 3 & SECON \\
+		% 4 & IPSN \\
+		% 5 & MobiSys \\
+		% 6 & ICNP \\
+		% 7 & MobiHoc \\
+		% 8 & NOSSDAV \\
+		% 9 & IWQoS \\
+		% 10 & IMC \\
+		% 1 & JSAC \\
+		% 2 & TMC \\
+		% 3 & TON \\
+		% 1 & TOIT \\
+		% 2 & TOMM \\
+		% 3 & TOSN \\
+		% 4 & CN \\
+		% 5 & TCOM \\
+		% 6 & TWC \\
+		% 2 & CC \\
+		% 3 & TNSM \\
+		% 5 & JNCA \\
+		% 6 & MONET \\
+		% 8 & PPNA \\
+		% 9 & WCMC \\
+		% 11 & IOT \\
+		% 1 & SIGCOMM \\
+		% 2 & MobiCom \\
+		% 3 & INFOCOM \\
+		% 4 & NSDI \\
+		% 1 & SenSys \\
+		% 2 & CoNEXT \\
+		% 3 & SECON \\
+		% 4 & IPSN \\
+		% 5 & MobiSys \\
+		% 6 & ICNP \\
+		% 7 & MobiHoc \\
+		% 8 & NOSSDAV \\
+		% 9 & IWQoS \\
+		% 10 & IMC \\
+	\end{longtable}
+	
+	\Section{Related works}
+
+	\begin{equation}
+		x^2 + y^2 + z^2
+	\end{equation}
+	
+	\Section{System model}
+
+	%% 在“外文资料原文”部分，排版定义、公理、定理、命题、推论、引理、示例、假设需使用对应首字母大写的环境，如下所示
+
+	\begin{Definition}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Definition}
+
+	\begin{Axiom}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Axiom}
+	
+	\begin{Theorem}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Theorem}
+	
+	\begin{Proposition}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Proposition}
+	
+	\begin{Corollary}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Corollary}
+	
+	\begin{Lemma}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Lemma}
+
+	\begin{Example}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Example}
+
+	\begin{Assumption}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{Assumption}
+	
+	\begin{proof}
+		Later, he escaped from the Quanzhen Sect and met Xiao Longnian at the ancient tomb, where he practised kung fu with Xiao Longnian.
+	\end{proof}
+	
+	\Section{Algorithm design}
+
+	\begin{algo}[!h](8em)
+		\caption{Example of an algorithm}
+		\Input{1) input1; 2) input2.}
+		\Output{result.}
+
+		Pseudocode line 1.
+		
+		\For(\tcc*[f]{for note 1}){Condition 1}{
+			Pseudocode line 2.
+			
+			\tcp{note 2}
+			Pseudocode line 3.
+			
+			\DoWhile(\tcc*[f]{while note 3}){Condition 2}{
+				Pseudocode line 4.
+			}
+			
+			\tcc{loop cycle}
+			\Loop(\tcc*[f]{note 4}){
+				cycle body 1.
+			}
+			
+			\Repeat(\tcc*[f]{repeat note 5}){Condition 3}{
+				cycle body 2.
+			}
+			\eIf(\tcc*[f]{if note 6}){Condition 6}{
+				when true，Pseudocode line 5.
+			}{
+				when false，Pseudocode line 6.\tcp*[f]{repeat cycle}
+			}
+		}
+		\textbf{return} result.
+	\end{algo}
+	
+	\Section{Experiments}
+
+	Example of itemize:
+
+	\begin{itemize}
+		\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+		\begin{itemize}
+			\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+			\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+		\end{itemize}
+		\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+	\end{itemize}
+
+	\null
+
+	Example of enumerate:
+
+	\begin{enumerate}
+		\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+		\begin{enumerate}
+			\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+			\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+		\end{enumerate}
+		\item When Yang was a teenager, his mother contracted a disease and died, and he then lived a wandering life.
+	\end{enumerate}
+	
+	\Section{Conclusions}
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.5\linewidth]{洪七公2}
+		\captionsetup{list=no}% 阻止此图片显示在图目录中
+		\caption{Dare you touch it? Little devil}
+	\end{figure}
+	
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.5\linewidth]{杨过3}
+		\captionsetup{list=no}% 阻止此图片显示在图目录中
+		\caption{Hard to hold}
+	\end{figure}
+
+
+	%%%%%% 开启“外文资料译文”
+	%% \translatedliterature{<译文标题>}{<原文作者>}
+	\translatedliterature{关于我的杀父仇人疑似是名震天下的
+	大侠时该如何报仇}{杨过}
+
+	%% 这部分内容务必使用模板提供的首字母大写的标题命令生成对应的外文译文标题，
+	%% 否则，对应内容将出现在正文的目录和pdf的书签中，非常冗余。
+	%% 另外，可使用的各级标题有\Section{}、\Subsection{}、\Subsubsection{}，没有chapter
+
+	\textit{摘要}——杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。但之后因杨过与郭芙等人之间的矛盾，郭靖便送其去全真派习武。
+
+	\textit{关键词}——练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌，练武，离经叛道，复仇，抗敌
+
+	\Section{引言}
+
+	\begin{table}[htbp]
+		\captionsetup{list=no}% 阻止此表格显示在表目录中
+		\caption{表格样例}
+		\begin{tabular}{ccccc}
+			\toprule
+			\multirow{2}{*}{Column0} &  \multicolumn{2}{c}{Column1\tnote{1}} & \multicolumn{2}{c}{Column2\tnote{2}} \\
+			\cmidrule(lr){2-3}\cmidrule(l){4-5}
+			~     & subcolumn1 & subcolumn2 & subcolumn1 & subcolumn2 \\
+			\midrule
+			Row1  & element11 & element12 &element13 & element14 \\
+			Row2  & element21 & element22 &element23 & element24 \\
+			\cmidrule{2-3}\cmidrule{4-5}
+			Row3  & element31 & element32 &element33 & element34 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+
+	\Subsection{贡献}
+
+
+	\Subsubsection{好好好}
+
+	\begin{longtable}{p{2em} p{4.5em}}
+		\captionsetup{list=no}% 阻止此表格显示在表目录中
+		\caption{中科院部分推荐期刊及会议}\\
+		
+		\toprule
+		\textbf{序号} & \textbf{简称} \\
+		\midrule
+		\endfirsthead
+		
+		% 在这里设计首页以外的表题和表头
+		\CPcaption{2}{中科院部分推荐期刊及会议}\\
+		\toprule
+		\textbf{序号} & \textbf{简称} \\
+		\midrule
+		\endhead
+		
+		% 在这里设计首页以外的表尾
+		\bottomrule
+		\multicolumn{2}{l}{续下页} \\  % 如不希望跨页表尾显示任何内容则注释掉即可
+		\endfoot
+		
+		\bottomrule
+		\endlastfoot
+		
+		1 & JSAC \\
+		2 & TMC \\
+		3 & TON \\
+		1 & TOIT \\
+		2 & TOMM \\
+		3 & TOSN \\
+		4 & CN \\
+		5 & TCOM \\
+		6 & TWC \\
+		2 & CC \\
+		3 & TNSM \\
+		5 & JNCA \\
+		6 & MONET \\
+		8 & PPNA \\
+		9 & WCMC \\
+		11 & IOT \\
+		% 1 & SIGCOMM \\
+		% 2 & MobiCom \\
+		% 3 & INFOCOM \\
+		% 4 & NSDI \\
+		% 1 & SenSys \\
+		% 2 & CoNEXT \\
+		% 3 & SECON \\
+		% 4 & IPSN \\
+		% 5 & MobiSys \\
+		% 6 & ICNP \\
+		% 7 & MobiHoc \\
+		% 8 & NOSSDAV \\
+		% 9 & IWQoS \\
+		% 10 & IMC \\
+		% 1 & JSAC \\
+		% 2 & TMC \\
+		% 3 & TON \\
+		% 1 & TOIT \\
+		% 2 & TOMM \\
+		% 3 & TOSN \\
+		% 4 & CN \\
+		% 5 & TCOM \\
+		% 6 & TWC \\
+		% 2 & CC \\
+		% 3 & TNSM \\
+		% 5 & JNCA \\
+		% 6 & MONET \\
+		% 8 & PPNA \\
+		% 9 & WCMC \\
+		% 11 & IOT \\
+		% 1 & SIGCOMM \\
+		% 2 & MobiCom \\
+		% 3 & INFOCOM \\
+		% 4 & NSDI \\
+		% 1 & SenSys \\
+		% 2 & CoNEXT \\
+		% 3 & SECON \\
+		% 4 & IPSN \\
+		% 5 & MobiSys \\
+		% 6 & ICNP \\
+		% 7 & MobiHoc \\
+		% 8 & NOSSDAV \\
+		% 9 & IWQoS \\
+		% 10 & IMC \\
+	\end{longtable}
+	
+	\Section{相关工作}
+
+	\begin{equation}
+		x^2 + y^2 + z^2
+	\end{equation}
+	
+	\Section{系统模型}
+
+	%% 在“外文资料译文”部分，排版定义、公理、定理、命题、推论、引理、示例、假设需使用与正文一致的环境，如下所示
+
+	\begin{definition}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{definition}
+
+	\begin{axiom}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{axiom}
+	
+	\begin{theorem}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{theorem}
+	
+	\begin{proposition}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{proposition}
+	
+	\begin{corollary}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{corollary}
+	
+	\begin{lemma}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{lemma}
+
+	\begin{example}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{example}
+
+	\begin{assumption}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{assumption}
+	
+	\begin{proof}
+		其后，又从全真派逃出，机缘巧合下于古墓遇见小龙女，之后便跟随小龙女练功。他身边有许多红颜知己钟情于他，而他却一心只爱小龙女。
+	\end{proof}
+	
+	\Section{算法设计}
+
+	\begin{algo}[!h]
+		\caption{algo环境伪码示例}
+		\Input{1) 输入1; 2) 输入2。}
+		\Output{输出结果。}
+
+		伪码行1。
+		
+		\For(\tcc*[f]{循环条件注释1}){循环条件1}{
+			伪码行2。
+			
+			\tcp{注释2}
+			伪码行3。
+			
+			\DoWhile(\tcc*[f]{循环条件注释3}){循环条件2}{
+				伪码行4。
+			}
+			
+			\tcc{loop循环}
+			\Loop(\tcc*[f]{注释4}){
+				循环体1。
+			}
+			
+			\Repeat(\tcc*[f]{循环条件注释5}){循环条件3}{
+				循环体2。
+			}
+			\eIf(\tcc*[f]{条件注释6}){条件语句6}{
+				为真，伪码行5。
+			}{
+				条件为假，伪码行6。\tcp*[f]{repeat循环}
+			}
+		}
+		\textbf{return} 算法结果。
+	\end{algo}
+	
+	\Section{实验}
+
+	itemize示例：
+
+	\begin{itemize}
+		\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+		\begin{itemize}
+			\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+			\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+		\end{itemize}
+		\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+	\end{itemize}
+
+	\null
+
+	enumerate示例：
+
+	\begin{enumerate}
+		\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+		\begin{enumerate}
+			\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+			\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+		\end{enumerate}
+		\item 杨过少年时期母亲染病而亡，随后他便过着四处流浪的生活。后来遇到郭靖夫妇，便由他们照看。
+	\end{enumerate}
+	
+	\Section{结论}
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.5\linewidth]{洪七公2}
+		\captionsetup{list=no}% 阻止此图片显示在图目录中
+		\caption{碰都不敢碰啊？小鬼}
+	\end{figure}
+	
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.5\linewidth]{杨过3}
+		\captionsetup{list=no}% 阻止此图片显示在图目录中
+		\caption{难顶}
+	\end{figure}
 \end{document}

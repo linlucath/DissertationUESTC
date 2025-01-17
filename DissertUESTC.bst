@@ -682,7 +682,7 @@ FUNCTION {n.dashify}
     { t empty$ not }
     { t #1 #1 substring$ "-" =
         { t #1 #2 substring$ "--" = not
-            { "--" *
+            { "-" *
               t #2 global.max$ substring$ 't :=
             }
             {   { t #1 #1 substring$ "-" = }
@@ -1191,8 +1191,8 @@ FUNCTION {article}
     { format.journal.eid }
   if$
   new.block
-  format.url output
-  new.block
+  % format.url output
+  % new.block
   format.note output
   format.eprint output
   fin.entry
@@ -1366,8 +1366,8 @@ FUNCTION {inproceedings}
   if$
   format.date ": " * format.pages * "pages" output.check
   new.block
-  format.url output
-  new.block
+  % format.url output
+  % new.block
   format.note output
   format.eprint output
   fin.entry
@@ -1497,8 +1497,8 @@ FUNCTION {proceedings}
   if$
       format.date "year" output.check
   new.block
-  format.url output
-  new.block
+  % format.url output
+  % new.block
   format.note output
   format.eprint output
   fin.entry

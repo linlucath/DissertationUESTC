@@ -173,7 +173,7 @@
 	\renewcommand{\uestclemmaname}{Lemma\,\!}
 	\renewcommand{\uestcassumptionname}{Assumption\,\!}
 	\renewcommand{\uestcexamplename}{Example\,\!}
-	\renewcommand{\uestcproofname}{Proof}
+	\renewcommand{\uestcproofname}{\textit{Proof}}
 	\renewcommand{\uestcalgorithmname}{Algorithm\,\!}
 	\renewcommand{\uestcinputname}{Input}
 	\renewcommand{\uestcoutputname}{Output}
@@ -193,7 +193,7 @@
 }
 
 % 将上述信息回滚成本土版本
-\newcommand{\rollbackfrominternational}{%
+\newcommand{\changetonational}{%
 	\renewcommand{\uestccovername}{论文封面}
 	\renewcommand{\uestctitlepagename}{中文扉页}
 	\renewcommand{\uestcentitlepagename}{英文扉页}
@@ -1666,7 +1666,20 @@
 	{} % <定理头后的标点符号> 如点号、冒号
 	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
 	{} % <定理头格式指定> 一般留空
-\theoremstyle{uestc} % plain: regular+italic, definition: regular++, remark: italic+regular
+% 用于“留学生论文”和“外文资料原文”
+\newtheoremstyle{international} % <风格名>
+	{0pt} % <上方间距> 若留空，则使用默认值
+	{0pt} % <下方间距> 若留空，则使用默认值
+	{} % <主体字体> 如 \itshape
+	{\parindent} % <缩进长度> 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
+	{\sffamily\itshape} % <定理头字体> 如 \bfseries
+	{.} % <定理头后的标点符号> 如点号、冒号
+	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
+	{} % <定理头格式指定> 一般留空
+% 根据论文类型设置定理风格
+\ifthenelse{\boolean{isinternational}}%
+	{\theoremstyle{international}}%
+	{\theoremstyle{uestc}}% plain: regular+italic, definition: regular++, remark: italic+regular
 \newtheorem{definition}{\uestcdefinitionname}
 \newtheorem{axiom}{\uestcaxiomname}
 \newtheorem{theorem}{\uestctheoremname}
@@ -1684,6 +1697,7 @@
 \counterwithin{lemma}{chapter}
 \counterwithin{example}{chapter}
 \counterwithin{assumption}{chapter}
+
 %\renewenvironment{proof}{{\sffamily 证明：}}{\hfill $\blacksquare$\par}  % https://blog.csdn.net/robert_chen1988/article/details/61204853
 \renewenvironment{proof}[1][\proofname]{\par
 	\pushQED{\qed}%
@@ -1707,6 +1721,36 @@
 \renewcommand{\theexample}{\arabic{chapter}.\arabic{example}}
 \renewcommand{\theassumption}{\arabic{chapter}.\arabic{assumption}}
 \renewcommand{\qedsymbol}{$\blacksquare$}
+
+
+%% 给“外文资料原文”定义独立的定理等环境
+\theoremstyle{international}
+\newtheorem{Definition}{\uestcdefinitionname}
+\newtheorem{Axiom}{\uestcaxiomname}
+\newtheorem{Theorem}{\uestctheoremname}
+\newtheorem{Proposition}{\uestcpropositionname}
+\newtheorem{Corollary}{\uestccorollaryname}
+\newtheorem{Lemma}{\uestclemmaname}
+\newtheorem{Example}{\uestcexamplename}
+\newtheorem{Assumption}{\uestcassumptionname}
+% 让这些环境随章节重置编号
+\counterwithin{Definition}{chapter}
+\counterwithin{Axiom}{chapter}
+\counterwithin{Theorem}{chapter}
+\counterwithin{Proposition}{chapter}
+\counterwithin{Corollary}{chapter}
+\counterwithin{Lemma}{chapter}
+\counterwithin{Example}{chapter}
+\counterwithin{Assumption}{chapter}
+%%
+\renewcommand{\theDefinition}{\arabic{Definition}}
+\renewcommand{\theAxiom}{\arabic{Axiom}}
+\renewcommand{\theTheorem}{\arabic{Theorem}}
+\renewcommand{\theProposition}{\arabic{Proposition}}
+\renewcommand{\theCorollary}{\arabic{Corollary}}
+\renewcommand{\theLemma}{\arabic{Lemma}}
+\renewcommand{\theExample}{\arabic{Example}}
+\renewcommand{\theAssumption}{\arabic{Assumption}}
 
 % 定义引用样式
 %\renewcommand{\eqref}[1]{（\ref{#1}）}  % amsmath宏包已定义，若需要使用中文括号则取消注释
@@ -1849,6 +1893,129 @@
 	}
 }
 
+
+
+%%% 封装用于“外文资料原文”和“外文资料译文”的各级标题命令：需要自动编号，但不能出现在目录和书签中
+\newcommand{\Section}[1]{%
+	\refstepcounter{section}%
+	\section*{\thesection\ #1}%
+}%
+\newcommand{\Subsection}[1]{%
+	\refstepcounter{subsection}%
+	\subsection*{\thesubsection\ #1}%
+}%
+\newcommand{\Subsubsection}[1]{%
+	\refstepcounter{subsubsection}%
+	\subsubsection*{\thesubsubsection\ #1}%
+}%
+
+%%%%%% 外文资料原文
+\newcommand{\originalliterature}[2]{
+	\chapter*{外文资料原文}
+	\markboth{外文资料原文}{\evenpagemark}
+	\addcontentsline{toc}{chapter}{外文资料原文}
+	\stepcounter{chapter}\setcounter{chapter}{0}% 更新一下章编号
+	\changetointernational
+	\renewcommand{\uestcfigurename}{Fig.}
+	\renewcommand{\uestctablename}{TABLE}
+	\renewcommand{\uestctitleseries}{\mdseries}% 外文资料原文的标题不用加粗
+	\renewcommand{\thesection}{\Roman{section}.}
+	\renewcommand{\thesubsection}{\Alph{subsection}.}
+	\renewcommand{\thesubsubsection}{\arabic{subsubsection})}
+	\renewcommand{\thefigure}{\arabic{figure}.}
+	\renewcommand{\thetable}{\arabic{table}.}
+	\renewcommand{\theequation}{\arabic{equation}}
+	\renewcommand{\theDefinition}{\arabic{Definition}}
+	\renewcommand{\theAxiom}{\arabic{Axiom}}
+	\renewcommand{\theTheorem}{\arabic{Theorem}}
+	\renewcommand{\theProposition}{\arabic{Proposition}}
+	\renewcommand{\theCorollary}{\arabic{Corollary}}
+	\renewcommand{\theLemma}{\arabic{Lemma}}
+	\renewcommand{\theExample}{\arabic{Example}}
+	\renewcommand{\theAssumption}{\arabic{Assumption}}
+	\renewcommand{\thealgocf}{\arabic{algocf}}
+	\setlength{\inoutsize}{1bp}% 重置伪码“输入”、“输出”标签的宽度，来自algorithm2e.sty源码
+	\SetKwInOut{Input}{\zihao{5}\uestcinputname}
+	\SetKwInOut{Output}{\zihao{5}\uestcoutputname}
+	\setlist[itemize,1]{
+		leftmargin=3em,
+		label=$\bullet$,
+	}
+	\setlist[itemize,2]{
+		leftmargin=1em,
+		label=$\circ$,
+	}
+	\setlist[enumerate,1]{
+		leftmargin=\uestcenumerateouterleftmargin,
+		labelsep=\uestcenumerateouterlabelsep,
+		label=\uestcenumerateouterlabel,
+		align=left,
+		itemindent=\uestcenumerateitemindent,
+	}
+	\setlist[enumerate,2]{
+		leftmargin=\uestcenumerateinnerleftmargin,
+		labelsep=\uestcenumerateinnerlabelsep,
+		label=\uestcenumerateinnerlabel,
+	}
+	%%
+	\vspace*{10bp}
+	{\sffamily\centering\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont #1\par}
+	\par\vspace*{18bp}
+	{\centering\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont #2\par}
+	\par\vspace*{18bp}
+}
+
+
+%%%%%% 外文资料译文
+\newcommand{\translatedliterature}[2]{
+	\chapter*{外文资料译文}
+	\markboth{外文资料译文}{\evenpagemark}
+	\addcontentsline{toc}{chapter}{外文资料译文}
+	\stepcounter{chapter}\setcounter{chapter}{0}% 更新一下章编号
+	\changetonational
+	\renewcommand{\thesection}{\zhnum{section}.}
+	\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+	\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+	\renewcommand{\thefigure}{\arabic{figure}}
+	\renewcommand{\thetable}{\arabic{table}}
+	\renewcommand{\thedefinition}{\arabic{definition}}
+	\renewcommand{\theaxiom}{\arabic{axiom}}
+	\renewcommand{\thetheorem}{\arabic{theorem}}
+	\renewcommand{\theproposition}{\arabic{proposition}}
+	\renewcommand{\thecorollary}{\arabic{corollary}}
+	\renewcommand{\thelemma}{\arabic{lemma}}
+	\renewcommand{\theexample}{\arabic{example}}
+	\renewcommand{\theassumption}{\arabic{assumption}}
+	\setlength{\inoutsize}{1bp}% 重置伪码“输入”、“输出”标签的宽度，来自algorithm2e.sty源码
+	\SetKwInOut{Input}{\zihao{5}\uestcinputname}
+	\SetKwInOut{Output}{\zihao{5}\uestcoutputname}
+	\setlist[itemize,1]{
+		leftmargin=3em,
+		label=$\bullet$,
+	}
+	\setlist[itemize,2]{
+		leftmargin=1em,
+		label=$\circ$,
+	}
+	\setlist[enumerate,1]{
+		leftmargin=\uestcenumerateouterleftmargin,
+		labelsep=\uestcenumerateouterlabelsep,
+		label=\uestcenumerateouterlabel,
+		align=left,
+		itemindent=\uestcenumerateitemindent,
+	}
+	\setlist[enumerate,2]{
+		leftmargin=\uestcenumerateinnerleftmargin,
+		labelsep=\uestcenumerateinnerlabelsep,
+		label=\uestcenumerateinnerlabel,
+	}
+	%%
+	\vspace*{10bp}
+	{\sffamily\centering\zihao{-3}\setlength{\baselineskip}{20bp}\selectfont #1\par}
+	\par\vspace*{18bp}
+	{\centering\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont #2\par}
+	\par\vspace*{18bp}
+}
 
 
 %%%%%% 脚注
