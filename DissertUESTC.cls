@@ -142,11 +142,14 @@
 \newcommand{\uestclotnumwidth}{1.4em}
 \newcommand{\uestcenumerateouterlabel}{（\arabic*）}
 \newcommand{\uestcenumerateinnerlabel}{\arabic*）}
-\newcommand{\uestcenumerateouterlabelsep}{0em}
-\newcommand{\uestcenumerateinnerlabelsep}{0em}
+\newcommand{\uestcenumerateouterlabelsep}{-0.2em}
+\newcommand{\uestcenumerateinnerlabelsep}{-0.2em}
 \newcommand{\uestcenumerateouterleftmargin}{4em}
-\newcommand{\uestcenumerateinnerleftmargin}{1.5em}
+\newcommand{\uestcenumerateinnerleftmargin}{1.3em}
 \newcommand{\uestcenumerateitemindent}{-0.84em}
+\newcommand{\uestcenumerateouterleftmarginwithintheorem}{4em}
+\newcommand{\uestcenumerateouterlabelsepwithintheorem}{-0.2em}
+\newcommand{\uestcenumerateitemindentwithintheorem}{-2.55em}
 \newcommand{\uestctitleseries}{\mdseries}% 本土标题黑体不加粗，留学生标题要加粗
 
 % 将上述信息切换成留学生版本
@@ -188,6 +191,9 @@
 	\renewcommand{\uestcenumerateouterleftmargin}{3.6em}
 	\renewcommand{\uestcenumerateinnerleftmargin}{1em}
 	\renewcommand{\uestcenumerateitemindent}{0em}
+	\renewcommand{\uestcenumerateouterleftmarginwithintheorem}{3.6em}
+	\renewcommand{\uestcenumerateouterlabelsepwithintheorem}{3bp}
+	\renewcommand{\uestcenumerateitemindentwithintheorem}{-1.2em}
 	\renewcommand{\uestctitleseries}{\bfseries}
 	\setboolean{isinternational}{true}
 }
@@ -226,11 +232,14 @@
 	\renewcommand{\uestclotnumwidth}{1.4em}
 	\renewcommand{\uestcenumerateouterlabel}{（\arabic*）}
 	\renewcommand{\uestcenumerateinnerlabel}{\arabic*）}
-	\renewcommand{\uestcenumerateouterlabelsep}{0em}
-	\renewcommand{\uestcenumerateinnerlabelsep}{0em}
+	\renewcommand{\uestcenumerateouterlabelsep}{-0.2em}
+	\renewcommand{\uestcenumerateinnerlabelsep}{-0.2em}
 	\renewcommand{\uestcenumerateouterleftmargin}{4em}
-	\renewcommand{\uestcenumerateinnerleftmargin}{1.5em}
+	\renewcommand{\uestcenumerateinnerleftmargin}{1.3em}
 	\renewcommand{\uestcenumerateitemindent}{-0.84em}
+	\renewcommand{\uestcenumerateouterleftmarginwithintheorem}{4em}
+	\renewcommand{\uestcenumerateouterlabelsepwithintheorem}{-0.2em}
+	\renewcommand{\uestcenumerateitemindentwithintheorem}{-2.55em}
 	\renewcommand{\uestctitleseries}{\mdseries}
 	\setboolean{isinternational}{false}
 }
@@ -1660,7 +1669,15 @@
 \newtheoremstyle{uestc} % <风格名>
 	{0pt} % <上方间距> 若留空，则使用默认值
 	{0pt} % <下方间距> 若留空，则使用默认值
-	{} % <主体字体> 如 \itshape
+	{%
+		\setlist[enumerate,1]{% theorem会影响一级enumerate的缩进，需要重新设置
+			leftmargin=\uestcenumerateouterleftmarginwithintheorem,
+			labelsep=\uestcenumerateouterlabelsepwithintheorem,
+			label=\uestcenumerateouterlabel,
+			align=left,
+			itemindent=\uestcenumerateitemindentwithintheorem,
+		}%
+	} % <主体字体> 如 \itshape
 	{\parindent} % <缩进长度> 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
 	{\sffamily} % <定理头字体> 如 \bfseries
 	{} % <定理头后的标点符号> 如点号、冒号
@@ -1670,7 +1687,15 @@
 \newtheoremstyle{international} % <风格名>
 	{0pt} % <上方间距> 若留空，则使用默认值
 	{0pt} % <下方间距> 若留空，则使用默认值
-	{} % <主体字体> 如 \itshape
+	{%
+		\setlist[enumerate,1]{% theorem会影响一级enumerate的缩进，需要重新设置
+			leftmargin=\uestcenumerateouterleftmarginwithintheorem,
+			labelsep=\uestcenumerateouterlabelsepwithintheorem,
+			label=\uestcenumerateouterlabel,
+			align=left,
+			itemindent=\uestcenumerateitemindentwithintheorem,
+		}%
+	} % <主体字体> 如 \itshape
 	{\parindent} % <缩进长度> 若留空，则无缩进；可以使用 \parindent 进行正常段落缩进
 	{\sffamily\itshape} % <定理头字体> 如 \bfseries
 	{.} % <定理头后的标点符号> 如点号、冒号
@@ -1707,6 +1732,13 @@
 	\sffamily\upshape
 	\hspace*{\parindent-3pt}
 	#1\@addpunct{\uestccolon}\hspace*{-5pt}]\ignorespaces
+	\setlist[enumerate,1]{% theorem会影响一级enumerate的缩进，需要重新设置
+		leftmargin=\uestcenumerateouterleftmarginwithintheorem,
+		labelsep=\uestcenumerateouterlabelsepwithintheorem,
+		label=\uestcenumerateouterlabel,
+		align=left,
+		itemindent=\uestcenumerateitemindentwithintheorem,
+	}
 }{
 	\popQED\endtrivlist\@endpefalse
 }  % https://ask.latexstudio.net/index.php/ask/article/647.html
