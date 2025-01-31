@@ -307,7 +307,7 @@
 	\begin{itemize}
 		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设置编译引擎。
 
-		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增四种选项：
+		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增六种选项：
 
 		\begin{itemize}
 			\item \shad{print}/\shad{nonprint}：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为\shad{print}。
@@ -317,11 +317,22 @@
 			\item \shad{subfigsimple}/\shad{subfigparens}：该选项用于调整正文中对子图标签进行引用生成的编号样式，\shad{subfigsimple}对应样式为\shad{1-1a}，\shad{subfigparens}对应样式为\shad{1-1(a)}，默认为\shad{subfigparens}。
    
 			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行查重时便捷地隐去论文中的图片，而不影响排版。
+			
+			\item \shad{review}：此选项将以评审模式排版论文的封面及中英文扉页，届时所有能确定个人身份的信息都将被隐去，包括导师信息以及独创性声明中的签名和日期（虽然在送审的时候也不会有这两个信息）。当然，你也可以采用本文档后续介绍的设置空参数的方法来隐去对应信息，但此选项能让你在不调整命令参数内容的情况下实现同样的效果。我个人觉得会更方便一点。
+			
+			\item \shad{cmmmath}/\shad{timesmathnogreek}/\shad{timesmath}：千呼万唤始出来，该选项用于选择渲染公式使用的字体。其中，\shad{cmmmath}即对应LaTeX原本使用的Computer Modern Math。这是添加此类选项前，本模板默认使用的公式字体，也是我个人比较喜欢的，现在仍然是此类选项的默认值；\shad{timesmathnogreek}指定使用Times New Roman来渲染公式中的英文字母和数字，但不会更改希腊字母、手写体和双线体的字体；\shad{timesmath}则同时将希腊字母也设置成Times New Roman，手写体和双线体仍保持不变，不过我觉得希腊字符用这个字体并不好看。对公式字体是不是均为Times New Roman比较介怀的用户可以使用\shad{timesmath}选项。后两种选项均基于\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{notsored}mathspec}}宏包实现，在我有限的测试实践中，只有它能做到真正意义上的Times New Roman。（2025.01.31）
+			
+			\textbf{PS1：}需要注意，后两种选项使用的Times New Roman字体本不支持在公式中排版粗斜体，即原本的\shad{$\backslash$boldsymbol\{\}}命令会失效。为了解决这个问题，我（仅在后两种选项下）对这条命令进行了粗糙的重定义，使之能像原版那样生成粗斜体符号。重定义后的\shad{$\backslash$boldsymbol\{\}}命令需要遵循一条额外的使用规则：\textbf{其输入参数必须是最原始的数学符号}。比如你想排版\shad{$\backslash$boldsymbol\{$\backslash$hat\{$\backslash$alpha\}\}}（这在\shad{cmmmath}下是没有问题的），那此时正确的源码应该是\shad{$\backslash$hat\{$\backslash$boldsymbol\{$\backslash$alpha\}\}}，\textbf{即将\shad{$\backslash$boldsymbol\{\}}置于嵌套的最内层}。如若不然，模板轻则无法渲染出预期的数学符号（在\shad{timesmath}选项下），重则直接报错（在\shad{timesmathnogreek}选项下）。大概是涉及了一些底层的问题，我也不懂。
+
+			\textbf{PS2：}因为\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{notsored}mathspec}}宏包本身的特性，使用Times New Roman作为公式字体需要用户付出更多精力。举个例子，你想排版\shad{\$f\^{}t\$}，那么你会发现\shad{f}和\shad{t}之间的间隔很小，两者重叠了，这时候需要你手动用\shad{"}插入空格，变成\shad{\$f\^{}\{"t\}\$}。使用\shad{timesmathnogreek}和\shad{timesmath}选项的用户均很容易遇到这类问题，届时就需要仔细查阅\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{notsored}mathspec}}的宏包文档。
+
+			\textbf{PS3：}论文撰写规范其实并未对公式使用的字体作强制要求，而且已经有同学使用本模板之前的版本通过了学校的格式审查。他提供的信息是说：审查系统会识别到公式字体不是Times New Roman，但级别是提醒而非错误，不会造成格式审查不通过。然则，实在有太多人问怎么公式不是Times New Roman了，既然有那么多人喜欢Times New Roman，那秉承本模板一贯的行事风格，选择权交给你自己。
 
 			\item 另外，\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{notsored}algorithm2e}}宏包的\shad{vlined}和\shad{boxruled}选项也能通过文档类设置。
 		\end{itemize}
 	\end{itemize}
 	
+	% \newpage
 	\section{各级标题}
 	
 	本模板基于\shad{book}类，章标题需要使用\shad{$\backslash$chapter\{<章标题>\}} 生成，其他各级标题依次为\shad{$\backslash$section\{<节标题>\}}、\shad{$\backslash$subsection\{<子节标题>\}}、\\ \shad{$\backslash$subsubsection\{<孙节标题>\}}。
@@ -332,11 +343,11 @@
 	
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[width=0.7\linewidth]{黄蓉郭靖1}
+		\includegraphics[width=0.6\linewidth]{黄蓉郭靖1}
 		\caption{锁定仇人}
 	\end{figure}
 	
-	\clearpage
+	% \clearpage
 	\begin{figure}[!htb]
 		\centering
 		\subfloat[]{
@@ -354,7 +365,7 @@
 
 	需要注意，图\ref{fig: 报仇哪有姑姑重要}中引用子图\ref{fig: 见到姑姑嘻嘻}和本段中引用子图使用的命令分别为\shad{$\backslash$subref\{fig: 见到姑姑嘻嘻\}}和\shad{$\backslash$ref\{fig: 报仇哪有姑姑重要\}}，它们分别生成仅含带括号子图编号和完整子图编号的结果。
 	
-	另外，图\ref{fig: 报仇哪有姑姑重要}的图题包含了子图题文本，但生成的图目录中却只有主图题文本，其实现方式为在主图题命令中使用可选参数单独指定图目录中的显示文本：\shad{$\backslash$caption[报仇哪有姑姑重要]}
+	另外，图\ref{fig: 报仇哪有姑姑重要}的图题包含了子图题文本，但生成的图目录中却只有主图题文本，其实现方式为在主图题命令中使用可选参数单独指定图目录中的显示文本：\shad{$\backslash$caption[报仇哪有姑姑重要]\{<实际图题>\}}
 	
 	\begin{figure}[!htb]
 		\centering
@@ -393,7 +404,7 @@
 	
 	\begin{figure}[!htb]
 		\centering
-		\includegraphics[width=0.9\linewidth]{杨过郭靖}
+		\includegraphics[width=0.98\linewidth]{杨过郭靖}
 		\caption{还是推主线吧，动手动手}
 	\end{figure}
 	
@@ -1140,26 +1151,33 @@
 		
 		\begin{align}
 			\min \left(\alpha + \beta + \gamma\right)^2 \label{eq: obj 2} \\
-			\text{s.t.} \quad \alpha \leq 9, \subeqtag \\
+			\text{s.t.} \quad alpha \leq 9, \subeqtag \\
 			\beta \geq -10, \subeqtag \\
 			\gamma \geq 8, \subeqtag[eq: constriant gamma]
 		\end{align}
 	\end{verbatim}
 	
 	\begin{align}
-		\max x^2 + y^2 + z^2 \label{eq: obj 1} \\
+		\thinmuskip=-3mu \medmuskip=-2mu \thickmuskip=-1mu
+		\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \label{eq: obj 1} \\
 		\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
 		y \leq 2, \subeqtag \\
 		z \leq 4, \subeqtag
 	\end{align}
 	
 	\begin{align}
-		\min \left(\alpha + \beta + \gamma\right)^2 \label{eq: obj 2} \\
-		\text{s.t.} \quad \alpha \leq 9, \subeqtag \\
+		\min \left(\boldsymbol{\alpha} + \beta + \gamma_{中文}\right)^2 \label{eq: obj 2} \\
+		\text{s.t.} \quad \boldsymbol{\alpha} \leq 9, \subeqtag \\
 		\beta \geq -10, \subeqtag \\
-		\gamma \geq 8, \subeqtag[eq: constriant gamma]
+		\gamma_{中文} \geq 8, \subeqtag[eq: constriant gamma]
 	\end{align}
 	
+
+	$\boldsymbol{x}^2 + \mathrm{y}^2 + z^2 + \mathcal{B}^2 + \mathcal{M}^2 + \mathbb{I}^2 + v^2 + g^2 + m^2 + k^2$
+	
+	$\check{\boldsymbol{C}}^t_n + \hat{p}^j_{n, s} + \tilde{r}^t_{u,b} + \overline{i}^t_{x, y} + \acute{\alpha}^t_v + \acute{\boldsymbol{\alpha}}^t + \hat{\boldsymbol{\alpha}}^t + f^t_j + f^{"t}_j + l^t_j + l^{"t}_j$
+
+	$\xlongequal{uvw}, \cdot, \cdots, \xLeftrightarrow{xyz}, \mathcal{N} \triangleq \left\{1, \dots, N\right\}, \times, \partial, \emptyset, \in, \subseteq, \leftarrow, \rightarrow, \leq, \geq$
 	
 	有两点需要提醒，\shadcmd{subeqtag[<子公式编号标签>]}的可选参数全文不可重复定义，因为它本质上还是调用的\shadcmd{label\{<编号标签>\}}，不用多说。另外，尽管使用\shadcmd{subeqtag[<子公式编号标签>]}的可选参数指定的标签本质上是基于\shadcmd{label\{<编号标签>\}}进行的封装，在TexStudio这样的编辑器上使用\shadcmd{ref\{<编号标签>\}}或\shadcmd{eqref\{<编号标签>\}}却不会自动弹出这些标签的选项，需要用户手动输入；而如果是直接用\shadcmd{label\{<编号标签>\}}指定的标签，引用时会出现在提醒选项中，用户可以直接选择，这算是\shadcmd{subeqtag[<子公式编号标签>]}不太方便的点，可惜我并不知道该如何解决。
 	

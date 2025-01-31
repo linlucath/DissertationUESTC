@@ -109,6 +109,11 @@
 \newboolean{isinternational}
 \setboolean{isinternational}{false}
 
+%% 用来判断该指定哪种公式字体
+\newboolean{iscmmmath}% 用作需要设置latex本身默认的Computer Modern Math
+\newboolean{istimesmath}% 用作需要设置公式符号全部为Times New Roman时
+\newboolean{istimesmathnogreek}% 用作需要设置除希腊字母外的公式符号为Times New Roman时
+
 
 \newcommand{\uestccovername}{论文封面}
 \newcommand{\uestctitlepagename}{中文扉页}
@@ -418,6 +423,24 @@
 	\renewcommand{\subfigformat}{parens}
 }
 
+\DeclareOption{cmmmath}{
+	\setboolean{iscmmmath}{true}
+	\setboolean{istimesmath}{false}
+	\setboolean{istimesmathnogreek}{false}
+}
+
+\DeclareOption{timesmath}{
+	\setboolean{iscmmmath}{false}
+	\setboolean{istimesmath}{true}
+	\setboolean{istimesmathnogreek}{true}
+}
+
+\DeclareOption{timesmathnogreek}{
+	\setboolean{iscmmmath}{false}
+	\setboolean{istimesmath}{false}
+	\setboolean{istimesmathnogreek}{true}
+}
+
 
 \DeclareOption*{
 	\ifthenelse{\equal{\CurrentOption}{boxruled}}
@@ -433,13 +456,14 @@
 
 %%%%%%----------------- execution of options -----------------
 
-\ExecuteOptions{print,doctor,subfigparens}
+\ExecuteOptions{print,doctor,subfigparens,cmmmath}
 \ProcessOptions\relax
 
 %%%%%%----------------- package loading -----------------
 
+\PassOptionsToPackage{no-math}{fontspec}% 为了能修改公式字体为times new roman
 \LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
-\RequirePackage[UTF8]{ctex}
+\RequirePackage[UTF8]{ctex}  % ctex 包含 xeCJK 包含 fontspec
 \RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 \RequirePackage{calc}
 \RequirePackage{color}
@@ -483,9 +507,28 @@
 \RequirePackage{centerlastline}  % 设计封面中的标题最后一行居中需要
 \RequirePackage{multirow}  % 表格合并多行单元格需要
 \RequirePackage{extarrows} % 带文字的长等号与箭头需要
+%%%%%%
+% \let\Zbar\relax% 防止在下方载入newtxmath宏包时报“Command `\Zbar' already defined.”，见：https://github.com/CTeX-org/ctex-kit/issues/454
+% \RequirePackage{newtxmath}  % 调整数学公式字体为times需要，但似乎公式中的数字字体不变，而且z看起来不像times，遂弃用
+%%%%%%
+% \RequirePackage{unicode-math}  % 也可调整公式字体，但仅能使用特定的Unicode数学字体，https://mirrors.ustc.edu.cn/CTAN/info/lshort/chinese/lshort-zh-cn.pdf。效果看起来偏粗，times的希腊字母有点丑，手写体很夸张，双线体也有点怪，遂弃用
+
+% mathspec宏包与ctex宏包和fontspec宏包有冲突，需要调整其加载fontspec的逻辑，https://tex.stackexchange.com/questions/713406/unknown-option-euzfmath-for-package-fontspec
+\ExplSyntaxOn
+\NewCommandCopy{\kernelRequirePackage}{\RequirePackage}
+\RenewDocumentCommand{\RequirePackage}{O{}mo}{
+	\str_if_eq:nnF{#2}{fontspec}{
+		\IfNoValueTF{#3}{\kernelRequirePackage[#1]{#2}}{\kernelRequirePackage[#1]{#2}[#3]}
+	}
+}
+\ExplSyntaxOff
+\RequirePackage{mathspec}% 设置公式字体为times new roman需要
+\RenewCommandCopy{\RequirePackage}{\kernelRequirePackage}
+
 \RequirePackage{xintfrac}  % 计算两个长度的比值需要，https://tex.stackexchange.com/questions/200581
 \RequirePackage{pifont}  % 实心五角星符号需要，https://dl.icdst.org/pdfs/files3/1900293ae8829c4c53fe55f2c9f0077c.pdf
 \RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
+
 
 
 %%----------------- main code -----------------
@@ -540,6 +583,26 @@
 	Path = ./font/,
 ] % 设置华文行楷字族使用的字体文件和字形等属性
 
+
+%%%%%% 判断是否设置公式字体为times new roman
+%% 基于mathspec宏包
+\ifthenelse{\boolean{iscmmmath}}%
+	{}%
+	{%
+		\ifthenelse{\boolean{istimesmath}}%
+			{%
+				\setallmainfonts{Times New Roman}% 设置公式中的所有字体均为times new roman，包括希腊字母
+			}%
+			{%
+				\setprimaryfont{Times New Roman}% 仅设置公式中的普通字母和数字为times new roman，希腊字母则保持默认字体，它们用times new roman着实不好看，参考mathspec宏包文档
+			}%
+		\setminwhitespace[6000]% 调整mathspec宏包提供的“"”插入的空格大小，用于解决部分数学字符间距离过小的问题，比如：$f^t$。参考mathspec宏包
+		\let\oldboldsymbol\boldsymbol
+		\renewcommand{\boldsymbol}[1]{\oldboldsymbol{\mathit{#1}}}% mathspec宏包未定义bold字系，只能重定义\boldsymbol命令，曲线救国
+	}%
+
+% %% 基于unicode-math宏包
+% \setmathfont{XITS Math}
 
 %%%%%% 让公式中支持中文，https://zhuanlan.zhihu.com/p/636127392
 \xeCJKsetup{CJKmath=true}
@@ -1228,7 +1291,7 @@
 %% https://www.latexstudio.net/archives/9786.html
 \setlength{\floatsep}{6bp} % 相邻两个浮动体之间的垂直距离
 \setlength{\intextsep}{6bp}  % h模式浮动体前后间距
-\setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或页面中第一个b模式的浮动体与文本的间距。
+\setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或 页面中第一个b模式的浮动体与文本的间距。
 \renewcommand{\figurename}{\uestcfigurename}% 如此才能修改图目录里的图标签前缀
 \captionsetup[figure]{%
 	name={\uestcfigurename},%
