@@ -294,24 +294,24 @@
 
 \DeclareOption{print}{
 	% 该命令插入无任何内容的空白页
-	\renewcommand{\insertemptypage}{
-		\null
-		\newpage
-		\thispagestyle{empty}
-		\null
-	}
+	\renewcommand{\insertemptypage}{%
+		\null%
+		\newpage%
+		\thispagestyle{empty}%
+		\null%
+	}%
 	
 	% 该命令在当前位置处于奇数页时插入一空白页作为左手边的页面
-	\renewcommand{\insertevenemptypage}{
-		\addtocounter{pseudopage}{\value{page}}
+	\renewcommand{\insertevenemptypage}{%
+		\addtocounter{pseudopage}{\value{page}}%
 		\ifthenelse{\isodd{\value{pseudopage}}}%
 			{%
-				\insertemptypage
-				\addtocounter{page}{-1}
-				\addtocounter{pseudopage}{1}
+				\insertemptypage%
+				\addtocounter{page}{-1}%
+				\addtocounter{pseudopage}{1}%
 			}{}%
-		\addtocounter{pseudopage}{-\value{page}}
-	}
+		\addtocounter{pseudopage}{-\value{page}}%
+	}%
 }
 
 
@@ -596,7 +596,7 @@
 			{%
 				\setprimaryfont{Times New Roman}% 仅设置公式中的普通字母和数字为times new roman，希腊字母则保持默认字体，它们用times new roman着实不好看，参考mathspec宏包文档
 			}%
-		\setminwhitespace[6000]% 调整mathspec宏包提供的“"”插入的空格大小，用于解决部分数学字符间距离过小的问题，比如：$f^t$。参考mathspec宏包
+		\setminwhitespace[3000]% 调整mathspec宏包提供的“"”插入的空格大小，用于解决部分数学字符间距离过小的问题，比如：$f^t$。参考mathspec宏包
 		\let\oldboldsymbol\boldsymbol
 		\renewcommand{\boldsymbol}[1]{\oldboldsymbol{\mathit{#1}}}% mathspec宏包未定义bold字系，只能重定义\boldsymbol命令，曲线救国
 	}%
@@ -1045,7 +1045,8 @@
 	}%
 	\par\vspace*{-2bp}
 	\parbox[b][1.5cm][b]{15cm}{注1：注明《国际十进分类法UDC》的类号。}
-	\par\vspace*{-\baselineskip}\insertemptypage}}
+	\par\vspace*{-\baselineskip}\insertemptypage%
+}}
 
 
 
@@ -1161,7 +1162,8 @@
 				}%
 		}%
 	}%
-	\par\vspace*{-\baselineskip}\insertemptypage}}
+	\par\vspace*{-\baselineskip}\insertemptypage%
+}}
 
 %% 声明页
 \newcommand{\declaration}[4][3cm]{
@@ -1240,7 +1242,7 @@
 			{\makebox[4.25cm][r]{#2}}%
 		\par
 	}
-	\par\vspace*{-\baselineskip}\insertemptypage
+	\par\vspace*{-\baselineskip}\insertemptypage%
 }
 
 
@@ -1401,7 +1403,7 @@
 		\endlastfoot
 	}{
 	\end{longtable}%
-	\insertevenemptypage
+	\insertevenemptypage%
 }
 
 \newlength{\CPcapwidth}  % 记录长表格跨页表题的宽度
@@ -1540,12 +1542,16 @@
 	\chapter*{\bfseries ABSTRACT}%
 	\markboth{ABSTRACT}{ABSTRACT}
 }
-\newcommand\zhkeywords[1]{\par\vspace{\baselineskip}\noindent
-	\parbox[t]{4em}{\textbf{关键词：}}\parbox[t]{\textwidth-4em}{#1}
-	\insertevenemptypage}
-\newcommand\enkeywords[1]{\par\vspace{\baselineskip}\noindent
-	\parbox[t]{5em}{\textbf{Keywords:}}\parbox[t]{\textwidth-5em}{#1}
-	\insertevenemptypage}
+\newcommand\zhkeywords[1]{%
+	\par\vspace{\baselineskip}\noindent%
+	\parbox[t]{4em}{\textbf{关键词：}}\parbox[t]{\textwidth-4em}{#1}%
+	\insertevenemptypage%
+}%
+\newcommand\enkeywords[1]{%
+	\par\vspace{\baselineskip}\noindent%
+	\parbox[t]{5em}{\textbf{Keywords:}}\parbox[t]{\textwidth-5em}{#1}%
+	\insertevenemptypage%
+}%
 
 \setcounter{secnumdepth}{5}
 
@@ -1571,8 +1577,8 @@
 \renewcommand{\tableofcontents}{%
 	\newpage%
 	\pdfbookmark[0]{\uestctocname}{bookmarktoc\thepage}%
-	\oldtableofcontents
-	\insertevenemptypage  % 为目录部分添加偶空白页
+	\oldtableofcontents%
+	\insertevenemptypage% 为目录部分添加偶空白页
 }
 
 \renewcommand{\listfigurename}{\uestclofname}  % 修改图目录标题
@@ -1581,41 +1587,41 @@
 \renewcommand{\listoffigures}{{
 	%	\let\oldnumberline\numberline
 	%	\renewcommand{\numberline}{\figurename~\oldnumberline}  % 为图目录条目加上标签“图”，https://www.latexstudio.net/archives/6202.html。这种方式会导致图目录条目悬挂缩进对不齐，弃用
-	\renewcommand\addvspace[1]{}  % 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
-	\renewcommand{\cftfigpresnum}{\figurename~}  % 给图目录条目加上标签“图”
-	\setlength{\cftfigindent}{0em}  % 取消图目录条目左边距
-	\addtolength{\cftfignumwidth}{\uestclofnumwidth}  % 调整图目录条目悬挂缩进量
-	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
+	\renewcommand\addvspace[1]{}% 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	\renewcommand{\cftfigpresnum}{\figurename~}% 给图目录条目加上标签“图”
+	\setlength{\cftfigindent}{0em}% 取消图目录条目左边距
+	\addtolength{\cftfignumwidth}{\uestclofnumwidth}% 调整图目录条目悬挂缩进量
+	\renewcommand{\cftdotsep}{1}% 调整页码前导航线的疏密
 	\newpage%
 	\pdfbookmark[0]{\uestclofname}{bookmarklof\thepage}%
-	\oldlistoffigures
-	\insertevenemptypage
+	\oldlistoffigures%
+	\insertevenemptypage%
 }}
 \let\oldlistoftables\listoftables
 \renewcommand{\listoftables}{{
 	%	\let\oldnumberline\numberline
 	%	\renewcommand{\numberline}{\tablename~\oldnumberline}  % 为表目录条目加上标签“表”。这种方式会导致表目录条目悬挂缩进对不齐，弃用
-	\renewcommand\addvspace[1]{}  % 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
-	\renewcommand{\cfttabpresnum}{\tablename~}  % 给表目录条目加上标签“图”
+	\renewcommand\addvspace[1]{}% 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	\renewcommand{\cfttabpresnum}{\tablename~}% 给表目录条目加上标签“图”
 	\setlength{\cfttabindent}{0em}  % 取消表目录条目左边距，参考tocloft宏包文档
-	\addtolength{\cfttabnumwidth}{\uestclotnumwidth}  % 调整表目录条目悬挂缩进量
-	\renewcommand{\cftdotsep}{1}  % 调整页码前导航线的疏密
+	\addtolength{\cfttabnumwidth}{\uestclotnumwidth}% 调整表目录条目悬挂缩进量
+	\renewcommand{\cftdotsep}{1}% 调整页码前导航线的疏密
 	\newpage%
 	\pdfbookmark[0]{\uestclotname}{bookmarklot\thepage}%
-	\oldlistoftables
-	\insertevenemptypage
+	\oldlistoftables%
+	\insertevenemptypage%
 }}
 
 
 
 %%%%%% 主要符号表
-\newcommand{\listofsymbs}{
+\newcommand{\listofsymbs}{%
 	\newpage%
 	\pdfbookmark[0]{\uestclosname}{bookmarklistofsymbs\thepage}%
 	\chapter*{\uestclosname}%
 	\markboth{\uestclosname}{\uestclosname}%
 	%	\insertevenemptypage
-}
+}%
 
 
 %%%%%% 缩略词表，https://blog.csdn.net/xovee/article/details/118604572
