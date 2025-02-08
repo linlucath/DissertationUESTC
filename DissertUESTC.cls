@@ -1751,7 +1751,7 @@
 	{\sffamily} % <定理头字体> 如 \bfseries
 	{} % <定理头后的标点符号> 如点号、冒号
 	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
-	{} % <定理头格式指定> 一般留空
+	{\thmname{#1}~\thmnumber{#2}\thmnote{（#3）}} % <定理头格式指定> 一般留空。这里修改中文论文的定理名分隔符为中文括号，默认是英文括号，https://ask.latexstudio.net/index.php/ask/question/17399.html
 % 用于“留学生论文”和“外文资料原文”
 \newtheoremstyle{international} % <风格名>
 	{0pt} % <上方间距> 若留空，则使用默认值
@@ -1769,7 +1769,7 @@
 	{\sffamily\itshape} % <定理头字体> 如 \bfseries
 	{.} % <定理头后的标点符号> 如点号、冒号
 	{ } % <定理头后的间距> 不可留空，若设置为 { }，则表示正常词间间距；若设置为 {\newline}，则环境内容开启新行
-	{} % <定理头格式指定> 一般留空
+	{\thmname{#1}~\thmnumber{#2}\thmnote{(#3)}} % <定理头格式指定> 一般留空
 % 根据论文类型设置定理风格
 \ifthenelse{\boolean{isinternational}}%
 	{\theoremstyle{international}}%
