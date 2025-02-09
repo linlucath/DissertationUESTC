@@ -1294,7 +1294,7 @@
 %% https://www.latexstudio.net/archives/9786.html
 \setlength{\floatsep}{9bp} % 相邻两个浮动体之间的垂直距离
 \setlength{\intextsep}{9bp}  % h模式浮动体前后间距
-\setlength{\textfloatsep}{17bp} % 页面中最后一个t模式的浮动体与文本的间距 或 页面中第一个b模式的浮动体与文本的间距。
+\setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或 页面中第一个b模式的浮动体与文本的间距。
 \renewcommand{\figurename}{\uestcfigurename}% 如此才能修改图目录里的图标签前缀
 \captionsetup[figure]{%
 	name={\uestcfigurename},%
@@ -1353,7 +1353,7 @@
 		{\oldtable[tbp]}%
 		{\oldtable[#1]}%
 	\IfSubStr{#1}{b}% 判断字符串中是否有指定子串，来自xstring宏包
-		{\vspace*{-10bp}}% b模式排版的table上间距很大，特调
+		{\vspace*{-8bp}}% b模式排版的table上间距很大，特调
 		{}%
 	\centering%
 	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
@@ -1666,7 +1666,7 @@
 		\renewcommand{\arraystretch}{1.3}%
 	}% 修改前面重定义\longtable时插入的属性命令来调整缩略词表的字体、行距
 	\setnomtableformat{p{#1}p{\textwidth-#1-4\tabcolsep}@{}l@{}l@{}l}% 设置缩略词表在nomentbl选项下的各列，抑制不需要的列，参考nomencl宏包说明
-	\renewcommand{\nompreamble}{\vspace*{-15bp}}% 利用nompreamble调整缩略词表表头和表题的垂直间距
+	\renewcommand{\nompreamble}{\vspace*{-12bp}}% 利用nompreamble调整缩略词表表头和表题的垂直间距
 	\renewcommand{\nomheadpartone}{{\noindent \bfseries \makebox[#1][l]{英文缩写}}}%
 	\renewcommand{\nomheadparttwo}{{\noindent \bfseries \makebox[\linewidth-#2-\tabcolsep][l]{英文全称}\hspace*{\tabcolsep}\makebox[#2][l]{中文全称}}}%
 	\setlength{\nomdescrchnwidth}{#2}%
