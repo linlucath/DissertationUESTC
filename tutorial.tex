@@ -410,6 +410,10 @@
 	
 	\clearpage
 	\section{表格}
+
+	\textbf{写在最开始}：由于一些实现上的问题，对于确定非置底排版的任何表格，用户在通过\shad{table}环境的选项指定可选择的排版模式时，\textbf{不可提供\shad{b}模式}，否则表格的上间距将过窄；反之，对于一页内确定置底排版的第一个表格，用户需要\textbf{显式在选项中指定\shad{b}或\shad{!b}}，否则此表格上间距将过宽。
+
+	若出现意料之外的情况，用户可以通过在\shad{table}环境开始后和结束前的位置插入\shad{$\backslash$vspace*\{<距离长度>\}}来调整其上下间距，使之看起来协调。
 	
 	\subsection{普通表格}
 	
@@ -417,7 +421,7 @@
 	
 	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{notsored}booktabs}}宏包的官方文档。
 	
-	\begin{table}[htbp]
+	\begin{table}[htp]
 		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
 		\begin{threeparttable}
 			\begin{tabular}{ccccc}
@@ -1463,7 +1467,7 @@
 
 	\Section{Introduction}
 
-	\begin{table}[htbp]
+	\begin{table}[htp]
 		\captionsetup{list=no}% 阻止此表格显示在表目录中
 		\caption{Example of a table}
 		\begin{tabular}{ccccc}

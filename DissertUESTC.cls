@@ -528,6 +528,7 @@
 \RequirePackage{xintfrac}  % 计算两个长度的比值需要，https://tex.stackexchange.com/questions/200581
 \RequirePackage{pifont}  % 实心五角星符号需要，https://dl.icdst.org/pdfs/files3/1900293ae8829c4c53fe55f2c9f0077c.pdf
 \RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
+\RequirePackage{xstring}% 在字符串中搜索子串需要
 
 
 
@@ -1291,9 +1292,9 @@
 %%%%%% 调整浮动体与前后文本的间距，https://github.com/CTeX-org/forum/issues/86，需要与caption包配合
 %%%%%% 官方文档，https://mirrors.bfsu.edu.cn/CTAN/macros/latex/contrib/caption/caption.pdf
 %% https://www.latexstudio.net/archives/9786.html
-\setlength{\floatsep}{6bp} % 相邻两个浮动体之间的垂直距离
-\setlength{\intextsep}{6bp}  % h模式浮动体前后间距
-\setlength{\textfloatsep}{15bp} % 页面中最后一个t模式的浮动体与文本的间距 或 页面中第一个b模式的浮动体与文本的间距。
+\setlength{\floatsep}{9bp} % 相邻两个浮动体之间的垂直距离
+\setlength{\intextsep}{9bp}  % h模式浮动体前后间距
+\setlength{\textfloatsep}{17bp} % 页面中最后一个t模式的浮动体与文本的间距 或 页面中第一个b模式的浮动体与文本的间距。
 \renewcommand{\figurename}{\uestcfigurename}% 如此才能修改图目录里的图标签前缀
 \captionsetup[figure]{%
 	name={\uestcfigurename},%
@@ -1302,7 +1303,7 @@
 	margin={\uestcfigcapmargin, \uestcfigcapmargin},%
 	position=below,%
 	aboveskip=6bp,%
-	belowskip=6bp-0.15\baselineskip%
+	belowskip=0bp%
 }
 \ifthenelse{\equal{\subfigformat}{simple}}
 	{
@@ -1330,8 +1331,8 @@
 	font=small,
 	margin={4em, 4em},
 	position=above,
-	aboveskip=6bp-0.15\baselineskip,
-	belowskip=6bp,
+	aboveskip=4bp,
+	belowskip=10bp,
 }
 % 调整三线表线高：https://tex.stackexchange.com/questions/156122
 \setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的默认线高
@@ -1345,16 +1346,22 @@
 % 表中文字垂直居中且水平居中的方法，https://blog.csdn.net/happy_demo/article/details/105430091
 
 % 重定义table环境，使表格整体默认在页面中居中，并设置其内容的字体大小和行距，内部环境使用其普通形式，https://tex.stackexchange.com/questions/14683
-\let\oldtable\table
-\let\oldendtable\endtable
-\renewenvironment{table}[1][tbp]{
-	\oldtable[#1]
-	\centering
+\let\oldtable\table%
+\let\oldendtable\endtable%
+\renewenvironment{table}[1][]{%
+	\ifthenelse{\equal{}{#1}}%
+		{\oldtable[tbp]}%
+		{\oldtable[#1]}%
+	\IfSubStr{#1}{b}% 判断字符串中是否有指定子串，来自xstring宏包
+		{\vspace*{-10bp}}% b模式排版的table上间距很大，特调
+		{}%
+	\centering%
 	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
 	%	\renewcommand{\arraystretch}{1.1}
-}{
-	\oldendtable
-}
+}{%
+	\vspace*{-4bp}% 同样的参数table和figure的实际间距不一样，略作调整
+	\oldendtable%
+}%
 
 % 在\longtable的定义中插入一行命令，以调整跨页长表格内容的字体及行距。参考自longtable宏包
 \newcommand{\longtableprop}{%
@@ -1873,7 +1880,7 @@
 
 %% 调整algorithm环境和前后文本的垂直距离
 \newskip\algskipamount
-\algskipamount = 6bp \@plus 1bp \@minus 1bp
+\algskipamount = 2bp \@plus 1bp \@minus 1bp
 \def\algskip{\vskip\algskipamount}  % 定义垂直距离宏，来自ChatGPT
 \SetAlgoSkip{algskip}  % 参考algorithm2e宏包的官方文档
 
