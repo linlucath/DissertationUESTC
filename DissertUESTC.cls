@@ -548,8 +548,18 @@
 
 
 %%%%%% 设置各种字体，https://www.cnblogs.com/54fire/p/10409570.html
-\setmainfont{Times New Roman}  % 英文正文罗马字体
-\setsansfont{Times New Roman}  % 英文正文无衬线字体
+\setmainfont{times}[
+	BoldFont=timesbd,
+	ItalicFont=timesi,
+	BoldItalicFont=timesbi,
+	Path=font/
+]  % 英文正文罗马字体
+\setsansfont{times}[
+	BoldFont=timesbd,
+	ItalicFont=timesi,
+	BoldItalicFont=timesbi,
+	Path=font/
+]  % 英文正文无衬线字体
 % \setmonofont{Times New Roman}  % 英文正文等宽字体
 \setCJKmainfont{SimSun}[
 	AutoFakeBold=3,
@@ -592,10 +602,20 @@
 	{%
 		\ifthenelse{\boolean{istimesmath}}%
 			{%
-				\setallmainfonts{Times New Roman}% 设置公式中的所有字体均为times new roman，包括希腊字母
+				\setallmainfonts[
+					BoldFont=timesbd,
+					ItalicFont=timesi,
+					BoldItalicFont=timesbi,
+					Path=font/
+				]{times}% 设置公式中的所有字体均为times new roman，包括希腊字母
 			}%
 			{%
-				\setprimaryfont{Times New Roman}% 仅设置公式中的普通字母和数字为times new roman，希腊字母则保持默认字体，它们用times new roman着实不好看，参考mathspec宏包文档
+				\setprimaryfont[
+					BoldFont=timesbd,
+					ItalicFont=timesi,
+					BoldItalicFont=timesbi,
+					Path=font/
+				]{times}% 仅设置公式中的普通字母和数字为times new roman，希腊字母则保持默认字体，它们用times new roman着实不好看，参考mathspec宏包文档
 			}%
 		\setminwhitespace[3000]% 调整mathspec宏包提供的“"”插入的空格大小，用于解决部分数学字符间距离过小的问题，比如：$f^t$。参考mathspec宏包
 		\let\oldboldsymbol\boldsymbol
@@ -1305,6 +1325,15 @@
 	aboveskip=6bp,%
 	belowskip=0bp%
 }
+
+%%% 重定义figure环境，在每次排版图片时都在“图目录”中间文件（.lof）中更新当前页码的实际宽度，以使图目录中的前导线完全延伸到页码，即前导线尾端可能参差不齐
+\renewenvironment{figure}[1][tbp]
+	{%
+		\@float{figure}[#1]%
+		\addtocontents{lof}{\protect\cftsetpnumwidth{\widthof{\thepage}-1bp}}% 调整目录中的页码排版宽度，并写入.lof文件，参考tocloft宏包
+	}%
+	{\end@float}
+
 \ifthenelse{\equal{\subfigformat}{simple}}
 	{
 		\captionsetup[subfloat]{%
@@ -1345,27 +1374,42 @@
 
 % 表中文字垂直居中且水平居中的方法，https://blog.csdn.net/happy_demo/article/details/105430091
 
-% 重定义table环境，使表格整体默认在页面中居中，并设置其内容的字体大小和行距，内部环境使用其普通形式，https://tex.stackexchange.com/questions/14683
-\let\oldtable\table%
-\let\oldendtable\endtable%
-\renewenvironment{table}[1][]{%
-	\ifthenelse{\equal{}{#1}}%
-		{\oldtable[tbp]}%
-		{\oldtable[#1]}%
-	\IfSubStr{#1}{b}% 判断字符串中是否有指定子串，来自xstring宏包
-		{\vspace*{-8bp}}% b模式排版的table上间距很大，特调
-		{}%
-	\centering%
-	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
-	%	\renewcommand{\arraystretch}{1.1}
-}{%
-	\vspace*{-4bp}% 同样的参数table和figure的实际间距不一样，略作调整
-	\oldendtable%
-}%
+%%% 重定义table环境，使表格整体默认在页面中居中，并设置其内容的字体大小和行距，内部环境使用其普通形式，https://tex.stackexchange.com/questions/14683。这种方式似乎会导致在同样的参数设置下表格环境的上下间距很怪异，遂弃用
+% \let\oldtable\table%
+% \let\oldendtable\endtable%
+% \renewenvironment{table}[1][]{%
+% 	\ifthenelse{\equal{}{#1}}%
+% 		{\oldtable[tbp]}%
+% 		{\oldtable[#1]}%
+% 	\IfSubStr{#1}{b}% 判断字符串中是否有指定子串，来自xstring宏包
+% 		{\vspace*{-8bp}}% b模式排版的table上间距很大，特调
+% 		{}%
+% 	\centering%
+% 	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
+% 	\addtocontents{lot}{\protect\cftsetpnumwidth{\widthof{\thepage}}}%
+% 	%	\renewcommand{\arraystretch}{1.1}
+% }{%
+% 	\vspace*{-4bp}% 同样的参数table和figure的实际间距不一样，略作调整
+% 	\oldendtable%
+% }%
+
+%%% 重定义table环境，使表格整体默认在页面中居中，并设置其内容的字体大小和行距；同时在每次排版表格时都在“表目录”中间文件（.lot）中更新当前页码的实际宽度，以使表目录中的前导线完全延伸到页码，即前导线尾端可能参差不齐
+\renewenvironment{table}[1][tp]%
+	{%
+		\@float{table}[#1]%
+		\IfSubStr{#1}{b}% 判断字符串中是否有指定子串，来自xstring宏包
+	 		{\vspace*{-6bp}}% b模式排版的table上间距很大，微调一点
+	 		{}%
+		\centering%
+		\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
+		\addtocontents{lot}{\protect\cftsetpnumwidth{\widthof{\thepage}-1bp}}%
+	}%
+	{\end@float}%
 
 % 在\longtable的定义中插入一行命令，以调整跨页长表格内容的字体及行距。参考自longtable宏包
 \newcommand{\longtableprop}{%
 	\zihao{5}\setlength\baselineskip{10.5bp}\selectfont%
+	\addtocontents{lot}{\protect\cftsetpnumwidth{\widthof{\thepage}}}% 调整目录中的页码排版宽度，并写入.lof文件，参考tocloft宏包
 	%	\renewcommand{\arraystretch}{1.1}%
 }
 
@@ -1564,10 +1608,21 @@
 
 \setcounter{tocdepth}{2}  % 设定目录的显示深度，到2级（chapter是0级）
 \renewcommand{\contentsname}{\uestctocname}  % 修改目录标题
-%% 调整主目录条目的缩进、字体、导航线型、页码编号等样式，参考titlesec宏包文档。
+
+%%% 调整主目录条目的缩进、字体、导航线型、页码编号等样式，参考titlesec宏包文档。
+
+%% titletoc宏包对\contentspage的原始定义
+%\newcommand\contentspage[1][\thecontentspage]{%
+%	\hb@xt@\@pnumwidth{\hfil#1}%
+%	\hspace*{-\@pnumwidth}}
+
+% 参考上述定义，重定义该命令使目录导航线一直延伸至各页码，即线尾参差不齐
+\renewcommand\contentspage[1][\thecontentspage]{%
+	#1%
+	\hspace*{-\@pnumwidth}}
 \titlecontents{chapter}[0bp]
 	{\sffamily\uestctitleseries\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
-	{\contentspush{\thecontentslabel\enspace}}{}{\mdseries~\titlerule*[4bp]{.}\contentspage}
+	{\contentspush{\thecontentslabel\enspace}}{}{\mdseries~\titlerule*[4bp]{.}\contentspage}% \thecontentspage按页码的实际宽度排版，titletoc宏包默认的\contentspage按所有页码的最长宽度排版
 \titlecontents{section}[\tocsecindent]
 	{\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont\filright}
 	{\contentspush{\thecontentslabel\enspace}}{}{~\titlerule*[4bp]{.}\contentspage}
@@ -1594,11 +1649,11 @@
 \renewcommand{\listoffigures}{{
 	%	\let\oldnumberline\numberline
 	%	\renewcommand{\numberline}{\figurename~\oldnumberline}  % 为图目录条目加上标签“图”，https://www.latexstudio.net/archives/6202.html。这种方式会导致图目录条目悬挂缩进对不齐，弃用
-	\renewcommand\addvspace[1]{}% 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	% \renewcommand\addvspace[1]{}% 取消图目录、表目录章节条目之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
 	\renewcommand{\cftfigpresnum}{\figurename~}% 给图目录条目加上标签“图”
 	\setlength{\cftfigindent}{0em}% 取消图目录条目左边距
 	\addtolength{\cftfignumwidth}{\uestclofnumwidth}% 调整图目录条目悬挂缩进量
-	\renewcommand{\cftdotsep}{1}% 调整页码前导航线的疏密
+	\renewcommand{\cftdotsep}{0.8}% 调整页码前导航线的疏密
 	\newpage%
 	\pdfbookmark[0]{\uestclofname}{bookmarklof\thepage}%
 	\oldlistoffigures%
@@ -1608,11 +1663,11 @@
 \renewcommand{\listoftables}{{
 	%	\let\oldnumberline\numberline
 	%	\renewcommand{\numberline}{\tablename~\oldnumberline}  % 为表目录条目加上标签“表”。这种方式会导致表目录条目悬挂缩进对不齐，弃用
-	\renewcommand\addvspace[1]{}% 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
-	\renewcommand{\cfttabpresnum}{\tablename~}% 给表目录条目加上标签“图”
+	% \renewcommand\addvspace[1]{}% 取消图、表目录章节之间的额外间距，https://github.com/HFUTTUG/HFUT_Thesis/discussions/45
+	\renewcommand{\cfttabpresnum}{\tablename~}% 给表目录条目加上标签“表”
 	\setlength{\cfttabindent}{0em}  % 取消表目录条目左边距，参考tocloft宏包文档
 	\addtolength{\cfttabnumwidth}{\uestclotnumwidth}% 调整表目录条目悬挂缩进量
-	\renewcommand{\cftdotsep}{1}% 调整页码前导航线的疏密
+	\renewcommand{\cftdotsep}{0.8}% 调整页码前导航线的疏密
 	\newpage%
 	\pdfbookmark[0]{\uestclotname}{bookmarklot\thepage}%
 	\oldlistoftables%
