@@ -40,6 +40,15 @@
 \newcommand{\chairreviewer}{}
 \newcommand{\reviewers}{}
 \newcommand{\uestcauthor}{}
+\newcommand{\chineseabstractpagelimit}{2}
+\newcommand{\acknowledgementpagelimit}{1}
+\newcounter{chineseabstractstartpage}
+\newcounter{chineseabstractpagespan}
+\newcounter{acknowledgementstartpage}
+\newcounter{acknowledgementpagespan}
+\setcounter{chineseabstractstartpage}{500}% 赋较大初值以防在缺失对应内容时错误打印提醒信息
+\setcounter{acknowledgementstartpage}{500}
+
 
 
 \newlength{\covertitlewidth}  % 封面论文题目长度
@@ -338,6 +347,7 @@
 	\renewcommand{\tocsubsubsecindent}{3em}
 	\renewcommand{\uestcfigcapmargin}{2em}
 	\renewcommand\uestclightrulewidth{0.5bp}
+	\renewcommand{\chineseabstractpagelimit}{1}
 }
 
 \DeclareOption{master}{
@@ -350,6 +360,7 @@
 	\renewcommand{\majorlabel}{学科专业}
 	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
 	\DegLv{硕士}
+	\renewcommand{\chineseabstractpagelimit}{1}
 }
 
 \DeclareOption{promaster}{
@@ -362,6 +373,7 @@
 	\renewcommand{\majorlabel}{专业学位类别}
 	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
 	\DegLv{硕士}
+	\renewcommand{\chineseabstractpagelimit}{1}
 }
 
 \DeclareOption{intmaster}{
@@ -374,6 +386,7 @@
 	\renewcommand{\majorlabel}{学科专业}
 	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
 	\DegLv{硕士}
+	\renewcommand{\chineseabstractpagelimit}{1}
 	\changetointernational
 }
 
@@ -545,6 +558,8 @@
 \setlength{\headsep}{1cm-\headheight}
 \setlength{\footskip}{1cm}
 \setlength{\emergencystretch}{3em}
+
+\definecolor{darkred}{RGB}{139, 0, 0}% 突出内容时用
 
 
 %%%%%% 设置各种字体，https://www.cnblogs.com/54fire/p/10409570.html
@@ -1581,21 +1596,29 @@
 
 \newcommand{\zhabstract}{%
 	\newpage% 这里是为了让书签能够准确定位到“摘要”所在的行
-	\pagenumbering{Roman}
+	\pagenumbering{Roman}%
 	% 参考hyperref宏包文档，手动添加书签，part属于-1级，chapter属于0级，section属于1级
 	\pdfbookmark[0]{摘\hspace{1em}要}{bookmarkzhabstract\thepage}%
 	\chapter*{摘\hspace{1em}要}%
-	\markboth{摘\hspace{1em}要}{摘\hspace{1em}要}
+	\markboth{摘\hspace{1em}要}{摘\hspace{1em}要}%
+	\setcounter{chineseabstractstartpage}{\value{page}}%
 }
 \newcommand{\enabstract}{%
 	\newpage%
 	\pdfbookmark[0]{ABSTRACT}{bookmarkabstract\thepage}%
 	\chapter*{\bfseries ABSTRACT}%
-	\markboth{ABSTRACT}{ABSTRACT}
+	\markboth{ABSTRACT}{ABSTRACT}%
 }
 \newcommand\zhkeywords[1]{%
 	\par\vspace{\baselineskip}\noindent%
 	\parbox[t]{4em}{\textbf{关键词：}}\parbox[t]{\textwidth-4em}{#1}%
+	\setcounter{chineseabstractpagespan}{\value{page}}%
+	\addtocounter{chineseabstractpagespan}{1}%
+	\addtocounter{chineseabstractpagespan}{-\value{chineseabstractstartpage}}%
+	\ifthenelse{\value{chineseabstractpagespan} > \chineseabstractpagelimit}%
+		{%
+			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
+		}{}%
 	\insertevenemptypage%
 }%
 \newcommand\enkeywords[1]{%
@@ -1779,19 +1802,26 @@
 \setlength{\bibsep}{0bp \@plus 2bp \@minus 1bp}  % 调整参考文献条目间距，设置橡胶长度以减少条目强制不跨页导致的页尾空白
 \renewcommand\@biblabel[1]{[#1]\hfill}  % 调整参考文献编号为左对齐，https://tex.stackexchange.com/questions/102680
 \let\oldbibliography\bibliography
-\renewcommand{\bibliography}[1]{
+\renewcommand{\bibliography}[1]{%
+	\setcounter{acknowledgementpagespan}{\value{page}}%
+	\addtocounter{acknowledgementpagespan}{1}%
+	\addtocounter{acknowledgementpagespan}{-\value{acknowledgementstartpage}}%
+	\ifthenelse{\value{acknowledgementpagespan} > \acknowledgementpagelimit}%
+		{%
+			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
+		}{}%
 	% 禁止参考文献条目跨页：
 	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
-	\interlinepenalty=10000
+	\interlinepenalty=10000%
 	% 让参考文献出现在目录中，且目录链接能正确跳转到参考文献起始页
 	% https://blog.csdn.net/weixin_34204057/article/details/91812554
-	\clearpage
-	\phantomsection
-	\addcontentsline{toc}{chapter}{\uestcreferencename}
-	\renewcommand{\rightmark}{\evenpagemark}
-	\markboth{\uestcreferencename}{\evenpagemark}
-	\oldbibliography{#1}
-}
+	\clearpage%
+	\phantomsection%
+	\addcontentsline{toc}{chapter}{\uestcreferencename}%
+	\renewcommand{\rightmark}{\evenpagemark}%
+	\markboth{\uestcreferencename}{\evenpagemark}%
+	\oldbibliography{#1}%
+}%
 
 
 
@@ -2009,11 +2039,12 @@
 
 
 %%%%%% 致谢
-\newcommand{\acknowledgement}{
-	\chapter*{\uestcacknowledgementname}
-	\markboth{\uestcacknowledgementname}{\evenpagemark}
-	\addcontentsline{toc}{chapter}{\uestcacknowledgementname}
-}
+\newcommand{\acknowledgement}{%
+	\chapter*{\uestcacknowledgementname}%
+	\markboth{\uestcacknowledgementname}{\evenpagemark}%
+	\addcontentsline{toc}{chapter}{\uestcacknowledgementname}%
+	\setcounter{acknowledgementstartpage}{\value{page}}%
+}%
 
 
 %%%%%% 附录
