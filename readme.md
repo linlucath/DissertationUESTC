@@ -16,7 +16,7 @@
 
 本地用户需要有LaTeX环境，我的开发和测试环境是TeXLive2024 + TeXstudio，以及TeXLive2024 + VSCode。模板需要使用`XeLaTeX`引擎编译，若各位也使用TeXstudio编辑器，则不需要对软件进行设置：`tutorial.tex`文件首行已经添加了`% !TEX Program = xelatex`，该指令指定使用`XeLaTeX`编译该文档。使用其他编辑器或Overleaf的用户则需要自行将编译引擎设置为`XeLaTeX`。
 
-为了确保使用Windows、MacOS、Overleaf的用户都能顺利完成编译，模板内附了除Times New Roman以外所有用到的字体文件，这导致了项目整体比较大，超过了Overleaf上传压缩包的限制。所以这部分用户只能麻烦一点：**先在Overleaf上新建一个文档项目，然后解压本模板并分批拖文件和文件夹到新建的项目中即可**。
+为了确保使用Windows、MacOS、Overleaf的用户都能顺利完成编译，模板内附了所有用到的字体文件，这导致了项目整体比较大，超过了Overleaf上传压缩包的限制。所以这部分用户只能麻烦一点：**先在Overleaf上新建一个文档项目，然后解压本模板并分批拖文件和文件夹到新建的项目中即可**。
 
 经部分同学反馈，**<font color=#8b0000>此模板在TeXLive2021上会出现无法按预期渲染封面下划线的情况</font>**，所以请所有本地用户将自己的TeXLive环境更新到[TeXLive2024](https://mirror.bjtu.edu.cn/CTAN/systems/texlive/Images/)。
 
