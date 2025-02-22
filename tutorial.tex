@@ -310,7 +310,7 @@
 	\begin{itemize}
 		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设置编译引擎。
 
-		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增六种选项：
+		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增\textbf{\color{darkred}七种}选项：
 
 		\begin{itemize}
 			\item \shad{print}/\shad{nonprint}：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为\shad{print}。
@@ -322,6 +322,8 @@
 			\item \shad{draftfig}：LaTeX标准文档类提供的\shad{draft}选项在排版草稿时不会生成交叉引用链接、超链接、书签，图片也会被替换为尺寸与之相同的方框+文本，并且会在超出表格、页面边界的位置标注粗框线。\shad{draftfig}选项则仅将图片替换为方框+文本，而不修改标准\shad{draft}选项涉及的其他内容。其主要用处是在自行查重时便捷地隐去论文中的图片，而不影响排版。
 			
 			\item \shad{review}：此选项将以评审模式排版论文的封面及中英文扉页，届时所有能确定个人身份的信息都将被隐去，包括导师信息以及独创性声明中的签名和日期（虽然在送审的时候也不会有这两个信息）。当然，你也可以采用本文档后续介绍的设置空参数的方法来隐去对应信息，但此选项能让你在不调整命令参数内容的情况下实现同样的效果。我个人觉得会更方便一点。
+			
+			\item \shad{noreminder}：默认情况下，当\textbf{中文摘要}和\textbf{致谢}的篇幅超出规范的最大页数限制时，模板将在对应内容的结尾显式打印提醒信息。若用户在知悉这些内容的长度超出规范限制后仍希望保持原样，则可使用\shad{noreminder}选项禁用提醒信息。（2025.02.22）
 			
 			\item \shad{cmmmath}/\shad{timesmathnogreek}/\shad{timesmath}：千呼万唤始出来，该选项用于选择渲染公式使用的字体。其中，\shad{cmmmath}即对应LaTeX原本使用的Computer Modern Math。这是添加此类选项前，本模板默认使用的公式字体，也是我个人比较喜欢的，现在仍然是此类选项的默认值；\shad{timesmathnogreek}指定使用Times New Roman来渲染公式中的英文字母和数字，但不会更改希腊字母、手写体和双线体的字体；\shad{timesmath}则同时将希腊字母也设置成Times New Roman，手写体和双线体仍保持不变，不过我觉得希腊字符用这个字体并不好看。对公式字体是不是均为Times New Roman比较介怀的用户可以使用\shad{timesmath}选项。后两种选项均基于\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{darkred}mathspec}}宏包实现，在我有限的测试实践中，只有它能做到真正意义上的Times New Roman。（2025.01.31）
 			
@@ -1409,9 +1411,10 @@
 	
 	\acknowledgement
 	
-	致谢内容
-	
 	% \null\newpage
+
+	致谢内容
+
 	
 	%% 参考文献部分
 %	\nocite{*}

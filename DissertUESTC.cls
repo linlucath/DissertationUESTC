@@ -115,6 +115,10 @@
 \newboolean{reviewflag}
 \setboolean{reviewflag}{false}
 
+%% 用来控制是否打印违反规范时的提醒信息
+\newboolean{usereminder}
+\setboolean{usereminder}{true}
+
 \newboolean{isinternational}
 \setboolean{isinternational}{false}
 
@@ -452,6 +456,10 @@
 	\setboolean{iscmmmath}{false}
 	\setboolean{istimesmath}{false}
 	\setboolean{istimesmathnogreek}{true}
+}
+
+\DeclareOption{noreminder}{
+	\setboolean{usereminder}{false}
 }
 
 
@@ -1615,7 +1623,7 @@
 	\setcounter{chineseabstractpagespan}{\value{page}}%
 	\addtocounter{chineseabstractpagespan}{1}%
 	\addtocounter{chineseabstractpagespan}{-\value{chineseabstractstartpage}}%
-	\ifthenelse{\value{chineseabstractpagespan} > \chineseabstractpagelimit}%
+	\ifthenelse{\value{chineseabstractpagespan} > \chineseabstractpagelimit \and \boolean{usereminder}}%
 		{%
 			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
 		}{}%
@@ -1806,7 +1814,7 @@
 	\setcounter{acknowledgementpagespan}{\value{page}}%
 	\addtocounter{acknowledgementpagespan}{1}%
 	\addtocounter{acknowledgementpagespan}{-\value{acknowledgementstartpage}}%
-	\ifthenelse{\value{acknowledgementpagespan} > \acknowledgementpagelimit}%
+	\ifthenelse{\value{acknowledgementpagespan} > \acknowledgementpagelimit \and \boolean{usereminder}}%
 		{%
 			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
 		}{}%
