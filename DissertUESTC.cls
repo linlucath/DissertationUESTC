@@ -55,6 +55,12 @@
 \newlength{\covertitlewidthlimit}  % 封面论文题目长度限制
 \newlength{\coverschoolwidth}  % 封面学院名称实际长度
 \newlength{\coverschoolwidthlimit}  % 封面学院名称长度限制
+\newlength{\supervisorwidth}% 中文扉页导师名称预留长度
+\newlength{\supervisortitlewidth}% 中文扉页导师职称实际长度
+\newlength{\tmpsupervisortitlewidth}% 中文扉页导师职称临时长度
+% \newlength{\supervisortitlewidthlimit}% 中文扉页导师职称长度限制
+% \newlength{\associatesupervisortitlewidth}% 中文扉页幅导师职称实际长度
+% \newlength{\associatesupervisortitlewidthlimit}% 中文扉页幅导师职称长度限制
 \newlength{\reviewerswidth}  % 中文扉页评阅人实际长度
 \newlength{\reviewerswidthlimit}  % 中文扉页评阅人长度限制
 \newlength{\engdisciplinewidth}  % 扉页英文专业名称实际长度
@@ -488,6 +494,7 @@
 \RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 \RequirePackage{calc}
 \RequirePackage{color}
+\RequirePackage[dvipsnames, svgnames, x11names]{xcolor}% 该宏包提供了更多预定义颜色，高亮代码块时比较方便
 \RequirePackage{layouts}
 \RequirePackage{zhnumber}
 \RequirePackage{titlesec}
@@ -550,6 +557,7 @@
 \RequirePackage{pifont}  % 实心五角星符号需要，https://dl.icdst.org/pdfs/files3/1900293ae8829c4c53fe55f2c9f0077c.pdf
 \RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
 \RequirePackage{xstring}% 在字符串中搜索子串需要
+\RequirePackage{listings}% 代码块风格化排版需要
 
 
 
@@ -567,7 +575,6 @@
 \setlength{\footskip}{1cm}
 \setlength{\emergencystretch}{3em}
 
-\definecolor{darkred}{RGB}{139, 0, 0}% 突出内容时用
 
 
 %%%%%% 设置各种字体，https://www.cnblogs.com/54fire/p/10409570.html
@@ -905,7 +912,7 @@
 
 
 %% 中文扉页
-\newcommand\uestczhtitlepage{{
+\newcommand\uestczhtitlepage[1][]{{
 	\newpage\thispagestyle{empty}
 	\rmfamily\zihao{-4}\raggedright%
 	\vspace*{-\baselineskip}\par\vspace*{4bp}%
@@ -950,26 +957,48 @@
 	\hspace*{5cm}\parbox[b][0.8cm][b]{5cm}{\zihao{-4}\centering （作者姓名）}%
 	\par\vspace*{1.3cm+1bp}
 	\parbox[b][0.9cm][b]{2.75cm}{\filleft 指导教师}%
-	\parbox[b][0.9cm][b]{6.5cm}{%
+	\setlength{\supervisortitlewidth}{3.25cm}% 初值设置为学校官方为职称预留的宽度
+	\ifthenelse{\equal{#1}{compress}}{}{%
+		\zihao{3}% 统计职称长度前先调整成对应的字号
+		\settowidth{\tmpsupervisortitlewidth}{\supervisortitle}%
+		\ifthenelse{\tmpsupervisortitlewidth > \supervisortitlewidth}%
+			{\setlength{\supervisortitlewidth}{\tmpsupervisortitlewidth}}{}%
+		\settowidth{\tmpsupervisortitlewidth}{\supervisorloc}%
+		\ifthenelse{\tmpsupervisortitlewidth > \supervisortitlewidth}%
+			{\setlength{\supervisortitlewidth}{\tmpsupervisortitlewidth}}{}%
+		\settowidth{\tmpsupervisortitlewidth}{\associatesupervisortitle}%
+		\ifthenelse{\tmpsupervisortitlewidth > \supervisortitlewidth}%
+			{\setlength{\supervisortitlewidth}{\tmpsupervisortitlewidth}}{}%
+		\settowidth{\tmpsupervisortitlewidth}{\associatesupervisorloc}%
+		\ifthenelse{\tmpsupervisortitlewidth > \supervisortitlewidth}%
+			{\setlength{\supervisortitlewidth}{\tmpsupervisortitlewidth}}{}%
+		\zihao{-4}% 统计职称长度后调回原本的字号
+	}%
+	\setlength{\supervisorwidth}{9.75cm-\supervisortitlewidth}%
+	\parbox[b][0.9cm][b]{\supervisorwidth}{%
 		\zihao{3}\centering\bfseries%
 		\ifreview{\supervisor}%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}%
 	}%
-	\parbox[b][0.9cm][b]{3.25cm}{%
+	\parbox[b][0.9cm][b]{\supervisortitlewidth}{%
 		\zihao{3}\filright\bfseries%
-		\ifreview{\supervisortitle}%
+		\settowidth{\tmpsupervisortitlewidth}{\supervisortitle}%
+		\ifthenelse{\tmpsupervisortitlewidth < \supervisortitlewidth}%
+			{\ifreview{\supervisortitle}}%
+			{\scalebox{\xintRound{2}{\supervisortitlewidth / \tmpsupervisortitlewidth}}[1]{\ifreview{\supervisortitle}}}% 对过长的职称进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+		% \ifreview{\supervisortitle}%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}%
 	}%
 	\par\vspace*{-4bp}
-	\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+	\hspace*{2.75cm}\parbox[b][0.9cm][b]{\supervisorwidth}{%
 		\zihao{3}\centering\bfseries%
 		\supervisororg%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}%
 	}%
-	\parbox[b][0.9cm][b]{3.25cm}{%
+	\parbox[b][0.9cm][b]{\supervisortitlewidth}{%
 		\zihao{3}\filright\bfseries%
 		\supervisorloc%
 		\par\vspace{-\baselineskip}%
@@ -981,26 +1010,30 @@
 				\parbox[b][0.8cm]{15cm}{\centering （姓名、职称、单位名称）}%
 			}{%
 				\vspace*{-4bp}\filright%
-				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+				\hspace*{2.75cm}\parbox[b][0.9cm][b]{\supervisorwidth}{%
 					\zihao{3}\centering\bfseries%
 					\ifreview{\associatesupervisor}%
 					\par\vspace{-\baselineskip}%
 					\rule[-4bp]{\linewidth}{0.5bp}%
 				}%
-				\parbox[b][0.9cm][b]{3.25cm}{%
+				\parbox[b][0.9cm][b]{\supervisortitlewidth}{%
 					\zihao{3}\filright\bfseries%
-					\ifreview{\associatesupervisortitle}%
+					\settowidth{\tmpsupervisortitlewidth}{\associatesupervisortitle}%
+					\ifthenelse{\tmpsupervisortitlewidth < \supervisortitlewidth}%
+						{\ifreview{\associatesupervisortitle}}%
+						{\scalebox{\xintRound{2}{\supervisortitlewidth / \tmpsupervisortitlewidth}}[1]{\ifreview{\associatesupervisortitle}}}% 对过长的职称进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					% \ifreview{\associatesupervisortitle}%
 					\par\vspace{-\baselineskip}%
 					\rule[-4bp]{\linewidth}{0.5bp}%
 				}%
 				\par\vspace*{-4bp}
-				\hspace*{2.75cm}\parbox[b][0.9cm][b]{6.5cm}{%
+				\hspace*{2.75cm}\parbox[b][0.9cm][b]{\supervisorwidth}{%
 					\zihao{3}\centering\bfseries%
 					\associatesupervisororg%
 					\par\vspace{-\baselineskip}%
 					\rule[-4bp]{\linewidth}{0.5bp}%
 				}%
-				\parbox[b][0.9cm][b]{3.25cm}{%
+				\parbox[b][0.9cm][b]{\supervisortitlewidth}{%
 					\zihao{3}\filright\bfseries%
 					\associatesupervisorloc%
 					\par\vspace{-\baselineskip}%

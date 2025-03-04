@@ -5,13 +5,9 @@
 
 \begin{document}
 	
-	% 以下几条命令均为高亮示例文档中的关键内容而设，正式撰写时切不可使用
-	\definecolor{shadcolor}{RGB}{228, 234, 246}
-	% \definecolor{darkblue}{RGB}{1, 0, 138}
-	\definecolor{darkblue}{RGB}{20, 144, 255}
-	\newcommand{\shad}[1]{\textcolor{darkblue}{\ttfamily #1}}
+	% 以下三条命令分别为高亮示例文档中的关键内容和列出所有参考文献条目而设，正式撰写时切不可使用
+	\newcommand{\shad}[1]{\textcolor{DodgerBlue}{\ttfamily #1}}
 	\newcommand{\shadcmd}[1]{\shad{$\backslash$#1}}
-	
 	\nocite{*}  % 为了便于在示例文档中展示参考文献而设，正式撰写时需要注释掉
 
 	% 当论文中某节的内容接近填满页面且其下紧随几项标题时，LaTeX更倾向于在后续的标题前分页，并且纵向拉伸当前页内容的段间距，以实现纵向分散对齐，也就是很多人在问的现象。这并不是模板bug，而是LaTeX特性。
@@ -65,8 +61,14 @@
 	\Reviewer{黄蓉}{一灯大师、老顽童、黄老邪、郭靖、小龙女}  % \Reviewer{<答辩委员为主席>}{<评阅人>}
 	\uestczhtitlepage
 
+
+	\Supervisor{小龙女}{古墓派末代掌门}{古墓派}{活死人墓}  % \Supervisor{<指导教师>}{<职称>}{<单位名称>}{<单位地址>}
+	% 副导师信息，无则注释
+	\AssociateSupervisor{洪七公}{天下第一帮前帮主}{丐帮}{襄阳}  % \AssociateSupervisor{<副导师名称>}{<职称}>{<单位名称>}{<单位地址>}
 	\Reviewer{黄蓉}{一灯大师、老顽童、黄老邪、郭靖、小龙女、金轮法王、洪七公、欧阳锋}  % \Reviewer{<答辩委员为主席>}{<评阅人>}
 	\uestczhtitlepage  % 过长评阅人文本将被自动压缩至下划线宽度，不会超出页面边界
+
+	\uestczhtitlepage[compress]  % 在compress选项下，“中文扉页”将自动压缩过长职称的字宽，使之不超出官方模板为该内容设定的长度
 	
 
 	% 英文扉页，仅研究生用
@@ -294,7 +296,7 @@
 	\begin{enumerate}
 		\item 先使用\shadcmd{printnomenclature[<英文缩写宽度>](<中文全称宽度>)}，第一项可选参数控制\textbf{英文缩写}的列宽，默认为\shad{5em}；第二项可选参数控制\textbf{中文全称}的列宽，默认为\shad{7.5em}。
 		
-		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn[<排序前缀>]\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。其中\shad{排序前缀}是可选参数，仅在对特定条目有特殊排序需求时才使用。具体细节参考\href{https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf}{\shad{\color{darkred}nomencl}}宏包对\shadcmd{nomenclature}命令的参数说明。
+		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn[<排序前缀>]\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。其中\shad{排序前缀}是可选参数，仅在对特定条目有特殊排序需求时才使用。具体细节参考\href{https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf}{\shad{\color{DarkRed}nomencl}}宏包对\shadcmd{nomenclature}命令的参数说明。
 	\end{enumerate}
 	
 	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\shad{编译缩略词表}}。Overleaf用户则可以一键搞定，无需额外操作。
@@ -310,7 +312,7 @@
 	\begin{itemize}
 		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设置编译引擎。
 
-		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增\textbf{\color{darkred}七种}选项：
+		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增\textbf{\color{DarkRed}七种}选项：
 
 		\begin{itemize}
 			\item \shad{print}/\shad{nonprint}：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为\shad{print}。
@@ -325,15 +327,15 @@
 			
 			\item \shad{noreminder}：默认情况下，当\textbf{中文摘要}和\textbf{致谢}的篇幅超出规范的最大页数限制时，模板将在对应内容的结尾显式打印提醒信息。若用户在知悉这些内容的长度超出规范限制后仍希望保持原样，则可使用\shad{noreminder}选项禁用提醒信息。（2025.02.22）
 			
-			\item \shad{cmmmath}/\shad{timesmathnogreek}/\shad{timesmath}：千呼万唤始出来，该选项用于选择渲染公式使用的字体。其中，\shad{cmmmath}即对应LaTeX原本使用的Computer Modern Math。这是添加此类选项前，本模板默认使用的公式字体，也是我个人比较喜欢的，现在仍然是此类选项的默认值；\shad{timesmathnogreek}指定使用Times New Roman来渲染公式中的英文字母和数字，但不会更改希腊字母、手写体和双线体的字体；\shad{timesmath}则同时将希腊字母也设置成Times New Roman，手写体和双线体仍保持不变，不过我觉得希腊字符用这个字体并不好看。对公式字体是不是均为Times New Roman比较介怀的用户可以使用\shad{timesmath}选项。后两种选项均基于\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{darkred}mathspec}}宏包实现，在我有限的测试实践中，只有它能做到真正意义上的Times New Roman。（2025.01.31）
+			\item \shad{cmmmath}/\shad{timesmathnogreek}/\shad{timesmath}：千呼万唤始出来，该选项用于选择渲染公式使用的字体。其中，\shad{cmmmath}即对应LaTeX原本使用的Computer Modern Math。这是添加此类选项前，本模板默认使用的公式字体，也是我个人比较喜欢的，现在仍然是此类选项的默认值；\shad{timesmathnogreek}指定使用Times New Roman来渲染公式中的英文字母和数字，但不会更改希腊字母、手写体和双线体的字体；\shad{timesmath}则同时将希腊字母也设置成Times New Roman，手写体和双线体仍保持不变，不过我觉得希腊字符用这个字体并不好看。对公式字体是不是均为Times New Roman比较介怀的用户可以使用\shad{timesmath}选项。后两种选项均基于\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{DarkRed}mathspec}}宏包实现，在我有限的测试实践中，只有它能做到真正意义上的Times New Roman。（2025.01.31）
 			
 			\textbf{PS1：}需要注意，后两种选项使用的Times New Roman字体本不支持在公式中排版粗斜体，即原本的\shad{$\backslash$boldsymbol\{\}}命令会失效。为了解决这个问题，我（仅在后两种选项下）对这条命令进行了粗糙的重定义，使之能像原版那样生成粗斜体符号。重定义后的\shad{$\backslash$boldsymbol\{\}}命令需要遵循一条额外的使用规则：\textbf{其输入参数必须是最原始的数学符号}。比如你想排版\shad{$\backslash$boldsymbol\{$\backslash$hat\{$\backslash$alpha\}\}}（这在\shad{cmmmath}下是没有问题的），那此时正确的源码应该是\shad{$\backslash$hat\{$\backslash$boldsymbol\{$\backslash$alpha\}\}}，\textbf{即将\shad{$\backslash$boldsymbol\{\}}置于嵌套的最内层}。如若不然，模板轻则无法渲染出预期的数学符号（在\shad{timesmath}选项下），重则直接报错（在\shad{timesmathnogreek}选项下）。大概是涉及了一些底层的问题，我也不懂。
 
-			\textbf{PS2：}因为\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{darkred}mathspec}}宏包本身的特性，使用Times New Roman作为公式字体需要用户付出更多精力。举个例子，你想排版\shad{\$f\^{}t\$}，那么你会发现\shad{f}和\shad{t}之间的间隔很小，两者重叠了，这时候需要你手动用\shad{"}插入空格，变成\shad{\$f\^{}\{"t\}\$}。使用\shad{timesmathnogreek}和\shad{timesmath}选项的用户均很容易遇到这类问题，届时就需要仔细查阅\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{darkred}mathspec}}的宏包文档。
+			\textbf{PS2：}因为\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{DarkRed}mathspec}}宏包本身的特性，使用Times New Roman作为公式字体需要用户付出更多精力。举个例子，你想排版\shad{\$f\^{}t\$}，那么你会发现\shad{f}和\shad{t}之间的间隔很小，两者重叠了，这时候需要你手动用\shad{"}插入空格，变成\shad{\$f\^{}\{"t\}\$}。使用\shad{timesmathnogreek}和\shad{timesmath}选项的用户均很容易遇到这类问题，届时就需要仔细查阅\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{DarkRed}mathspec}}的宏包文档。
 
 			\textbf{PS3：}论文撰写规范其实并未对公式使用的字体作强制要求，而且已经有同学使用本模板之前的版本通过了学校的格式审查。他提供的信息是说：审查系统会识别到公式字体不是Times New Roman，但级别是提醒而非错误，不会造成格式审查不通过。然则，实在有太多人问怎么公式不是Times New Roman了，既然有那么多人喜欢Times New Roman，那秉承本模板一贯的行事风格，选择权交给你自己。
 
-			\item 另外，\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{darkred}algorithm2e}}宏包的\shad{vlined}和\shad{boxruled}选项也能通过文档类设置。
+			\item 另外，\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{DarkRed}algorithm2e}}宏包的\shad{vlined}和\shad{boxruled}选项也能通过文档类设置。
 		\end{itemize}
 	\end{itemize}
 	
@@ -424,7 +426,7 @@
 	
 	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合研究生规范中对线高的要求（\shad{1.5}磅、\shad{0.75}磅、\shad{1.5}磅）。注意不要用\shad{$\backslash$hline}。而对于本科生，学士学位论文规范要求表格中的线高统一为\shad{0.5}磅，在\shad{bachelor}选项下，\shad{$\backslash$midrule}的线高设置为\shad{0.5}磅。因此，本科生在表格中只需要也只可以使用\shad{$\backslash$midrule}和\shadcmd{cmidrule}，否则线高将不符合要求。
 	
-	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{darkred}booktabs}}宏包的官方文档。
+	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{DarkRed}booktabs}}宏包的官方文档。
 	
 	\begin{table}[htp]
 		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
@@ -533,7 +535,7 @@
 	\clearpage
 	\subsection{跨页表格}
 	
-	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{darkred}longtable}}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<当前表格总列数>\}\{<跨页表题>\}}来正确排版跨页之后的表题\textcolor{red}{（2025.01.05日更新该命令的使用方式）}。\textbf{务必使用此命令}，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致；并且在跨页表题长度超过表宽时，无法产生预期的排版结果。
+	原则上，长度不足一页的表格不应跨页。而对于本身超过一页的表格，本模板使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{DarkRed}longtable}}宏包提供的\shad{longtable}环境实现。用户需要了解\shad{longtable}环境的基本使用方法，它与\shad{tabular}环境的最大区别在于需要用户自行定义分页后的表题、表头以及表尾。本模板提供了命令\shadcmd{CPcaption\{<当前表格总列数>\}\{<跨页表题>\}}来正确排版跨页之后的表题\textcolor{red}{（2025.01.05日更新该命令的使用方式）}。\textbf{务必使用此命令}，否则跨页后的表题将会与表格内容采用相同的行距和段前段后，而非与规范中要求的表题格式保持一致；并且在跨页表题长度超过表宽时，无法产生预期的排版结果。
 	
 	此外，不应将\shad{longtable}环境嵌套在\shad{table}等浮动环境中，否则长表格将无法正常跨页。具体细节参见本小节示例表\ref{tab: 中国计算机学会部分推荐期刊及会议}和表\ref{tab: 中国计算机学会部分推荐期刊及会议简表}。
 	
@@ -707,7 +709,7 @@
 
 	\textcolor{red}{\textbf{注意：}}使用\shadcmd{tablenotetext}命令的前提是对表格首列进行特定设置，用户\textbf{必须}通过\shad{p{<长度>}}或\shad{m{<长度>}}来人为指定\shad{longtable}的首列宽度，\textcolor{red}{\textbf{切不可}}将之设置为\shad{c}、\shad{r}或\shad{l}。另外，表格中最后一条\shadcmd{tablenotetext}之后不需要\shadcmd{\shadcmd{}}，否则表尾与下方文本的间隔将偏大。
 
-	还有一种特殊情况是，跨页表格恰好在附注开始处发生了分页，此时也会产生另类的排版结果。要解决该问题，用户得手动在表格内容的适当位置使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{darkred}longtable}}宏包提供的\shadcmd{pagebreak}命令提前断页，代价是前一页底部可能有更多空白，参考表\ref{tab: 跨页带附注表格恰巧在附注开始处换页示例}中的做法。如果你运气尤其差，附注特别长，而且在附注中间跨页了，那我实在无能为力了。
+	还有一种特殊情况是，跨页表格恰好在附注开始处发生了分页，此时也会产生另类的排版结果。要解决该问题，用户得手动在表格内容的适当位置使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/required/tools/longtable.pdf}{\shad{\color{DarkRed}longtable}}宏包提供的\shadcmd{pagebreak}命令提前断页，代价是前一页底部可能有更多空白，参考表\ref{tab: 跨页带附注表格恰巧在附注开始处换页示例}中的做法。如果你运气尤其差，附注特别长，而且在附注中间跨页了，那我实在无能为力了。
 
 	必须要承认，\shadcmd{tablenotetext}命令很不稳定。其参数在不同的表格中需要特调，甚至在同一表格的不同排版设置下都是如此，可谓一表一参。如遇到不得不用的时候，用户必须要投入很多精力。可惜，这已经是我目前所能做到的极限。
 
@@ -851,9 +853,9 @@
 	\clearpage
 	\section{伪代码}
 	
-	伪代码基于\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{darkred}algorithm2e}}宏包提供的\shad{algorithm}环境，默认不添加左右侧框线，且顶部框线和底部框线类比规范对表格的要求进行了加粗，字体大小也调整到了\textbf{五号字}，与表格保持一致。用户可以在载入文档类时添加\shad{boxruled}选项来恢复左右侧框线。该环境生成的伪码与正文文本保持相同宽度。
+	伪代码基于\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{DarkRed}algorithm2e}}宏包提供的\shad{algorithm}环境，默认不添加左右侧框线，且顶部框线和底部框线类比规范对表格的要求进行了加粗，字体大小也调整到了\textbf{五号字}，与表格保持一致。用户可以在载入文档类时添加\shad{boxruled}选项来恢复左右侧框线。该环境生成的伪码与正文文本保持相同宽度。
 	
-	除了\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{darkred}algorithm2e}}宏包本身提供的各种条件、循环语句，本模板基于宏包提供的接口，追加了\shad{Do While}和\shad{Loop}循环语句：
+	除了\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf}{\shad{\color{DarkRed}algorithm2e}}宏包本身提供的各种条件、循环语句，本模板基于宏包提供的接口，追加了\shad{Do While}和\shad{Loop}循环语句：
 	\begin{itemize}
 		\item \shadcmd{DoWhile(<紧跟关键字do的文本，可用于添加注释>)\{<循环条件>\}\{<循环体>\}}
 		\item \shadcmd{Loop(<紧跟关键字loop的文本，可用于添加注释>)\{<循环体>\}}
@@ -1140,7 +1142,7 @@
 	
 	在正文中加入脚注直接在需要放置脚注标签的位置使用\shadcmd{footnote\{<脚注内容>\}}即可。
 	
-	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{\color{darkred}LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
+	在其他环境中，如表格，则需要需要使用\shadcmd{footnotemark}配合\shadcmd{footnotetext\{<脚注文本>\}}。在需要放置脚注标签的位置使用\shadcmd{footnotemark}，然后在环境外使用\shadcmd{footnotetext\{<脚注文本>\}}指明脚注内容\footnote{更详细的使用方法参考\href{https://blog.csdn.net/xovee/article/details/127563209}{\shad{\color{DarkRed}LaTeX脚注}}。冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况；冗余文本用于展示脚注内容发生换行后的情况。}。
 	
 	
 	\section{模板中的各种编号}
@@ -1158,23 +1160,23 @@
 	
 	\begin{verbatim}
 		\begin{align}
-			\max x^2 + y^2 + z^2 \label{eq: obj 1} \\
+			\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \\
 			\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
 			y \leq 2, \subeqtag \\
 			z \leq 4, \subeqtag
 		\end{align}
 		
 		\begin{align}
-			\min \left(\alpha + \beta + \gamma\right)^2 \label{eq: obj 2} \\
-			\text{s.t.} \quad alpha \leq 9, \subeqtag \\
+			\min \left(\boldsymbol{\alpha} + \beta + \gamma_{中文}\right)^2  \\
+			\text{s.t.} \quad \boldsymbol{\alpha} \leq 9, \subeqtag \\
 			\beta \geq -10, \subeqtag \\
-			\gamma \geq 8, \subeqtag[eq: constriant gamma]
+			\gamma_{中文} \geq 8, \subeqtag[eq: constriant gamma]
 		\end{align}
 	\end{verbatim}
 	
 	\begin{align}
 		\thinmuskip=-3mu \medmuskip=-2mu \thickmuskip=-1mu
-		\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \label{eq: obj 1} \\
+		\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \\
 		\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
 		y \leq 2, \subeqtag \\
 		z \leq 4, \subeqtag
@@ -1197,6 +1199,10 @@
 	有两点需要提醒，\shadcmd{subeqtag[<子公式编号标签>]}的可选参数全文不可重复定义，因为它本质上还是调用的\shadcmd{label\{<编号标签>\}}，不用多说。另外，尽管使用\shadcmd{subeqtag[<子公式编号标签>]}的可选参数指定的标签本质上是基于\shadcmd{label\{<编号标签>\}}进行的封装，在TexStudio这样的编辑器上使用\shadcmd{ref\{<编号标签>\}}或\shadcmd{eqref\{<编号标签>\}}却不会自动弹出这些标签的选项，需要用户手动输入；而如果是直接用\shadcmd{label\{<编号标签>\}}指定的标签，引用时会出现在提醒选项中，用户可以直接选择，这算是\shadcmd{subeqtag[<子公式编号标签>]}不太方便的点，可惜我并不知道该如何解决。
 	
 	
+	\section{在标题中排版数学符号\texorpdfstring{$\tilde{r}^t_{u,b}, \acute{\alpha}^t_v, \check{\boldsymbol{C}}^t_n$}{示例}}
+
+	尽管我不建议各位在标题中排版数学符号（因为规范甚至不建议在标题中排版英文缩略词），但如果你非排版不可，那可参考本节标题的做法，使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/macros/latex/contrib/hyperref/doc/hyperref-doc.pdf}{\shad{\color{DarkRed}hyperref}}宏包（模板已载入该宏包）提供的\shadcmd{texorpdfstring\{<TeXstring>\}\{<PDFstring>\}}命令，该命令的具体用法参考这个帖子：\href{https://blog.csdn.net/qq_42679415/article/details/139592054}{\shad{\color{DarkRed}texorpdfstring使用方法}}。
+
 	
 	\section{引用}
 	
@@ -1373,7 +1379,7 @@
 	}
 	\end{verbatim}
 	
-	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{\color{darkred}研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
+	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{\color{DarkRed}研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
 
 	当用户漏掉了参考文献需要的强制域时，BibTeX编译会报错。在VScode中，编译将直接中断；在TeXstudio中，编译不会中断，但log窗口会打印错误信息。这是一种规范控制手段，并非模板bug。遇到这类问题，用户应该自行筛查漏掉了哪些信息。
 	
@@ -1391,9 +1397,9 @@
 		
 		\item 对电子文献，其类型众多，因此需要用户通过\shad{type=\{\}}域显式指定，如文献\cite{电子文献1}和\cite{电子文献2}；而对其他的文献类型，只要在\shad{@}符号后输入了正确的类型标识，对应的类型标签会自动生成，无需用户手动逐条添加。
 		
-		\item （2025.01.02）需要特别说明的参考文献类型是\shad{mastersthesis/phdthesis}，即学位论文。学校在撰写规范中提到参考文献排版应该遵循国标\href{https://lib.tsinghua.edu.cn/wj/GBT7714-2015.pdf}{\color{darkred}GB/T 7714-2015}，在此国标中，对学位论文的引用不需要页码信息。但是，\textbf{学校的规范中又明确为学位论文引用添加了页码信息}。为此，我询问了学位办的相关老师，得到的答复大致是：“\textit{我翻阅了手边信通学院学生的论文，他们是写了页码信息的。但这个要求并没有那么严格，不会说没写就评审不过，历年也没有出现因为这个不过的情况，评审老师也没有严格挑。学位论文的质量并不是通过这个来评判的，不过我们这边还是建议写上}”。
+		\item （2025.01.02）需要特别说明的参考文献类型是\shad{mastersthesis/phdthesis}，即学位论文。学校在撰写规范中提到参考文献排版应该遵循国标\href{https://lib.tsinghua.edu.cn/wj/GBT7714-2015.pdf}{\color{DarkRed}GB/T 7714-2015}，在此国标中，对学位论文的引用不需要页码信息。但是，\textbf{学校的规范中又明确为学位论文引用添加了页码信息}。为此，我询问了学位办的相关老师，得到的答复大致是：“\textit{我翻阅了手边信通学院学生的论文，他们是写了页码信息的。但这个要求并没有那么严格，不会说没写就评审不过，历年也没有出现因为这个不过的情况，评审老师也没有严格挑。学位论文的质量并不是通过这个来评判的，不过我们这边还是建议写上}”。
    
-		本模板原本的实现方式是遵循学校的撰写规范，将学位论文的页码信息设置为了强制域。如果缺少该信息，使用VScode作为编辑器时将报错而无法完成编译；TeXstudio则能跳过这种小问题继续编译，但BibTeX仍会输出错误提醒。GitHub用户\href{https://github.com/zealrussell}{\color{darkred}@zealrussell}在使用VScode撰写论文时，发现不为学位论文这类参考文献添加页码信息将无法顺利编译，遂发起了issue。
+		本模板原本的实现方式是遵循学校的撰写规范，将学位论文的页码信息设置为了强制域。如果缺少该信息，使用VScode作为编辑器时将报错而无法完成编译；TeXstudio则能跳过这种小问题继续编译，但BibTeX仍会输出错误提醒。GitHub用户\href{https://github.com/zealrussell}{\color{DarkRed}@zealrussell}在使用VScode撰写论文时，发现不为学位论文这类参考文献添加页码信息将无法顺利编译，遂发起了issue。
 		
 		经过查阅相关文件，以及向学位办老师求证，本模板调整了此类文献的排版规则。现在，学位论文的`pages`域将不再是强制域，缺少该信息不会再中断编译过程，但会输出警告，提醒用户某条参考文献条目缺少页码信息，见参考文献\cite{陈念永2001毫米波细胞生物效应及抗肿瘤研究无页码}。如果你使用TeXstudio，则在编译参考文献辅助文件时BibTeX会发出该警告（图\ref{fig: TeXstudio对参考文献缺失信息的提醒}）；如果你使用VScode，则需要去检查\shad{problems}窗口输出的信息。它是按文件对警告进行分类的，你需要先定位到\shad{ref.bib}（图\ref{fig: VScode对参考文献缺失信息的提醒}）。本模板将是否在引用学位论文时添加页码信息的选择权交予用户，但我个人仍建议各位遵循学校的规范。
 	\end{itemize}
