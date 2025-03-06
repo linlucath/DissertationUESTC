@@ -325,6 +325,10 @@
 			
 			\item \shad{review}：此选项将以评审模式排版论文的封面及中英文扉页，届时所有能确定个人身份的信息都将被隐去，包括导师信息以及独创性声明中的签名和日期（虽然在送审的时候也不会有这两个信息）。当然，你也可以采用本文档后续介绍的设置空参数的方法来隐去对应信息，但此选项能让你在不调整命令参数内容的情况下实现同样的效果。我个人觉得会更方便一点。
 			
+			另外，模板提供了将\shad{review}的作用范围扩展到文中其他内容的途径。比如在致谢和成果部分，送审前需要抹除个人身份信息，那么用户只需要将对应内容置于\shadcmd{ifreview[<替换文本>]\{<原内容>\}}命令中即可。当未指定该命令的第一项可选参数时，\shad{review}选项会将原内容固定替换为两字宽的水平空白；若指定了第一项可选参数，则\shad{review}选项将以指定的参数替换原内容。用户可对比以下两句话在\shad{review}选项下的区别。（2025.03.06）
+
+			\textbf{示例}：杨过的师傅是\ifreview[XXX]{小龙女}；杨过不承认师傅是\ifreview{赵志敬}。
+			
 			\item \shad{noreminder}：默认情况下，当\textbf{中文摘要}和\textbf{致谢}的篇幅超出规范的最大页数限制时，模板将在对应内容的结尾显式打印提醒信息。若用户在知悉这些内容的长度超出规范限制后仍希望保持原样，则可使用\shad{noreminder}选项禁用提醒信息。（2025.02.22）
 			
 			\item \shad{cmmmath}/\shad{timesmathnogreek}/\shad{timesmath}：千呼万唤始出来，该选项用于选择渲染公式使用的字体。其中，\shad{cmmmath}即对应LaTeX原本使用的Computer Modern Math。这是添加此类选项前，本模板默认使用的公式字体，也是我个人比较喜欢的，现在仍然是此类选项的默认值；\shad{timesmathnogreek}指定使用Times New Roman来渲染公式中的英文字母和数字，但不会更改希腊字母、手写体和双线体的字体；\shad{timesmath}则同时将希腊字母也设置成Times New Roman，手写体和双线体仍保持不变，不过我觉得希腊字符用这个字体并不好看。对公式字体是不是均为Times New Roman比较介怀的用户可以使用\shad{timesmath}选项。后两种选项均基于\href{https://mirrors.nju.edu.cn/CTAN/macros/xetex/latex/mathspec/mathspec.pdf}{\shad{\color{DarkRed}mathspec}}宏包实现，在我有限的测试实践中，只有它能做到真正意义上的Times New Roman。（2025.01.31）

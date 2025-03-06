@@ -285,10 +285,10 @@
 }
 
 
-\newcommand{\ifreview}[1]{%
-	\ifthenelse{\equal{#1}{} \or \boolean{reviewflag}}%
-		{\phantom{占位}}%
+\newcommand{\ifreview}[2][\phantom{占位}]{%
+	\ifthenelse{\equal{#2}{} \or \boolean{reviewflag}}%
 		{#1}%
+		{#2}%
 }
 
 

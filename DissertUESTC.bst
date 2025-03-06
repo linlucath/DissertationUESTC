@@ -1171,7 +1171,7 @@ FUNCTION {article}
       journal
       "journal" bibinfo.check
       "journal" output.check
-      format.date "year" output.check
+      year "year" output.check
       volume missing$
         {
           number missing$
@@ -1244,9 +1244,9 @@ FUNCTION {book}
     }
   if$
   pages missing$
-    {format.date "year" output.check}
+    {year "year" output.check}
     {
-      format.date ": " * format.pages * "pages" output.check
+      year ": " * format.pages * "pages" output.check
     }
   if$
   new.block
@@ -1364,7 +1364,7 @@ FUNCTION {inproceedings}
     { format.incoll.inproc.crossref output.nonnull
     }
   if$
-  format.date ": " * format.pages * "pages" output.check
+  year ": " * format.pages * "pages" output.check
   new.block
   % format.url output
   % new.block
@@ -1425,9 +1425,9 @@ FUNCTION {mastersthesis}
   pages missing$
     {
       pages "pages" bibinfo.warn pop$
-      format.date "year" output.check
+      year "year" output.check
     }
-    {format.date ": " * format.pages * "pages" output.check}
+    {year ": " * format.pages * "pages" output.check}
   if$
   new.block
   format.url output
@@ -1451,9 +1451,9 @@ FUNCTION {phdthesis}
   pages missing$
     {
       pages "pages" bibinfo.warn pop$
-      format.date "year" output.check
+      year "year" output.check
     }
-    {format.date ": " * format.pages * "pages" output.check}
+    {year ": " * format.pages * "pages" output.check}
   if$
   new.block
   format.url output
@@ -1495,7 +1495,7 @@ FUNCTION {proceedings}
       if$
      }
   if$
-      format.date "year" output.check
+      year "year" output.check
   new.block
   % format.url output
   % new.block
@@ -1532,7 +1532,7 @@ FUNCTION {report}
   address "address" bibinfo.warn output
   ": " *  write$
   publisher "publisher" bibinfo.warn
-  format.date "year" output.check
+  year "year" output.check
   new.block
   format.url output
   new.block
@@ -1592,7 +1592,7 @@ FUNCTION {standard}
   address "address" bibinfo.warn output
   ": " * write$
   publisher "publisher" bibinfo.warn
-  format.date ": " * format.pages * "year" output.check
+  year ": " * format.pages * "year" output.check
   new.block
   format.url output
   new.block
@@ -1614,7 +1614,7 @@ FUNCTION {digital}
       address "address" bibinfo.warn output
       ": " * write$
       publisher "publisher" bibinfo.warn
-      format.date "year" bibinfo.warn output
+      year "year" bibinfo.warn output
       ": " * write$
       format.pages "pages" bibinfo.warn write$
       modifydate "modifydate" bibinfo.warn
