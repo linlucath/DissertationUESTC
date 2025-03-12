@@ -1385,15 +1385,41 @@
 	
 	这些\shad{.bib}数据依次编译后的结果见本文档中附上的参考文献列表，用户可对应查看。感兴趣的朋友可与\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\shad{\color{DarkRed}研究生学位论文撰写规范}}中给出的结果进行对比，看看是否做到了完全复刻。
 
+	另外，\textbf{\textcolor{DarkRed}{学士学位论文在大部分参考文献类型上采用了与研究生学位论文不同的排版风格}}。其中大部分文献类型只不过是各项内容的排布顺序和其后的标点符号不同，而这些由模板负责处理。换句话说，上述大多数\shad{bib}条目同样适用于学士学位论文。但是，对\textbf{“专利”}而言，学士学位论文还需要新的域：nation（专利国别）和type（专利种类）。以下是本科生需要为\textbf{“专利”}维护的\shad{bib}信息：
+	\begin{verbatim}
+	@patent{肖珍新2012,
+	    author={肖珍新},
+	    title={一种新型排渣阀调节降温装置},
+	    number={ZL201120085830.0},
+	    year={2012},
+	    month={04},
+	    day={25},
+	    nation={中国},
+	    type={发明专利},
+	}
+	\end{verbatim}
+	类似的，学士学位论文在引用\textbf{“电子文献”}时，“出版地”和“获取地址”只取其一、“发表更新日期”和“引用日期”同样只取其一，所以本科生只需要用\shad{address}域为之提供“出版地”\textcolor{DarkRed}{或}“获取地址”；用\shad{modifydate}域为之提供“发表更新日期”\textcolor{DarkRed}{或}“引用日期”即可。如下所示：
+	\begin{verbatim}
+	@digital{电子文献1,
+	    author={Deverell, W and gler, D},
+	    title={A companion to California history},
+	    type={M/OL},
+	    modifydate={2013-11-15},
+	    address={New York},
+	    publisher={John Wiley \& Sons},
+	}
+	\end{verbatim}
+
 	\textbf{\textcolor{DarkRed}{特别提醒：示例文档在开头的位置使用了命令\shadcmd{nocite\{*\}}，其作用是在参考文献列表中列出\shad{.bib}数据库中的所有参考文献条目，以便用作示例。因此，各位在正式撰写论文时一定要先注释掉该条命令！！！}}
 
 	当用户漏掉了参考文献需要的强制域时，BibTeX编译会报错。在VScode中，编译将直接中断；在TeXstudio中，编译不会中断，但log窗口会打印错误信息。这是一种规范控制手段，并非模板bug。遇到这类问题，用户应该自行筛查漏掉了哪些信息。
 	
-	生成参考文献最耗费精力的是维护正确的\shad{ref.bib}数据库。在这之后，只需要在正文的对应位置使用以下两行代码即可插入完整的参考文献列表：
+	生成参考文献最耗费精力的是维护正确的\shad{ref.bib}数据库。在这之后，只需要在正文的对应位置使用以下单行代码即可插入完整的参考文献列表：
 	\begin{verbatim}
-		\bibliographystyle{DissertUESTC}
 		\bibliography{ref}
 	\end{verbatim}
+
+	尽管研究生和学士学位论文对参考文献的排版风格有不同要求，\textbf{\textcolor{DarkRed}{用户在开头通过文档类选项指定学位论文类型后，模板将自动确定并应用相应的\shad{.bst}风格文件}}，无需像之前那样通过\shadcmd{bibliographystyle\{DissertUESTC\}}来显式设置。（2025.03.12）
 	
 	多说两句：
 	\begin{itemize}
@@ -1430,7 +1456,7 @@
 	
 	%% 参考文献部分
 %	\nocite{*}
-	\bibliographystyle{DissertUESTC}
+	% \bibliographystyle{DissertUESTC-bachelor}
 	\bibliography{ref}
 	
 	% 附录起始位置

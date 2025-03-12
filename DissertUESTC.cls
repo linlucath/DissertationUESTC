@@ -1864,6 +1864,10 @@
 	\oldbibliography{#1}%
 }%
 
+%%% 根据论文类型设置参考文献排版样式
+\ifthenelse{\equal{\dissertationtype}{bachelor}}%
+	{\bibliographystyle{DissertUESTC-bachelor}}%
+	{\bibliographystyle{DissertUESTC}}%
 
 
 

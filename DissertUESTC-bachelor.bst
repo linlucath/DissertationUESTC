@@ -1,5 +1,5 @@
 %%
-%% This is file `DissertUESTC.bst',
+%% This is file `DissertUESTC-bachelor.bst',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
@@ -132,7 +132,8 @@ FUNCTION {output.check}
 
 %%% 给栈顶元素尾部加上"."，并写入输出缓冲区，然后将输出缓冲区中的所有信息写入bbl文件
 FUNCTION {fin.entry}
-{ add.period$
+{ 
+  % add.period$
   write$
   newline$
 }
@@ -502,9 +503,9 @@ FUNCTION {format.names}
   numnames 'namesleft :=
     { namesleft #0 > }
     { s nameptr
-      "{vv~}{ll}{ f{~}}{ jj}"
+      "{f.{~}}{ jj}{ vv}{ ll}"
       format.name$
-      remove.dots
+      % remove.dots
       bibinfo bibinfo.check
       't :=
       nameptr #1 >
@@ -737,44 +738,44 @@ FUNCTION {full.date}
   year duplicate$ empty$
     { "there's no year in " cite$ * warning$
       pop$
-      "XXXX-"
+      "XXXX年"
     }
-    { "-" * }
+    { "年" * }
   if$
   month duplicate$ empty$
     { "there's no month in " cite$ * warning$
       pop$
-      "Xx-" *
+      "Xx月" *
     }
-    { * "-" * }
+    { * "月" * }
   if$
   day duplicate$ empty$
     { "there's no day in " cite$ * warning$
       pop$
-      "xx" *
+      "xx日" *
     }
-    { * }
+    { * "日" * }
   if$
 }
 FUNCTION {format.full.date}
 {
   year "year" bibinfo.check duplicate$ empty$
     { "there's no year in " cite$ * warning$
-      "XXXX-" *
+      "XXXX年" *
     }
-    { "-" * }
+    { "年" * }
   if$
   month "month" bibinfo.check duplicate$ empty$
     { "there's no month in " cite$ * warning$ 
-      * "Xx-" *
+      * "Xx月" *
     }
-    { * "-" * }
+    { * "月" * }
   if$
   day "day" bibinfo.check duplicate$ empty$
     { "there's no day in " cite$ * warning$
-      * "xx" *
+      * "xx日" *
     }
-    { * }
+    { * "日" * }
   if$
   duplicate$ empty$
     'skip$
@@ -1217,21 +1218,21 @@ FUNCTION {book}
   translator missing$
     {skip$}
     {
-      format.translators "translator" output.check
+      "(" format.translators * ")" * "translator" output.check
       new.block
     }
   if$
   %format.edition output
-  edition missing$
-    {skip$}
-    {
-      language missing$
-        { format.edition "edition" output.check }
-        { edition "版" * "edition" output.check }
-      if$
-      new.block
-    }
-  if$
+  % edition missing$
+  %   {skip$}
+  %   {
+  %     language missing$
+  %       { format.edition "edition" output.check }
+  %       { edition "版" * "edition" output.check }
+  %     if$
+  %     new.block
+  %   }
+  % if$
   crossref missing$
     { format.bvolume output
       new.block
@@ -1247,7 +1248,7 @@ FUNCTION {book}
   pages missing$
     {year "year" output.check}
     {
-      year ": " * format.pages * "pages" output.check
+      year ", " * format.pages * "pages" output.check
     }
   if$
   new.block
@@ -1428,7 +1429,7 @@ FUNCTION {mastersthesis}
       pages "pages" bibinfo.warn pop$
       year "year" output.check
     }
-    {year ": " * format.pages * "pages" output.check}
+    {year ", " * format.pages * "pages" output.check}
   if$
   new.block
   format.url output
@@ -1454,7 +1455,7 @@ FUNCTION {phdthesis}
       pages "pages" bibinfo.warn pop$
       year "year" output.check
     }
-    {year ": " * format.pages * "pages" output.check}
+    {year ", " * format.pages * "pages" output.check}
   if$
   new.block
   format.url output
@@ -1513,7 +1514,8 @@ FUNCTION {news}
   new.block
   publisher "publisher" bibinfo.warn output
   full.date "date" bibinfo.warn output write$
-  " (" number * ")" *
+  % " (" number * ")" *
+  ""
   new.block
   format.url output
   new.block
@@ -1560,14 +1562,15 @@ FUNCTION {patent}
 { output.bibitem
   format.authors "author" output.check
   new.block
-  format.title ": " * number * "[P]" * "title" output.check
-  new.block
+  format.title "[P]. " * nation * ", " *
+  type * ", " * number * "title" output.check
+  % new.block
   crossref missing$
     {
       %journal
       %"journal" bibinfo.check
       %"journal" output.check
-      format.full.date "fulldate" output.check
+      full.date "fulldate" output.check
     }
     { format.article.crossref output.nonnull
     }
@@ -1588,12 +1591,12 @@ FUNCTION {standard}
 { output.bibitem
   format.authors "author" output.check
   new.block
-  format.title ": " * number * "[S]" * "title" output.check
+  number ". " * format.title * "[S]" * "title" output.check
   new.block
   address "address" bibinfo.warn output
   ": " * write$
   publisher "publisher" bibinfo.warn
-  year ": " * format.pages * "year" output.check
+  full.date "date" output.check
   new.block
   format.url output
   new.block
@@ -1614,18 +1617,18 @@ FUNCTION {digital}
     {
       address "address" bibinfo.warn output
       ": " * write$
-      publisher "publisher" bibinfo.warn
-      year "year" bibinfo.warn output
-      ": " * write$
-      format.pages "pages" bibinfo.warn write$
+      publisher "publisher" bibinfo.warn write$
+      % year "year" bibinfo.warn output
+      ", " write$
+      % format.pages "pages" bibinfo.warn write$
       modifydate "modifydate" bibinfo.warn
-      " (" swap$ * ")" * write$
-      citedate "citedate" bibinfo.warn
-      " [" swap$ * "]" *
+      % " (" swap$ * ")" * write$
+      % citedate "citedate" bibinfo.warn
+      % " [" swap$ * "]" *
       new.block
     }
   if$
-  format.url output
+  % format.url output
   fin.entry
 }
 
