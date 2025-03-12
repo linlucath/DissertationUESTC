@@ -428,9 +428,9 @@
 	
 	\subsection{普通表格}
 	
-	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合研究生规范中对线高的要求（\shad{1.5}磅、\shad{0.75}磅、\shad{1.5}磅）。注意不要用\shad{$\backslash$hline}。而对于本科生，学士学位论文规范要求表格中的线高统一为\shad{0.5}磅，在\shad{bachelor}选项下，\shad{$\backslash$midrule}的线高设置为\shad{0.5}磅。因此，本科生在表格中只需要也只可以使用\shad{$\backslash$midrule}和\shadcmd{cmidrule}，否则线高将不符合要求。
+	普通表格的排版本身无需多言，使用\shad{table}+\shad{tabular}环境即可，但是要注意三线表中的三条线分别需要使用\shad{$\backslash$toprule}、\shad{$\backslash$midrule}、\shad{$\backslash$bottomrule}生成，这样才符合研究生规范中对线粗的要求（\shad{1.5}磅、\shad{0.75}磅、\shad{1.5}磅）。注意不要用\shad{$\backslash$hline}。而对于本科生，学士学位论文规范要求表格中的线粗统一为\shad{0.5}磅，在\shad{bachelor}选项下，\shad{$\backslash$midrule}的线粗设置为\shad{0.5}磅。因此，本科生在表格中只需要也只可以使用\shad{$\backslash$midrule}和\shadcmd{cmidrule}，否则线粗将不符合要求。
 	
-	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线高>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线高，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线高度，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{DarkRed}booktabs}}宏包的官方文档。
+	在需要为表格中的某些单元格添加水平框线时，应使用\newline\shadcmd{cmidrule[<线粗>](<修剪>)\{<起始列-终止列>\}}而非\shadcmd{cline\{<起始列-终止列>\}}。后者似乎无法调整线粗，也无法对框线的端点进行修剪。前者的第一项可选参数允许用户设置框线粗细，其默认值在\shad{bachelor}选项下设置为了\shad{0.5}磅，而在其他论文类型下设置为了\shad{0.75}磅。如非必要，用户无需设置该可选参数；第二项可选参数允许用户对框线的端点进行修剪，当需要避免同行独立的相邻框线在视觉上连通到一起时，该选项将很有用，比如表\ref{tab: cmidrule示例}中的示例。有关第二项可选参数可取的值，建议用户查阅\href{https://mirrors.sustech.edu.cn/CTAN/macros/latex/contrib/booktabs/booktabs.pdf}{\shad{\color{DarkRed}booktabs}}宏包的官方文档。
 	
 	\begin{table}[htp]
 		\caption{$\backslash$cmidrule示例}\label{tab: cmidrule示例}
@@ -448,8 +448,8 @@
 				\bottomrule
 			\end{tabular}
 			\begin{tablenotes}
-				\item[1] 在\shad{bachelor}选项下，\shadcmd{cmidrule}默认线高设置为0.5bp，而在其他论文类型下，默认值为0.75bp，两者规范的要求不同。可用第二项可选参数同时修剪掉框线的左右端点
-				\item[2] 通过指定\shadcmd{cmidrule}的第一项可选参数调整线高，并用第二项可选参数仅修剪掉框线的左端点
+				\item[1] 在\shad{bachelor}选项下，\shadcmd{cmidrule}默认线粗设置为0.5bp，而在其他论文类型下，默认值为0.75bp，两者规范的要求不同。可用第二项可选参数同时修剪掉框线的左右端点
+				\item[2] 通过指定\shadcmd{cmidrule}的第一项可选参数调整线粗，并用第二项可选参数仅修剪掉框线的左端点
 			\end{tablenotes}
 		\end{threeparttable}
 	\end{table}
