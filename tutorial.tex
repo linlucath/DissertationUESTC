@@ -5,10 +5,9 @@
 
 \begin{document}
 	
-	% 以下三条命令分别为高亮示例文档中的关键内容和列出所有参考文献条目而设，正式撰写时切不可使用
+	% 以下两条命令为高亮示例文档中的关键内容而设，正式撰写时切不可使用
 	\newcommand{\shad}[1]{\textcolor{DodgerBlue}{\ttfamily #1}}
 	\newcommand{\shadcmd}[1]{\shad{$\backslash$#1}}
-	\nocite{*}  % 为了便于在示例文档中展示参考文献而设，正式撰写时需要注释掉
 
 	% 当论文中某节的内容接近填满页面且其下紧随几项标题时，LaTeX更倾向于在后续的标题前分页，并且纵向拉伸当前页内容的段间距，以实现纵向分散对齐，也就是很多人在问的现象。这并不是模板bug，而是LaTeX特性。
 	% 出现这种情况的本质原因是用户的内容，尤其是在页面中有些图、表、标题的时候，它们的高度很可能不是正文行距的整数倍，那必然就会出现这种问题。
@@ -48,7 +47,7 @@
 	\ClsNum{TN828.6}  % \ClsNum{<分类号>}
 	\ClsLv{公开}  % \ClsLv{<密级>}
 	\UDC{621.39}  % \UDC{<UDC号>}
-	\DissertationTitle{关于我的杀父仇人疑似是名震天下的大侠时该如何报仇}  % \DissertationTitle{<题名>}
+	\DissertationTitle{关于我的杀父仇人疑似是名震天下的大侠时\\该如何报仇}  % \DissertationTitle{<题名>}
 	\Author{杨过}  % \Author{<作者姓名>}
 	\Supervisor{小龙女}{掌门}{古墓派}{活死人墓}  % \Supervisor{<指导教师>}{<职称>}{<单位名称>}{<单位地址>}
 	% 副导师信息，无则注释
@@ -1410,7 +1409,7 @@
 	}
 	\end{verbatim}
 
-	\textbf{\textcolor{DarkRed}{特别提醒：示例文档在开头的位置使用了命令\shadcmd{nocite\{*\}}，其作用是在参考文献列表中列出\shad{.bib}数据库中的所有参考文献条目，以便用作示例。因此，各位在正式撰写论文时一定要先注释掉该条命令！！！}}
+	
 
 	当用户漏掉了参考文献需要的强制域时，BibTeX编译会报错。在VScode中，编译将直接中断；在TeXstudio中，编译不会中断，但log窗口会打印错误信息。这是一种规范控制手段，并非模板bug。遇到这类问题，用户应该自行筛查漏掉了哪些信息。
 	
@@ -1418,7 +1417,9 @@
 	\begin{verbatim}
 		\bibliography{ref}
 	\end{verbatim}
-
+	
+	\textbf{\textcolor{DarkRed}{特别提醒：示例文档在上述命令之前使用了命令\shadcmd{nocite\{*\}}，其作用是在参考文献列表中列出\shad{.bib}数据库中的所有参考文献条目，以便用作示例。因此，各位在正式撰写论文时一定要注释掉该条命令！！！}}
+	
 	尽管研究生和学士学位论文对参考文献的排版风格有不同要求，\textbf{\textcolor{DarkRed}{用户在开头通过文档类选项指定学位论文类型后，模板将自动确定并应用相应的\shad{.bst}风格文件}}，无需像之前那样通过\shadcmd{bibliographystyle\{DissertUESTC\}}来显式设置。（2025.03.12）
 	
 	多说两句：
@@ -1455,8 +1456,8 @@
 
 	
 	%% 参考文献部分
-%	\nocite{*}
-	% \bibliographystyle{DissertUESTC-bachelor}
+	\nocite{*}% 为了便于在示例文档中展示参考文献而设，正式撰写时需要注释掉
+	% \bibliographystyle{DissertUESTC}% 自v25.03.12版本后，参考文献风格文件由用户设定的论文类型选项自动确定，无需在此手动设置
 	\bibliography{ref}
 	
 	% 附录起始位置

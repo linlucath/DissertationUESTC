@@ -939,8 +939,8 @@
 	}%
 	\par\vspace*{1bp}
 	\parbox[b][2.5cm][b]{15cm}{%
-		\hwzs\zihao{-2}\hspace*{2cm}%
-		\parbox[b]{11cm}{\centering\bfseries \dissertationtitle}%
+		\hwzs\zihao{-2}%\hspace*{1cm}%
+		\parbox[b]{15cm}{\centering\bfseries \dissertationtitle}%
 		\par\vspace{-\baselineskip}%
 		\rule[-8bp]{\linewidth}{0.5bp}%
 	}%
@@ -1658,7 +1658,7 @@
 	\addtocounter{chineseabstractpagespan}{-\value{chineseabstractstartpage}}%
 	\ifthenelse{\value{chineseabstractpagespan} > \chineseabstractpagelimit \and \boolean{usereminder}}%
 		{%
-			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
 		}{}%
 	\insertevenemptypage%
 }%
@@ -1849,7 +1849,7 @@
 	\addtocounter{acknowledgementpagespan}{-\value{acknowledgementstartpage}}%
 	\ifthenelse{\value{acknowledgementpagespan} > \acknowledgementpagelimit \and \boolean{usereminder}}%
 		{%
-			\par\noindent\textbf{\textcolor{darkred}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
 		}{}%
 	% 禁止参考文献条目跨页：
 	% https://tex.stackexchange.com/questions/43260/biblatex-no-pagebreak-in-bibliography-entry
