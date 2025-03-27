@@ -715,11 +715,8 @@
 				\settowidth{\covertitlewidth}{#2}%
 				\setlength{\covertitlewidthlimit}{10.5cm}%
 				\replaceempty{#2}%
-				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
+				\ifthenelse{\covertitlewidth > \covertitlewidthlimit}%
 					{%
-						\null\par\vspace{-\baselineskip}%
-						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
-					}{%
 						\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
 							\null%
 							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -735,6 +732,9 @@
 									\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
 								}{}%
 						}%
+					}{%
+						\null\par\vspace{-\baselineskip}%
+						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
 					}%
 			}%
 		}%
@@ -763,11 +763,8 @@
 						\centering\setlength{\baselineskip}{1cm}%
 						\setcounter{linecount}{0}%
 						\replaceempty{#8}%
-						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+						\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
 							{%
-								\null\par\vspace{-\baselineskip}%
-								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
-							}{%
 								\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
 									\null%
 									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -783,12 +780,15 @@
 											\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
 										}{}%
 								}%
+							}{%
+								\null\par\vspace{-\baselineskip}%
+								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
 							}%
 					}%
 				}{% 对过长的学院名称缩放处理
-					\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
-						{\makebox[9cm][c]{#8}}%
+					\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
 						{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+						{\makebox[9cm][c]{#8}}%
 					\null\par\vspace{-\baselineskip}%
 					\noindent\hspace*{4.5cm}%
 					\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
@@ -825,11 +825,8 @@
 				\settowidth{\covertitlewidth}{#2}%
 				\setlength{\covertitlewidthlimit}{10.5cm}%
 				\replaceempty{#2}%
-				\ifthenelse{\covertitlewidth < \covertitlewidthlimit}%
+				\ifthenelse{\covertitlewidth > \covertitlewidthlimit}%
 					{%
-						\null\par\vspace{-\baselineskip}%
-						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
-					}{%
 						\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
 							\null%
 							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -845,6 +842,9 @@
 									\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
 								}{}%
 						}%
+					}{%
+						\null\par\vspace{-\baselineskip}%
+						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
 					}%
 			}%
 		}%
@@ -861,11 +861,8 @@
 						\centering\setlength{\baselineskip}{1.25cm}%
 						\setcounter{linecount}{0}%
 						\replaceempty{#8}%
-						\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
+						\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
 							{%
-								\null\par\vspace{-\baselineskip}%
-								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
-							}{%
 								\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
 									\null%
 									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -881,12 +878,15 @@
 											\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
 										}{}%
 								}%
+							}{%
+								\null\par\vspace{-\baselineskip}%
+								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
 							}%
 					}%
 				}{% 对过长的学院名称缩放处理
-					\ifthenelse{\coverschoolwidth < \coverschoolwidthlimit}%
-						{\makebox[9cm][c]{#8}}%
+					\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
 						{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+						{\makebox[9cm][c]{#8}}%
 					\null\par\vspace{-\baselineskip}%
 					\noindent\hspace*{4.5cm}%
 					\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
@@ -1114,9 +1114,9 @@
 		\settowidth{\reviewerswidth}{\reviewers}%
 		\setlength{\reviewerswidthlimit}{13.5cm-0.5em}%
 		\hspace*{0.5em}%
-		\ifthenelse{\reviewerswidth < \reviewerswidthlimit}%
-			{\ifreview{\reviewers}}%
+		\ifthenelse{\reviewerswidth > \reviewerswidthlimit}%
 			{\scalebox{\xintRound{2}{\reviewerswidthlimit / \reviewerswidth}}[1]{\ifreview{\reviewers}}}%
+			{\ifreview{\reviewers}}%
 		\par\vspace{-\baselineskip}%
 		\rule[-4bp]{\linewidth}{0.5bp}%
 	}%
@@ -1160,11 +1160,8 @@
 		\setcounter{linecount}{0}
 		\setlength{\baselineskip}{1.2cm}%
 		\replaceempty{#2}%
-		\ifthenelse{\engdisciplinewidth < \engdisciplinewidthlimit}%
-			{
-				\null\par\vspace*{-\baselineskip}%
-				\rule[-5.5bp]{\linewidth}{0.5bp}%
-			}{%
+		\ifthenelse{\engdisciplinewidth > \engdisciplinewidthlimit}%
+			{%
 				\whiledo{\engdisciplinewidthlimit < \engdisciplinewidth}{%
 					\null%
 					\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -1180,6 +1177,9 @@
 							\rule[-5.5bp]{\linewidth}{0.5bp}%
 						}{}%
 				}%
+			}{%
+				\null\par\vspace*{-\baselineskip}%
+				\rule[-5.5bp]{\linewidth}{0.5bp}%
 			}%
 	}%
 	\par\vspace*{0pt}%
@@ -1216,11 +1216,8 @@
 			\settowidth{\engschoolwidth}{#7}%
 			\setlength{\engschoolwidthlimit}{12cm}%
 			\replaceempty{#7}%
-			\ifthenelse{\engschoolwidth < \engschoolwidthlimit}%
+			\ifthenelse{\engschoolwidth > \engschoolwidthlimit}%
 				{%
-					\null\par\vspace{-\baselineskip}%
-					\rule[-5.5bp]{\linewidth}{0.5bp}%
-				}{%
 					\whiledo{\engschoolwidthlimit < \engschoolwidth}{%
 						\null%
 						\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
@@ -1236,6 +1233,9 @@
 								\rule[-5.5bp]{\linewidth}{0.5bp}%
 							}{}%
 					}%
+				}{%
+					\null\par\vspace{-\baselineskip}%
+					\rule[-5.5bp]{\linewidth}{0.5bp}%
 				}%
 		}%
 	}%

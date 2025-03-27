@@ -1163,14 +1163,16 @@
 	
 	\begin{verbatim}
 		\begin{align}
-			\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \\
+			\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right)
+			\label{eq: obj 1} \\
 			\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
 			y \leq 2, \subeqtag \\
 			z \leq 4, \subeqtag
 		\end{align}
 		
 		\begin{align}
-			\min \left(\boldsymbol{\alpha} + \beta + \gamma_{中文}\right)^2  \\
+			\min \left(\boldsymbol{\alpha} + \beta + \gamma_{中文}\right)^2
+			\label{eq: obj 2} \\
 			\text{s.t.} \quad \boldsymbol{\alpha} \leq 9, \subeqtag \\
 			\beta \geq -10, \subeqtag \\
 			\gamma_{中文} \geq 8, \subeqtag[eq: constriant gamma]
@@ -1179,7 +1181,7 @@
 	
 	\begin{align}
 		\thinmuskip=-3mu \medmuskip=-2mu \thickmuskip=-1mu
-		\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \\
+		\max \log \left(x^2 + y^2 + z^2 + v^2 + g^2 + m^2 + k^2\right) \label{eq: obj 1} \\
 		\text{s.t.} \quad x \leq 1, \subeqtag[eq: constraint x] \\
 		y \leq 2, \subeqtag \\
 		z \leq 4, \subeqtag
@@ -1217,7 +1219,7 @@
 	
 	参考文献的引用是基于\shad{natbib}宏包实现的，单次引用多篇参考文献时会自动排序并压缩序号（如果可以的话）。
 
-	另外，研究生论文规范要求正文中引用的公式编号样式采用英文括号，即\shad{(1-1)}；而本科论文规范中则要求是中文括号，即\shad{（1-1）}。在公式右侧的编号中，两者均采用英文括号。此间区别完全由相应的选项（\shad{doctor}/\shad{prodoctor}/\shad{master}/\shad{promaster}/ \shad{bachelor}）控制，用户无需过问，但一定要确保自己写对了选项。
+	另外，研究生论文规范要求正文中引用的公式编号样式采用英文括号，即\shad{(1-1)}；而本科论文规范中则要求是中文括号，即\shad{（1-1）}。在公式右侧的编号中，两者均采用英文括号。此间区别完全由相应的选项（\shad{doctor} / \shad{prodoctor} / \shad{intdoctor} / \shad{master} / \shad{promaster} / \shad{intmaster} / \shad{bachelor}）控制，用户无需过问，但一定要确保自己写对了选项。
 	
 	
 	\section{参考文献编译}
@@ -1259,10 +1261,10 @@
 	}
 	
 	@article{hu2014domain,
-	    title={Domain decomposition method based on integral equation for solution of
-	    scattering from very thin, conducting cavity},
-	    author={Hu, Jun and Zhao, Ran and Tian, Mi and Zhao, Huapeng and Jiang,
-	    Ming and Wei, Xiang and Nie, Zai Ping},
+	    title={Domain decomposition method based on integral equation
+	    for solution of scattering from very thin, conducting cavity},
+	    author={Hu, Jun and Zhao, Ran and Tian, Mi and Zhao, Huapeng and
+	    Jiang, Ming and Wei, Xiang and Nie, Zai Ping},
 	    journal={IEEE Transactions on Antennas and Propagation},
 	    volume={62},
 	    number={10},
@@ -1272,10 +1274,10 @@
 	}
 	
 	@inproceedings{bergamasco2015adopting,
-	    title={Adopting an unconstrained ray model in light-field cameras for 3d
-	    shape reconstruction},
-	    author={Bergamasco, Filippo and Albarelli, Andrea and Cosmo, Luca and Torsello,
-	    Andrea and Rodola, Emanuele and Cremers, Daniel},
+	    title={Adopting an unconstrained ray model in light-field cameras
+	    for 3d shape reconstruction},
+	    author={Bergamasco, Filippo and Albarelli, Andrea and Cosmo, Luca
+	    and Torsello, Andrea and Rodola, Emanuele and Cremers, Daniel},
 	    booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
 	    pages={3003-3012},
 	    year={2015},
@@ -1283,10 +1285,10 @@
 	}
 	
 	@article{xue2024survey,
-	    title={A survey of beam management for mmWave and THz communications
-	    towards 6G},
-	    author={Xue, Qing and Ji, Chengwang and Ma, Shaodan and Guo, Jiajia and Xu,
-	    Yongjun and Chen, Qianbin and Zhang, Wei},
+	    title={A survey of beam management for mmWave and THz
+	    communications towards 6G},
+	    author={Xue, Qing and Ji, Chengwang and Ma, Shaodan and Guo, Jiajia
+	    and Xu, Yongjun and Chen, Qianbin and Zhang, Wei},
 	    journal={IEEE Communications Surveys \& Tutorials},
 	    year={2024},
 	    pages={1-41},
@@ -1331,7 +1333,8 @@
 	
 	@digital{电子文献2,
 	    author={Clerc, M},
-	    title={Discrete particle swarm optimization: a fuzzy combinatorial box},
+	    title={Discrete particle swarm optimization: a fuzzy
+	    combinatorial box},
 	    type={EB/OL},
 	    modifydate={2010-07-16},
 	    url={http://clere.maurice.free.fr/pso/Fuzzy_Discrere_PSO/Fuzzy_DPSO.html},
