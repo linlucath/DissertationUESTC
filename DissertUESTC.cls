@@ -174,7 +174,7 @@
 \newcommand{\uestcenumerateouterleftmarginwithintheorem}{4em}
 \newcommand{\uestcenumerateouterlabelsepwithintheorem}{-0.2em}
 \newcommand{\uestcenumerateitemindentwithintheorem}{-2.55em}
-\newcommand{\uestctitleseries}{\mdseries}% 本土标题黑体不加粗，留学生标题要加粗
+\newcommand{\uestctitleseries}{\mdseries}% 本土标题文本黑体不加粗（编号要加粗），留学生标题文本要加粗
 
 % 将上述信息切换成留学生版本
 \newcommand{\changetointernational}{%
@@ -1600,7 +1600,7 @@
 		\sffamily\uestctitleseries\filright%
 		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont%
 	}%
-	{\thesection}%
+	{\textbf{\thesection}}%
 	{\wordsep}%
 	{}%
 \titleformat{\subsection}[block]%
@@ -1608,7 +1608,7 @@
 		\sffamily\uestctitleseries\filright%
 		\zihao{4}\setlength{\baselineskip}{20bp}\selectfont%
 	}%
-	{\thesubsection}%
+	{\textbf{\thesubsection}}%
 	{\wordsep}%
 	{}%
 \titleformat{\subsubsection}[block]%
@@ -1616,7 +1616,7 @@
 		\sffamily\uestctitleseries\filright%
 		\zihao{-4}\setlength{\baselineskip}{20bp}\selectfont%
 	}%
-	{\thesubsubsection}%
+	{\textbf{\thesubsubsection}}%
 	{\wordsep}%
 	{}%
 
