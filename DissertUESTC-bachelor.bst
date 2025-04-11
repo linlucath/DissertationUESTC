@@ -133,7 +133,7 @@ FUNCTION {output.check}
 %%% 给栈顶元素尾部加上"."，并写入输出缓冲区，然后将输出缓冲区中的所有信息写入bbl文件
 FUNCTION {fin.entry}
 { 
-  % add.period$
+  add.period$
   write$
   newline$
 }
