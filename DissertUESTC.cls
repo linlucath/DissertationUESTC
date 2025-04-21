@@ -17,13 +17,16 @@
 \newcommand{\majlabel}{}
 \newlength{\nametitleorgskip}
 \newcommand{\majorlabel}{}
+\newcommand{\secondarymajorlabel}{}
 \newcommand{\entitlepagemidtext}{}
 \newcommand{\clsnum}{}
 \newcommand{\clslv}{}
 \newcommand{\udc}{}
 \newcommand{\dissertationtitle}{}
 \newcommand{\supervisor}{}
+\newcommand{\secondarysupervisor}{}
 \newcommand{\supervisortitle}{}
+\newcommand{\secondarysupervisortitle}{}
 \newcommand{\supervisororg}{}
 \newcommand{\supervisorloc}{}
 \newcommand{\associatesupervisor}{}
@@ -349,7 +352,27 @@
 	\renewcommand{\majlabel}{专\hspace{2em}业}
 	\setlength{\nametitleorgskip}{6bp}
 	\renewcommand{\majorlabel}{专\hspace{2em}业}
-	\renewcommand{\entitlepagemidtext}{A Master Thesis Submitted to \\ University of Electronic Science and Technology of China}
+	\renewcommand{\entitlepagemidtext}{A Bachelor Thesis Submitted to \\ University of Electronic Science and Technology of China}
+	\DegLv{学士}
+	\renewcommand{\uestctocname}{目\hspace{0.5em}录}
+	\renewcommand{\tocsecindent}{1em}
+	\renewcommand{\tocsubsecindent}{2em}
+	\renewcommand{\tocsubsubsecindent}{3em}
+	\renewcommand{\uestcfigcapmargin}{2em}
+	\renewcommand\uestclightrulewidth{0.5bp}
+	\renewcommand{\chineseabstractpagelimit}{1}
+}
+
+\DeclareOption{doublebachelor}{
+	\renewcommand{\dissertationtype}{doublebachelor}
+	\renewcommand{\evenpagemark}{电子科技大学双学士学位交叉复合型论文}
+	\renewcommand{\achievementtext}{攻读学士学位期间取得的成果}
+	\renewcommand{\covertitletext}{双学士学位\\交叉复合型论文}
+	\renewcommand{\covertitleentext}{BACHELOR THESIS}
+	\renewcommand{\majlabel}{第一专业}
+	\setlength{\nametitleorgskip}{6bp}
+	\renewcommand{\majorlabel}{第一专业}
+	\renewcommand{\entitlepagemidtext}{A Bachelor Thesis Submitted to \\ University of Electronic Science and Technology of China}
 	\DegLv{学士}
 	\renewcommand{\uestctocname}{目\hspace{0.5em}录}
 	\renewcommand{\tocsecindent}{1em}
@@ -686,9 +709,9 @@
 
 
 %% 构建论文封面，研究生和学士差异很大
-\ifthenelse{\equal{\dissertationtype}{graduate}}{
-	\newcommand\uestccover[8][]{
-		\newpage\thispagestyle{empty}
+\ifthenelse{\equal{\dissertationtype}{graduate}}{% 研究生封面
+	\newcommand\uestccover[8][]{%
+		\newpage\thispagestyle{empty}%
 		\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
 		\vspace*{13bp}%
 		\confidential%
@@ -796,114 +819,202 @@
 			\par\vspace*{-\baselineskip}\insertemptypage}%
 	}%
 }{%
-	\newcommand\uestccover[8][]{%
-		\newpage\thispagestyle{empty}%
-		\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
-		\vspace*{-12bp}%
-		\confidential%
-		{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
-			电\hspace{0.25cm}子\hspace{0.25cm}科\hspace{0.25cm}%
-			技\hspace{0.25cm}大\hspace{0.25cm}学 \par}
-		\vspace*{7bp}%
-		{\fontsize{12bp}{9.23bp}\selectfont\centering%
-			UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
-		\vspace*{32bp}%
-		{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
-			\covertitletext\par}%
-		\vspace*{10bp}\par%
-		{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
-			\covertitleentext\par}%
-		\vspace*{1.7cm}\par%
-		{\centering\includegraphics[height=3.25cm]{uestclogo}\par}%
-		\vspace*{3.3cm}\par%
-		{\bfseries\raggedright%
-			\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
-			\parbox[t][3.6cm]{10.5cm}{%
-				\fontsize{16bp}{26bp}\selectfont%
-				\centering%
-				\setcounter{linecount}{0}%
-				\settowidth{\covertitlewidth}{#2}%
-				\setlength{\covertitlewidthlimit}{10.5cm}%
-				\replaceempty{#2}%
-				\ifthenelse{\covertitlewidth > \covertitlewidthlimit}%
-					{%
-						\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
-							\null%
-							\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+	\ifthenelse{\equal{\dissertationtype}{bachelor}}{% 学士封面
+		\newcommand\uestccover[8][]{%
+			\newpage\thispagestyle{empty}%
+			\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
+			\vspace*{-12bp}%
+			\confidential%
+			{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
+				电\hspace{0.47cm}子\hspace{0.47cm}科\hspace{0.47cm}%
+				技\hspace{0.47cm}大\hspace{0.47cm}学\par}%
+			\vspace*{7bp}%
+			{\fontsize{12bp}{9.23bp}\selectfont\centering%
+				UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+			\vspace*{32bp}%
+			{\bfseries\fontsize{42bp}{32.31bp}\selectfont\centering%
+				\covertitletext\par}%
+			\vspace*{10bp}\par%
+			{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
+				\covertitleentext\par}%
+			\vspace*{1.7cm}\par%
+			{\centering\includegraphics[height=3.25cm]{uestclogo}\par}%
+			\vspace*{3.3cm}\par%
+			{\bfseries\raggedright%
+				\hspace*{1em}\parbox[t]{3cm}{\hwzs\fontsize{18bp}{0.77cm}\selectfont\centering 论文题目}%
+				\parbox[t][3.6cm]{10.5cm}{%
+					\fontsize{16bp}{26bp}\selectfont%
+					\centering%
+					\setcounter{linecount}{0}%
+					\settowidth{\covertitlewidth}{#2}%
+					\setlength{\covertitlewidthlimit}{10.5cm}%
+					\replaceempty{#2}%
+					\ifthenelse{\covertitlewidth > \covertitlewidthlimit}%
+						{%
+							\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
+								\null%
+								\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+								\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+								\null%
+								\par\vspace{\baselineskip*2*\value{linecount}}%
+								\stepcounter{linecount}%
+								\addtolength{\covertitlewidthlimit}{10.5cm}%
+								\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
+									{%
+										\null%
+										\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+										\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+									}{}%
+							}%
+						}{%
+							\null\par\vspace{-\baselineskip}%
 							\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
-							\null%
-							\par\vspace{\baselineskip*2*\value{linecount}}%
-							\stepcounter{linecount}%
-							\addtolength{\covertitlewidthlimit}{10.5cm}%
-							\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
-								{%
-									\null%
-									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
-									\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
-								}{}%
 						}%
-					}{%
+				}%
+			}%
+			\ifthenelse{\equal{#1}{par}}%
+				{\par\vspace*{20bp-1.25cm}}%
+				{\par\vspace*{20bp}}%
+			{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
+				\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
+				\settowidth{\coverschoolwidth}{#8}%
+				\setlength{\coverschoolwidthlimit}{9cm}%
+				\ifthenelse{\equal{#1}{par}}%
+					{% 对过长的学院名称换行处理
+						\parbox[t][2.5cm]{9cm}{%
+							\centering\setlength{\baselineskip}{1.25cm}%
+							\setcounter{linecount}{0}%
+							\replaceempty{#8}%
+							\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
+								{%
+									\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
+										\null%
+										\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+										\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+										\null%
+										\par\vspace{\baselineskip*2*\value{linecount}}%
+										\stepcounter{linecount}%
+										\addtolength{\coverschoolwidthlimit}{9cm}%
+										\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
+											{%
+												\null%
+												\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+												\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+											}{}%
+									}%
+								}{%
+									\null\par\vspace{-\baselineskip}%
+									\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+								}%
+						}%
+					}{% 对过长的学院名称缩放处理
+						\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
+							{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+							{\makebox[9cm][c]{#8}}%
 						\null\par\vspace{-\baselineskip}%
-						\rule[-8.5bp]{\linewidth+1.5bp}{0.5bp}%
+						\noindent\hspace*{4.5cm}%
+						\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
 					}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#4}}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#5}}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#6}\hspace{2em}\ifreview{#7}}}%
+				\par\vspace*{-\baselineskip}\insertemptypage%
 			}%
 		}%
-		\ifthenelse{\equal{#1}{par}}%
-			{\par\vspace*{20bp-1.25cm}}%
-			{\par\vspace*{20bp}}%
-		{\bfseries\zihao{3}\setlength{\baselineskip}{1.25cm}\selectfont\noindent%
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}院}%
-			\settowidth{\coverschoolwidth}{#8}%
-			\setlength{\coverschoolwidthlimit}{9cm}%
-			\ifthenelse{\equal{#1}{par}}%
-				{% 对过长的学院名称换行处理
-					\parbox[t][2.5cm]{9cm}{%
-						\centering\setlength{\baselineskip}{1.25cm}%
-						\setcounter{linecount}{0}%
-						\replaceempty{#8}%
-						\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
-							{%
-								\whiledo{\coverschoolwidthlimit < \coverschoolwidth}{%
-									\null%
-									\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
-									\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
-									\null%
-									\par\vspace{\baselineskip*2*\value{linecount}}%
-									\stepcounter{linecount}%
-									\addtolength{\coverschoolwidthlimit}{9cm}%
-									\ifthenelse{\coverschoolwidthlimit > \coverschoolwidth}%
-										{%
-											\null%
-											\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
-											\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
-										}{}%
-								}%
-							}{%
-								\null\par\vspace{-\baselineskip}%
-								\rule[-4.5bp]{\linewidth+1.5bp}{0.5bp}%
+	}{% 双学位学士封面
+		\newcommand\uestccover[8]{%
+			\newpage\thispagestyle{empty}%
+			\pdfbookmark[0]{\uestccovername}{bookmarkcover\thepage}%
+			\vspace*{-22bp}%
+			\confidential%
+			{\hwxk\bfseries\zihao{1}\setlength{\baselineskip}{26bp}\selectfont\centering%
+				电\hspace{0.47cm}子\hspace{0.47cm}科\hspace{0.47cm}%
+				技\hspace{0.47cm}大\hspace{0.47cm}学\par}%
+			\vspace*{15bp}%
+			{\fontsize{12bp}{9.23bp}\selectfont\centering%
+				UNIVERSITY OF ELECTRONIC SCIENCE AND TECHNOLOGY OF CHINA\par}
+			\vspace*{18bp}%
+			{\bfseries\fontsize{42bp}{48bp}\selectfont\centering%
+				\covertitletext\par}%
+			\vspace*{21bp}\par%
+			{\bfseries\fontsize{16bp}{12.31bp}\selectfont\centering%
+				\covertitleentext\par}%
+			\vspace*{1.2cm}\par%
+			{\centering\includegraphics[height=3.15cm]{uestclogo}\par}%
+			\vspace*{0.95cm}\par%
+			{\bfseries\raggedright%
+				\hspace*{-2em}\parbox[t]{3cm}{\fontsize{16bp}{0.55cm}\selectfont\centering 论文题目}%
+				\parbox[t][3cm]{12cm}{%
+					\fontsize{16bp}{22bp}\selectfont%
+					\centering%
+					\setcounter{linecount}{0}%
+					\settowidth{\covertitlewidth}{#1}%
+					\setlength{\covertitlewidthlimit}{12cm}%
+					\replaceempty{#1}%
+					\ifthenelse{\covertitlewidth > \covertitlewidthlimit}%
+						{%
+							\whiledo{\covertitlewidthlimit < \covertitlewidth}{%
+								\null%
+								\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+								\rule[-5.5bp]{\linewidth+1.5bp}{0.5bp}%
+								\null%
+								\par\vspace{\baselineskip*2*\value{linecount}}%
+								\stepcounter{linecount}%
+								\addtolength{\covertitlewidthlimit}{10.5cm}%
+								\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
+									{%
+										\null%
+										\par\vspace{-\baselineskip*(1+2*\value{linecount})}%
+										\rule[-5.5bp]{\linewidth+1.5bp}{0.5bp}%
+									}{}%
 							}%
-					}%
-				}{% 对过长的学院名称缩放处理
-					\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
-						{\makebox[9cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#8}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
-						{\makebox[9cm][c]{#8}}%
-					\null\par\vspace{-\baselineskip}%
-					\noindent\hspace*{4.5cm}%
-					\rule[-4.5bp]{9cm+1.5bp}{0.5bp}%
+						}{%
+							\null\par\vspace{-\baselineskip}%
+							\rule[-5.5bp]{\linewidth+1.5bp}{0.5bp}%
+						}%
 				}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs \majlabel}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{#3}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 学\hspace{2em}号}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#4}}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 作者姓名}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#5}}}%
-			\par\vspace*{0bp}\noindent
-			\hspace*{1.5cm}\makebox[3cm][c]{\hwzs 指导教师}%
-			\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9cm][c]{\ifreview{#6}\hspace{2em}\ifreview{#7}}}%
-			\par\vspace*{-\baselineskip}\insertemptypage%
+			}%
+			\par\vspace*{-22bp}%
+			{\bfseries\zihao{3}\setlength{\baselineskip}{1.11cm}\selectfont\noindent%
+				\hspace*{1.5em}\makebox[3.8cm][l]{学\hspace{2.8em}院}%
+				\settowidth{\coverschoolwidth}{#2}%
+				\setlength{\coverschoolwidthlimit}{9.5cm}%
+				% 对过长的学院名称缩放处理
+				\ifthenelse{\coverschoolwidth > \coverschoolwidthlimit}%
+					{\makebox[9.5cm][c]{\scalebox{\xintRound{2}{\coverschoolwidthlimit / \coverschoolwidth}}[1]{#2}}}% 对过长的学院名进行缩放，计算长度比值的方法：https://tex.stackexchange.com/questions/200581
+					{\makebox[9.5cm][c]{#2}}%
+				\null\par\vspace{-\baselineskip}%
+				\noindent\hspace*{1.5em+3.8cm}%
+				\rule[-4.5bp]{9.5cm+1.5bp}{0.5bp}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{第\hspace*{4bp}一\hspace*{4bp}专\hspace*{4bp}业}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{#3}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{第\hspace*{4bp}二\hspace*{4bp}专\hspace*{4bp}业}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{#4}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{学\hspace{2.8em}号}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{\ifreview{#5}}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{作\hspace*{4bp}者\hspace*{4bp}姓\hspace*{4bp}名}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{\ifreview{#6}}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{第\hspace*{4bp}一\hspace*{4bp}导\hspace*{4bp}师}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{\ifreview{#7}}}%
+				\par\vspace*{0bp}\noindent
+				\hspace*{1.5em}\makebox[3.8cm][l]{第\hspace*{4bp}二\hspace*{4bp}导\hspace*{4bp}师}%
+				\CJKunderline*[thickness=0.5bp, depth=4bp]{\makebox[9.5cm][c]{\ifreview{#8}}}%
+				\par\vspace*{-\baselineskip}\insertemptypage%
+			}%
 		}%
 	}%
 }%
@@ -1865,9 +1976,9 @@
 }%
 
 %%% 根据论文类型设置参考文献排版样式
-\ifthenelse{\equal{\dissertationtype}{bachelor}}%
-	{\bibliographystyle{DissertUESTC-bachelor}}%
+\ifthenelse{\equal{\dissertationtype}{graduate}}%
 	{\bibliographystyle{DissertUESTC}}%
+	{\bibliographystyle{DissertUESTC-bachelor}}%
 
 
 
@@ -2336,9 +2447,10 @@
 \newcommand{\citess}[1]{\textsuperscript{\cite{#1}}}
 
 %%%%%% 调整学士论文引用公式编号的形式
-\ifthenelse{\equal{\dissertationtype}{bachelor}}%
-	{\renewcommand{\eqref}[1]{（\ref{#1}）}}%
+\ifthenelse{\equal{\dissertationtype}{graduate}}%
 	{}%
+	{\renewcommand{\eqref}[1]{（\ref{#1}）}}%
+	
 
 
 %% 修改\url{URL}命令的排版字体风格，https://tex.stackexchange.com/questions/261434
