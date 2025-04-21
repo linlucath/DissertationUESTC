@@ -969,7 +969,7 @@
 								\null%
 								\par\vspace{\baselineskip*2*\value{linecount}}%
 								\stepcounter{linecount}%
-								\addtolength{\covertitlewidthlimit}{10.5cm}%
+								\addtolength{\covertitlewidthlimit}{12cm}%
 								\ifthenelse{\covertitlewidthlimit > \covertitlewidth}%
 									{%
 										\null%
