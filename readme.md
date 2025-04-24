@@ -46,11 +46,11 @@
 
 ### 1.1 适用对象
 
-本模板基于电子科技大学[2024年研究生学位论文撰写规范](https://gr.uestc.edu.cn/xiazai/114/3917)以及通院[关于启动2021级本科毕业设计（论文）工作的通知](https://www.sice.uestc.edu.cn/info/1140/14689.htm)编写，适用于：
-- [x] 学术学位博士、专业学位博士 :mortar_board:
-- [x] 学术学位硕士、专业学位硕士 :mortar_board:
-- [x] 普通学士、**双学位学士（2025.04.21新增）** :mortar_board:
-- [x] **来华留学生International Students（2025.01.07新增）** :mortar_board:
+本模板基于电子科技大学[2024年研究生学位论文撰写规范](https://gr.uestc.edu.cn/xiazai/114/3917)、通院[关于启动2021级本科毕业设计（论文）工作的通知](https://www.sice.uestc.edu.cn/info/1140/14689.htm)以及[交叉复合型毕业设计](https://www.jwc.uestc.edu.cn/info/1507170256521551874)编写，适用对象包括：
+> - [x] 学术学位博士、专业学位博士 :mortar_board:
+> - [x] 学术学位硕士、专业学位硕士 :mortar_board:
+> - [x] 普通学士、**双学位学士（2025.04.21新增）** :mortar_board:
+> - [x] **来华留学生International Students（2025.01.07新增）** :mortar_board:
 
 使用本模板的用户需要具备基本的LaTeX排版技能，后续不会对常见命令和环境的使用进行说明。
 
@@ -75,7 +75,7 @@
 
 - [ ] 伪代码环境无法跨页。本模板排版伪代码使用的宏包是`algorithm2e`，无法跨页排版伪码。注：通常来说，过长的伪码会增加阅读难度，我更建议根据算法逻辑将之拆分成多个子算法或子过程，分别进行排版，最后汇总。
 
-此外，不排除模板存在一些细节上的疏漏。本人尚在撰写学位论文的过程中，如发现或遇到问题仍会修复并更新。请各位使用本模板的同学时常来看看 :point_right: [项目发布页](https://github.com/MGG1996/DissertationUESTC)，确保自己处于最新版本 :satisfied:。
+此外，不排除模板存在一些细节上的疏漏。本人尚在撰写学位论文的过程中，如发现或遇到问题仍会修复并更新。请各位使用本模板的同学时常来看看 :point_right: [项目发布页 :anchor:](https://github.com/MGG1996/DissertationUESTC)，确保自己处于最新版本 :satisfied:。
 
 ### 1.4 模板的更新方法
 
