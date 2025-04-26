@@ -235,14 +235,18 @@
    * 另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见[编译缩略词表](https://zhuanlan.zhihu.com/p/46442713 "本地缩略词表编译教程")或**下方操作截图** :point_down:。Overleaf用户则可以一键搞定，无需额外操作。
 
         * :bulb: 使用Texstudio时，按下图中步骤配置用户命令：`makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile | makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile`，然后在工具栏执行该命令（一次），后续不再需要编译整个文档：
-          <img src="fig/TeXstudio-nomenclature1.jpg"  align = "center"  width="700" />
-          <img src="fig/TeXstudio-nomenclature2.jpg"  align = "center"  width="700" />
-          <img src="fig/TeXstudio-nomenclature3.jpg"  align = "center"  width="700" />
-          
-          若缩略词表有更新，则只需要再执行上述步骤7、8、9即可，无需重复定义命令。
+          <p align = "center">
+          <img src="fig/TeXstudio-nomenclature1.jpg"  width="700" />
+          <img src="fig/TeXstudio-nomenclature2.jpg"  width="700" />
+          <img src="fig/TeXstudio-nomenclature3.jpg"  width="700" />
+          </p>
+
+          若缩略词表有更新，则只需要再执行上述步骤7、8、9即可，无需再次定义命令。
         
         * :bulb: 使用VSCode时，需要呼出终端并键入命令：`makeindex %.nlo -s nomencl.ist -o %.nls`，执行（两次），之后还需要编译整个文档：
-          <img src="fig/VSCode-nomenclature.jpg"  align = "center"  width="700" />
+          <p align = "center">
+          <img src="fig/VSCode-nomenclature.jpg"  width="700" />
+          </p>
           
           若缩略词表有更新，则要再次在终端中键入上述命令并执行，接着再次编译整个文档。
 
@@ -267,7 +271,7 @@
 本模板基于`book`类实现，所以章标题需要使用`\chapter{<章标题>}`生成，其他各级标题依次为`\section{<节标题>}`、`\subsection{<子节标题>}`、`\subsubsection{<孙节标题>}`。
 
 规范要求：**<font color=#8b0000>两个标题之间无正文时，第二个标题的段前距设置为0磅</font>**。亲测LaTeX原本就会自动压缩连续标题间的垂直距离，且其采用的规则就是直接忽略下侧标题的段前距。
-	
+
 然而，在实际使用中有时会出现连续标题间的垂直间隔仍然较大的情况，这一现象本质上是因为LaTeX的另一排版规则。在默认情况下（即未使用`\raggedbottom`），当中间某页的实际内容并非恰好填满当页区域时，LaTeX会在该页的各段之间均匀插入额外的垂直距离，从而让整页的内容纵向对齐到页面的上下边界。正是这一特性在某些情况下导致了连续标题间的垂直距离过大。
 
 理论上讲，中间页的内容越充足，段落数越多，LaTeX对连续标题的排版结果越接近规范要求。若确实因为页面内容不足等原因，造成连续标题间的垂直间隔过大，则用户需要手动特调。操作方式是在连续的标题之间用`\vspace*{}`插入负垂直距离来进行补偿，负距离的取值并不固定，取决于当页的内容情况，需要用户自行尝试。`tutorial.tex`中提供了有关示例。
@@ -639,8 +643,10 @@
    
    经过查阅相关文件，以及向学位办老师求证后，本模板对此类文献的排版规则进行了调整。现在，学位论文的`pages域`将不再是强制域，缺少该信息不会再中断编译过程，但会输出警告，提醒用户某条参考文献条目缺少页码信息。如果你使用TeXstudio，则在编译参考文献辅助文件时BibTeX会发出该警告（下图1）；如果你使用VScode，则需要去检查`problems`窗口输出的信息。它是按文件对警告进行分类的，你需要先定位到`ref.bib`（下图2）。本模板将是否加页码的选择权交予用户，但我个人仍建议各位遵循学校的规范。
    
-   ![TeXstudio对参考文献缺失信息的提醒](./fig/TeXstudio_bibtex.png#pic_center){style="width:500px"}
-   ![VScode对参考文献缺失信息的提醒](./fig/VScode_bibtex.png#pic_center){style="width:500px"}
+   <p align = "center">
+   <img src="fig/TeXstudio_bibtex.png"  width="500" />
+   <img src="fig/VScode_bibtex.png"  width="500" />
+   </p>
 
 
 

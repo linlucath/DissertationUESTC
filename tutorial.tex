@@ -310,9 +310,29 @@
 		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn[<排序前缀>]\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。其中\shad{排序前缀}是可选参数，仅在对特定条目有特殊排序需求时才使用。具体细节参考\href{https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf}{\shad{\color{DarkRed}nomencl}}宏包对\shadcmd{nomenclature}命令的参数说明。
 	\end{enumerate}
 	
-	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，辅助文件编译教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\color{DarkRed}编译缩略词表}或\href{https://github.com/MGG1996/DissertationUESTC?tab=readme-ov-file#6-%E7%9B%AE%E5%BD%95%E5%9B%BE%E7%9B%AE%E5%BD%95%E8%A1%A8%E7%9B%AE%E5%BD%95%E4%B8%BB%E8%A6%81%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%A9%E7%95%A5%E8%AF%8D%E8%A1%A8}{\color{DarkRed}项目readme第6节}给出的操作截图。Overleaf用户则可以一键搞定，无需额外操作。
+	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，辅助文件编译教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\color{DarkRed}编译缩略词表} 或 \href{https://github.com/MGG1996/DissertationUESTC?tab=readme-ov-file#6-%E7%9B%AE%E5%BD%95%E5%9B%BE%E7%9B%AE%E5%BD%95%E8%A1%A8%E7%9B%AE%E5%BD%95%E4%B8%BB%E8%A6%81%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%A9%E7%95%A5%E8%AF%8D%E8%A1%A8}{\color{DarkRed}项目readme第6节}给出的操作图示，对应本文档中的图\ref{fig: TeXstudio编译缩略词表}和图\ref{fig: VScode编译缩略词表}。图中用到的命令分别为：
+	\begin{itemize}
+		\item \shad{makeindex \%.nlo -s nomencl.ist -o \%.nls | txs:///compile | makeindex \%.nlo -s nomencl.ist -o \%.nls | txs:///compile}
+		\item \shad{makeindex \%.nlo -s nomencl.ist -o \%.nls}
+	\end{itemize}
+	Overleaf用户则可以一键搞定，无需额外操作。
 	
 	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。提示一下，当你正式使用本模板撰写论文时，肯定不需要此页的内容。
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.95\linewidth]{TeXstudio-nomenclature1}
+		\\
+		\includegraphics[width=0.95\linewidth]{TeXstudio-nomenclature2}
+		\\
+		\includegraphics[width=0.95\linewidth]{TeXstudio-nomenclature3}
+		\caption{TeXstudio编译缩略词表的操作步骤} \label{fig: TeXstudio编译缩略词表}
+	\end{figure}
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.95\linewidth]{VSCode-nomenclature}
+		\caption{VSCode编译缩略词表的操作步骤} \label{fig: VScode编译缩略词表}
+	\end{figure}
 
 	
 	\chapter{模板使用说明}
