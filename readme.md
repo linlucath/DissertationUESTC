@@ -238,10 +238,12 @@
           <img src="fig/TeXstudio-nomenclature1.jpg"  align = "center"  width="700" />
           <img src="fig/TeXstudio-nomenclature2.jpg"  align = "center"  width="700" />
           <img src="fig/TeXstudio-nomenclature3.jpg"  align = "center"  width="700" />
+          
           若缩略词表有更新，则只需要再执行上述步骤7、8、9即可，无需重复定义命令。
         
         * :bulb: 使用VSCode时，需要呼出终端并键入命令：`makeindex %.nlo -s nomencl.ist -o %.nls`，执行（两次），之后还需要编译整个文档：
           <img src="fig/VSCode-nomenclature.jpg"  align = "center"  width="700" />
+          
           若缩略词表有更新，则要再次在终端中键入上述命令并执行，接着再次编译整个文档。
 
 
