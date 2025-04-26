@@ -75,7 +75,7 @@
 
 - [ ] 伪代码环境无法跨页。本模板排版伪代码使用的宏包是`algorithm2e`，无法跨页排版伪码。注：通常来说，过长的伪码会增加阅读难度，我更建议根据算法逻辑将之拆分成多个子算法或子过程，分别进行排版，最后汇总。
 
-此外，不排除模板存在一些细节上的疏漏。本人尚在撰写学位论文的过程中，如发现或遇到问题仍会修复并更新。请各位使用本模板的同学时常来看看 :point_right: [项目发布页 :anchor:](https://github.com/MGG1996/DissertationUESTC)，确保自己处于最新版本 :satisfied:。
+此外，不排除模板存在一些细节上的疏漏。本人尚在撰写学位论文的过程中，如发现或遇到问题仍会修复并更新。请各位使用本模板的同学时常来看看 :point_right: [项目发布页](https://github.com/MGG1996/DissertationUESTC):anchor:，确保自己处于最新版本 :satisfied:。
 
 ### 1.4 模板的更新方法
 
@@ -232,7 +232,15 @@
    
    * 然后在正文中出现缩略词的位置使用命令`\nomchn[<排序前缀>]{<缩略词>}{<英文全称>}{<中文全称>}`添加该缩略词条目。只需要添加一次。其中，`排序前缀`仅在对特定条目有特殊排序需求时才使用。具体细节参考[nomencl](https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf)宏包对`\nomenclature`命令的参数说明。
 
-   * 另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见[编译缩略词表](https://zhuanlan.zhihu.com/p/46442713 "本地缩略词表编译教程")。Overleaf用户则可以一键搞定，无需额外操作。
+   * 另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见[编译缩略词表](https://zhuanlan.zhihu.com/p/46442713 "本地缩略词表编译教程")或**下方操作截图** :point_down:。Overleaf用户则可以一键搞定，无需额外操作。
+
+        * :bulb: 使用Texstudio时，按下图中步骤配置用户命令：`makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile | makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile`，然后在工具栏执行该命令（一次），后续不再需要编译整个文档：
+          ![](fig/TeXstudio-nomenclature1.jpg){style="width:700px;"}
+          ![](fig/TeXstudio-nomenclature2.jpg){style="width:700px;"}
+          ![](fig/TeXstudio-nomenclature3.jpg){style="width:700px;"}
+        
+        * :bulb: 使用VSCode时，需要呼出终端并键入命令：`makeindex %.nlo -s nomencl.ist -o %.nls`，执行（两次），之后还需要编译整个文档：
+          ![](fig/VSCode-nomenclature.jpg){style="width:700px;"}
 
 
 ## 7. 论文主体部分
@@ -627,8 +635,8 @@
    
    经过查阅相关文件，以及向学位办老师求证后，本模板对此类文献的排版规则进行了调整。现在，学位论文的`pages域`将不再是强制域，缺少该信息不会再中断编译过程，但会输出警告，提醒用户某条参考文献条目缺少页码信息。如果你使用TeXstudio，则在编译参考文献辅助文件时BibTeX会发出该警告（下图1）；如果你使用VScode，则需要去检查`problems`窗口输出的信息。它是按文件对警告进行分类的，你需要先定位到`ref.bib`（下图2）。本模板将是否加页码的选择权交予用户，但我个人仍建议各位遵循学校的规范。
    
-   ![TeXstudio对参考文献缺失信息的提醒](./fig/TeXstudio_bibtex.png)
-   ![VScode对参考文献缺失信息的提醒](./fig/VScode_bibtex.png)
+   ![TeXstudio对参考文献缺失信息的提醒](./fig/TeXstudio_bibtex.png#pic_center){style="width:500px"}
+   ![VScode对参考文献缺失信息的提醒](./fig/VScode_bibtex.png#pic_center){style="width:500px"}
 
 
 

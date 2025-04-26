@@ -310,7 +310,7 @@
 		\item 然后在正文中出现缩略词的位置使用命令\\\shadcmd{nomchn[<排序前缀>]\{<缩略词>\}\{<英文全称>\}\{<中文全称>\}}添加该缩略词条目。其中\shad{排序前缀}是可选参数，仅在对特定条目有特殊排序需求时才使用。具体细节参考\href{https://mirrors.hust.edu.cn/CTAN/macros/latex/contrib/nomencl/nomencl.pdf}{\shad{\color{DarkRed}nomencl}}宏包对\shadcmd{nomenclature}命令的参数说明。
 	\end{enumerate}
 	
-	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\shad{编译缩略词表}}。Overleaf用户则可以一键搞定，无需额外操作。
+	另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，辅助文件编译教程参见\href{https://zhuanlan.zhihu.com/p/46442713}{\color{DarkRed}编译缩略词表}或\href{https://github.com/MGG1996/DissertationUESTC?tab=readme-ov-file#6-%E7%9B%AE%E5%BD%95%E5%9B%BE%E7%9B%AE%E5%BD%95%E8%A1%A8%E7%9B%AE%E5%BD%95%E4%B8%BB%E8%A6%81%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BC%A9%E7%95%A5%E8%AF%8D%E8%A1%A8}{\color{DarkRed}项目readme第6节}给出的操作截图。Overleaf用户则可以一键搞定，无需额外操作。
 	
 	细心的朋友可能会发现，在印刷模式下，当前段落所在的页并未标注任何页眉与页脚，猜猜为什么。提示一下，当你正式使用本模板撰写论文时，肯定不需要此页的内容。
 
@@ -320,7 +320,7 @@
 	\section{前言}
 	\subsection{适用对象}
 	
-	本模板基于电子科技大学\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\textcolor{DarkRed}{2024年研究生学位论文撰写规范}}、通院\href{https://www.sice.uestc.edu.cn/info/1140/14689.htm}{\textcolor{DarkRed}{关于启动2021级本科毕业设计（论文）工作的通知}}以及\href{https://www.jwc.uestc.edu.cn/info/1507170256521551874}{\textcolor{DarkRed}{交叉复合型毕业设计}}编写，适用于学术学位博士、专业学位博士、学术学位硕士、专业学位硕士、普通学士、双学位学士以及来华留学生。
+	本模板基于电子科技大学\href{https://gr.uestc.edu.cn/xiazai/114/3917}{\textcolor{DarkRed}{2024年研究生学位论文撰写规范}}、通院\href{https://www.sice.uestc.edu.cn/info/1140/14689.htm}{\color{DarkRed}关于启动2021级本科毕业设计（论文）工作的通知}以及\href{https://www.jwc.uestc.edu.cn/info/1507170256521551874}{\color{DarkRed}交叉复合型毕业设计}编写，适用于学术学位博士、专业学位博士、学术学位硕士、专业学位硕士、普通学士、双学位学士以及来华留学生。
 
 	\subsection{使用环境}
 
@@ -330,11 +330,11 @@
 
 	为了确保使用Windows、MacOS、Overleaf的用户都能顺利完成编译，模板内附了所有用到的字体文件，这导致了项目整体比较大，超过了Overleaf上传压缩包的限制。所以这部分用户只能麻烦一点：\textbf{先在Overleaf上新建一个文档项目，然后解压本模板并分批拖文件和文件夹到新建的项目中即可}。
 
-	经部分同学反馈，此模板在TeXLive2021上会出现无法按预期渲染封面下划线的情况，\textbf{所以请所有本地用户将自己的TeXLive环境更新到\href{https://mirror.bjtu.edu.cn/CTAN/systems/texlive/Images/}{\textcolor{DarkRed}{TeXLive2024}及以上}}。
+	经部分同学反馈，此模板在TeXLive2021上会出现无法按预期渲染封面下划线的情况，\textbf{所以请所有本地用户将自己的TeXLive环境更新到\href{https://mirror.bjtu.edu.cn/CTAN/systems/texlive/Images/}{\color{DarkRed}TeXLive2024及以上}}。
 
 	\subsection{模板更新方法}
 
-	模板的发布地址为：\href{https://github.com/MGG1996/DissertationUESTC}{\textcolor{DarkRed}{https://github.com/MGG1996/DissertationUESTC}}。
+	模板的发布地址为：\href{https://github.com/MGG1996/DissertationUESTC}{\color{DarkRed}https://github.com/MGG1996/DissertationUESTC}。
 	
 	更新模板的正确方式是：\textbf{下载最新的完整压缩包，解压后用自己的\shad{.bib}和\shad{.tex}文件以及\shad{fig}目录替换掉模板中原有的同名文件和目录}。如果你更改过这两个文件的名称，那直接将之移入最新的模板根目录即可，无需删除目录中的同后缀文件。当然如果你愿意或者有强迫症，删掉模板中提供的\shad{.bib}和\shad{.tex}文件也是可以的。
 	
@@ -344,7 +344,7 @@
 	\begin{itemize}
 		\item \shad{\% !TEX Program = xelatex}在Texstudio中表示指定使用XeLaTeX编译该文档，对其他编辑器，可能需要用户手动设置编译引擎。
 
-		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增\textbf{\color{DarkRed}七种}选项：
+		\item \shadcmd{documentclass[<选项列表>]\{DissertUESTC\}}表示加载名为\shad{DissertUESTC}的文档类，该文档类基于LaTeX的\shad{book}类编写。此文档类新增\textbf{\shad{七种}}选项：
 
 		\begin{itemize}
 			\item \shad{print}/\shad{nonprint}：该选项控制是否以印刷模式生成文档，印刷模式会自动在论文的前置部分添加必要的空白页。默认为\shad{print}。
