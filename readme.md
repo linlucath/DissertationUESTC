@@ -235,12 +235,12 @@
    * 另外，本地用户需要先编译生成缩略词表的辅助文件，再编译完整文档才能获得正确的结果，教程参见[编译缩略词表](https://zhuanlan.zhihu.com/p/46442713 "本地缩略词表编译教程")或**下方操作截图** :point_down:。Overleaf用户则可以一键搞定，无需额外操作。
 
         * :bulb: 使用Texstudio时，按下图中步骤配置用户命令：`makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile | makeindex %.nlo -s nomencl.ist -o %.nls | txs:///compile`，然后在工具栏执行该命令（一次），后续不再需要编译整个文档：
-          ![TeXstudio-nomenclature1](fig/TeXstudio-nomenclature1.jpg#pic_center#pic_center =700x)
-          ![TeXstudio-nomenclature2](fig/TeXstudio-nomenclature2.jpg#pic_center#pic_center =700x)
-          ![TeXstudio-nomenclature3](fig/TeXstudio-nomenclature3.jpg#pic_center#pic_center =700x)
+          <img src="fig/TeXstudio-nomenclature1.jpg"  align = "center"  width="700" />
+          <img src="fig/TeXstudio-nomenclature2.jpg"  align = "center"  width="700" />
+          <img src="fig/TeXstudio-nomenclature3.jpg"  align = "center"  width="700" />
         
         * :bulb: 使用VSCode时，需要呼出终端并键入命令：`makeindex %.nlo -s nomencl.ist -o %.nls`，执行（两次），之后还需要编译整个文档：
-          ![VSCode-nomenclature](fig/VSCode-nomenclature.jpg#pic_center#pic_center =700x)
+          <img src="fig/VSCode-nomenclature.jpg"  align = "center"  width="700" />
 
 
 ## 7. 论文主体部分
