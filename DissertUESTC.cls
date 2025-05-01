@@ -295,7 +295,8 @@
 }
 
 
-\newcommand{\uestclightrulewidth}{0.75bp}  % 用于设置\midrule默认线高，本科0.5bp，研究生0.75bp
+\newcommand{\uestcheavyrulewidth}{1.5bp}  % 用于设置\toprule、\bottomrule默认线粗，本科0.5bp，研究生1.5bp
+\newcommand{\uestclightrulewidth}{0.75bp}  % 用于设置\midrule默认线粗，本科0.5bp，研究生0.75bp
 
 
 % 引入伪页码计数器，用以计算摘要之后正文之前的前置部分的右手页的偶数页码
@@ -359,7 +360,8 @@
 	\renewcommand{\tocsubsecindent}{2em}
 	\renewcommand{\tocsubsubsecindent}{3em}
 	\renewcommand{\uestcfigcapmargin}{2em}
-	\renewcommand\uestclightrulewidth{0.5bp}
+	\renewcommand{\uestcheavyrulewidth}{0.5bp}
+	\renewcommand{\uestclightrulewidth}{0.5bp}
 	\renewcommand{\chineseabstractpagelimit}{1}
 }
 
@@ -379,7 +381,8 @@
 	\renewcommand{\tocsubsecindent}{2em}
 	\renewcommand{\tocsubsubsecindent}{3em}
 	\renewcommand{\uestcfigcapmargin}{2em}
-	\renewcommand\uestclightrulewidth{0.5bp}
+	\renewcommand{\uestcheavyrulewidth}{0.5bp}
+	\renewcommand{\uestclightrulewidth}{0.5bp}
 	\renewcommand{\chineseabstractpagelimit}{1}
 }
 
@@ -581,6 +584,7 @@
 \RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
 \RequirePackage{xstring}% 在字符串中搜索子串需要
 \RequirePackage{listings}% 代码块风格化排版需要
+
 
 
 
@@ -1530,12 +1534,12 @@
 	aboveskip=4bp,
 	belowskip=10bp,
 }
-% 调整三线表线高：https://tex.stackexchange.com/questions/156122
-\setlength\heavyrulewidth{1.5bp}  % 调整\toprule和\bottomrule的默认线高
-\setlength\lightrulewidth{\uestclightrulewidth} % 调整\midrule默认线高，本科0.5bp，研究生0.75bp
+% 调整三线表线粗：https://tex.stackexchange.com/questions/156122
+\setlength\heavyrulewidth{\uestcheavyrulewidth}  % 调整\toprule和\bottomrule的默认线粗，本科0.5bp，研究生1.5bp
+\setlength\lightrulewidth{\uestclightrulewidth} % 调整\midrule默认线粗，本科0.5bp，研究生0.75bp
 
-% 调整表格中间线条线高：https://tex.stackexchange.com/questions/679523
-\setlength\cmidrulewidth{\uestclightrulewidth}  % 调整\cmidrule[line height](trim){a-b}的默认线高，参见booktabs宏包文档。本科0.5bp，研究生0.75bp
+% 调整表格中间线条线粗：https://tex.stackexchange.com/questions/679523
+\setlength\cmidrulewidth{\uestclightrulewidth}  % 调整\cmidrule[line height](trim){a-b}的默认线粗，参见booktabs宏包文档。本科0.5bp，研究生0.75bp
 \setlength\aboverulesep{0bp}  % 调整\cmidrule生成框线的上垂直间隔
 \setlength\belowrulesep{0bp}  % 调整\cmidrule生成框线的下垂直间隔
 
@@ -2125,9 +2129,9 @@
 \def\algskip{\vskip\algskipamount}  % 定义垂直距离宏，来自ChatGPT
 \SetAlgoSkip{algskip}  % 参考algorithm2e宏包的官方文档
 
-%% 调整伪码中的线高，https://tex.stackexchange.com/questions/45272
-\setlength{\algoheightrule}{1.5bp} % 伪码顶部和底部的线高
-\setlength{\algotitleheightrule}{0.75bp} % 伪码标题下的线高
+%% 调整伪码中的线粗，https://tex.stackexchange.com/questions/45272
+\setlength{\algoheightrule}{\uestcheavyrulewidth} % 伪码顶部和底部的线粗
+\setlength{\algotitleheightrule}{\uestclightrulewidth} % 伪码标题下的线粗
 
 %% 调整algorithm环境的标题标签、标题文本和内容文本的字体和行距
 %% 参考algorithm2e宏包的官方文档
