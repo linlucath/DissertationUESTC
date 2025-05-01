@@ -584,6 +584,10 @@
 \RequirePackage[absolute,overlay]{textpos}  % 在封面中悬浮保密信息需要
 \RequirePackage{xstring}% 在字符串中搜索子串需要
 \RequirePackage{listings}% 代码块风格化排版需要
+\RequirePackage{zref-user, zref-abspage}% 获取绝对页码需要，用来实现“摘要”和“致谢”超页提醒
+
+% 该命令获取参数标签所在页面的实际绝对页码，可赋值给计数器（来自DeepSeek）
+\newcommand{\rawabspageref}[1]{\zref@extractdefault{#1}{abspage}{0}}
 
 
 
@@ -1757,7 +1761,9 @@
 	\pdfbookmark[0]{摘\hspace{1em}要}{bookmarkzhabstract\thepage}%
 	\chapter*{摘\hspace{1em}要}%
 	\markboth{摘\hspace{1em}要}{摘\hspace{1em}要}%
-	\setcounter{chineseabstractstartpage}{\value{page}}%
+	% \setcounter{chineseabstractstartpage}{\value{page}}%
+	\zlabel{page: zhabstract begin}%
+	\setcounter{chineseabstractstartpage}{\rawabspageref{page: zhabstract begin}}%
 }
 \newcommand{\enabstract}{%
 	\newpage%
@@ -1768,11 +1774,15 @@
 \newcommand\zhkeywords[1]{%
 	\par\vspace{\baselineskip}\noindent%
 	\parbox[t]{4em}{\textbf{关键词：}}\parbox[t]{\textwidth-4em}{#1}%
-	\setcounter{chineseabstractpagespan}{\value{page}}%
+	% \setcounter{chineseabstractpagespan}{\value{page}}%
+	\zlabel{page: zhkeywords end}%
+	\setcounter{chineseabstractpagespan}{\rawabspageref{page: zhkeywords end}}%
 	\addtocounter{chineseabstractpagespan}{1}%
 	\addtocounter{chineseabstractpagespan}{-\value{chineseabstractstartpage}}%
 	\ifthenelse{\value{chineseabstractpagespan} > \chineseabstractpagelimit \and \boolean{usereminder}}%
 		{%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
 			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Chinese Abstract} has exceeded the maximum limit of \chineseabstractpagelimit~page(s).}}%
 		}{}%
 	\insertevenemptypage%
@@ -1861,7 +1871,6 @@
 	\pdfbookmark[0]{\uestclosname}{bookmarklistofsymbs\thepage}%
 	\chapter*{\uestclosname}%
 	\markboth{\uestclosname}{\uestclosname}%
-	%	\insertevenemptypage
 }%
 
 
@@ -1959,11 +1968,15 @@
 \renewcommand\@biblabel[1]{[#1]\hfill}  % 调整参考文献编号为左对齐，https://tex.stackexchange.com/questions/102680
 \let\oldbibliography\bibliography
 \renewcommand{\bibliography}[1]{%
-	\setcounter{acknowledgementpagespan}{\value{page}}%
+	% \setcounter{acknowledgementpagespan}{\value{page}}%
+	\zlabel{page: acknowledgement end}%
+	\setcounter{acknowledgementpagespan}{\rawabspageref{page: acknowledgement end}}%
 	\addtocounter{acknowledgementpagespan}{1}%
 	\addtocounter{acknowledgementpagespan}{-\value{acknowledgementstartpage}}%
 	\ifthenelse{\value{acknowledgementpagespan} > \acknowledgementpagelimit \and \boolean{usereminder}}%
 		{%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
+			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
 			\par\noindent\textbf{\textcolor{DarkRed}{The length of the \textit{Acknowledgement} has exceeded the maximum limit of \acknowledgementpagelimit~page(s).}}%
 		}{}%
 	% 禁止参考文献条目跨页：
@@ -2203,7 +2216,9 @@
 	\chapter*{\uestcacknowledgementname}%
 	\markboth{\uestcacknowledgementname}{\evenpagemark}%
 	\addcontentsline{toc}{chapter}{\uestcacknowledgementname}%
-	\setcounter{acknowledgementstartpage}{\value{page}}%
+	% \setcounter{acknowledgementstartpage}{\value{page}}%
+	\zlabel{page: acknowledgement begin}%
+	\setcounter{acknowledgementstartpage}{\rawabspageref{page: acknowledgement begin}}%
 }%
 
 
