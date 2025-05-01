@@ -64,7 +64,7 @@
 
 为了确保使用Windows、MacOS、Overleaf的用户都能顺利完成编译，模板内附了所有用到的字体文件，这导致了项目整体比较大，超过了Overleaf上传压缩包的限制。所以这部分用户只能麻烦一点： :point_right: **先在Overleaf上新建一个文档项目，然后解压本模板并分批拖文件和文件夹到新建的项目中即可**。
 
-:warning: 经部分同学反馈，**<font color=#8b0000>此模板在TeXLive2021上会出现无法按预期渲染封面下划线的情况</font>**，所以请所有本地用户将自己的TeXLive环境更新到[TeXLive2024及以上](https://mirror.bjtu.edu.cn/CTAN/systems/texlive/Images/)。
+:warning: 经部分同学反馈，**<font color=#8b0000>此模板在TeXLive2021上会出现无法按预期渲染封面下划线的情况</font>**，所以请所有本地用户将自己的LaTeX环境更新到[TeXLive2024及以上](https://mirrors.tuna.tsinghua.edu.cn/tex-historic-archive/systems/texlive/)或[MacTeX2024及以上](https://mirrors.tuna.tsinghua.edu.cn/tex-historic-archive/systems/mactex/)，以避免兼容性问题。
 
 
 ### 1.3 模板完成度
